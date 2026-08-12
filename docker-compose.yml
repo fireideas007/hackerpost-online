@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: hackerpost
+    restart: always
+    environment:
+      - PORT=3000
+      - VIRTUAL_HOST=hackerpost.online
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=hackerpost.online
+      - LETSENCRYPT_EMAIL=64010844+fireideas007@users.noreply.github.com
+    volumes:
+      - hackerpost_data:/app/data
+    networks:
+      - default
+      - app_webnet
+
+volumes:
+  hackerpost_data:
+
+networks:
+  app_webnet:
+    external: true
+    name: app_webnet
