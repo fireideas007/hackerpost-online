@@ -3,15 +3,15 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sun, Moon, Newspaper, Radio, Code2 } from "lucide-react";
+import { Sun, Moon, ShieldAlert, Radio, Code2 } from "lucide-react";
 
 export default function Header() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const pathname = usePathname();
 
-  // Load theme from localStorage on mount
+  // Load theme from localStorage on mount (default to dark)
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
+    const savedTheme = localStorage.getItem("theme") || "dark";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
   }, []);
@@ -27,8 +27,8 @@ export default function Header() {
     <div className="header-wrapper">
       <header className="container header">
         <Link href="/" className="logo">
-          <Newspaper size={28} className="logo-icon" style={{ color: "hsl(var(--primary))" }} />
-          <span>HyperLocal.AI</span>
+          <ShieldAlert size={28} className="logo-icon" style={{ color: "hsl(var(--primary))" }} />
+          <span>HackerPost<span>.online</span></span>
         </Link>
 
         <nav className="nav-links">
@@ -36,7 +36,7 @@ export default function Header() {
             href="/" 
             className={`nav-link ${pathname === "/" ? "active" : ""}`}
           >
-            Home Feed
+            Threat Feed
           </Link>
           <Link 
             href="/admin" 
@@ -44,7 +44,7 @@ export default function Header() {
             style={{ display: "flex", alignItems: "center", gap: "6px" }}
           >
             <Radio size={16} className="sandbox-loading-pulse" style={{ color: "hsl(var(--danger))" }} />
-            AI Ingestion Dashboard
+            Ingestion Hub
           </Link>
           <Link 
             href="/b2b" 
@@ -52,7 +52,7 @@ export default function Header() {
             style={{ display: "flex", alignItems: "center", gap: "6px" }}
           >
             <Code2 size={16} />
-            Developer API
+            Integrations
           </Link>
           
           <button 
@@ -68,4 +68,3 @@ export default function Header() {
     </div>
   );
 }
-

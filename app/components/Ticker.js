@@ -1,26 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AlertCircle } from "lucide-react";
+import { ShieldAlert } from "lucide-react";
 
 export default function Ticker() {
   const [tickerItems, setTickerItems] = useState([
-    "WATER SERVICE BULLETIN: Infrastructure upgrades on Broadway Ave scheduled June 15-19. Motorists expect delays.",
-    "AIR QUALITY NOTICE: Fine particle warnings active for county valleys. Residents advised to reduce physical strains.",
-    "TRANSIT ADVISORY: Red Line schedules modified this weekend due to critical switches maintenance. Shuttle busses available.",
-    "EDUCATION IN BRIEF: High School STEM laboratories expansion funded with $1.2M allocation."
+    "CRITICAL ALERT: Zero-day remote code execution vulnerability identified in OpenSSH (sshd) under active scan telemetry.",
+    "THREAT BULLETIN: Active ransomware campaign targeting VMware ESXi hypervisors. Mitigation recommended immediately.",
+    "BREACH LOG: Enterprise transactional database leak exposed. Incident response teams active.",
+    "INTEL BRIEF: Cyber group Storm-1204 observed deploying double-free kernel exploits in local systems."
   ]);
 
-  // Optionally fetch latest news to populate ticker dynamically
   useEffect(() => {
     fetch("/api/news")
       .then((res) => res.json())
       .then((data) => {
         if (data && data.published && data.published.length > 0) {
           const titles = data.published.map(
-            (art) => `LOCAL BRIEF: ${art.title} in ${art.location}`
+            (art) => `THREAT BULLETIN: ${art.title} [${art.cve || art.location || "UNTAGGED"}]`
           );
-          // Prepend default urgent bulletins
           setTickerItems((prev) => [...titles, ...prev]);
         }
       })
@@ -30,8 +28,8 @@ export default function Ticker() {
   return (
     <div className="ticker-wrapper">
       <div className="ticker-label">
-        <AlertCircle size={14} style={{ marginRight: "6px" }} />
-        Live Feed
+        <ShieldAlert size={14} style={{ marginRight: "6px" }} />
+        Threat Stream
       </div>
       <div className="ticker-content">
         {tickerItems.map((item, idx) => (
