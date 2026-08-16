@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sun, Moon, ShieldAlert, Radio, Code2 } from "lucide-react";
+import { Sun, Moon, ShieldAlert, Radio, Code2, Bot } from "lucide-react";
 
 export default function Header() {
   const [theme, setTheme] = useState("dark");
@@ -37,6 +37,15 @@ export default function Header() {
             className={`nav-link ${pathname === "/" ? "active" : ""}`}
           >
             Threat Feed
+          </Link>
+          <Link 
+            href="/agent" 
+            className={`nav-link ${pathname === "/agent" ? "active" : ""}`}
+            style={{ display: "flex", alignItems: "center", gap: "6px" }}
+          >
+            <Bot size={16} style={{ color: "hsl(var(--primary))" }} />
+            AI Agent
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "hsl(var(--success))", boxShadow: "0 0 6px hsl(var(--success))" }} />
           </Link>
           <Link 
             href="/admin" 

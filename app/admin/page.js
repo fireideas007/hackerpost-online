@@ -40,6 +40,7 @@ export default function AdminDashboard() {
   
   // Notification State
   const [notification, setNotification] = useState(null);
+  const [scraping, setScraping] = useState(false);
 
   const fetchDashboardData = async () => {
     try {
@@ -104,6 +105,28 @@ export default function AdminDashboard() {
       }
     } catch (err) {
       showNotice("error", "Failed to populate search stream.");
+    }
+  };
+
+  const handleScrapeLive = async () => {
+    setScraping(true);
+    try {
+      const res = await fetch("/api/news/scrape");
+      const data = await res.json();
+      if (data.success) {
+        if (data.insertedCount === 0) {
+          showNotice("success", "CISA Scrape complete: backlogs are already up to date.");
+        } else {
+          showNotice("success", `Scraped live CISA advisories! Ingested ${data.insertedCount} new alerts.`);
+        }
+        fetchDashboardData();
+      } else {
+        showNotice("error", data.error || "Scraper failed.");
+      }
+    } catch (err) {
+      showNotice("error", "Error connecting to the scraper subsystem.");
+    } finally {
+      setScraping(false);
     }
   };
 
@@ -259,6 +282,21 @@ export default function AdminDashboard() {
           </p>
         </div>
         <div style={{ display: "flex", gap: "10px" }}>
+          <button 
+            onClick={handleScrapeLive} 
+            disabled={scraping}
+            className="btn btn-primary"
+            style={{ display: "flex", alignItems: "center", gap: "6px" }}
+          >
+            {scraping ? (
+              <span className="sandbox-loading-pulse">Scraping CISA...</span>
+            ) : (
+              <>
+                <Terminal size={14} />
+                Scrape Live Alerts
+              </>
+            )}
+          </button>
           <button 
             onClick={handleSeedSearches} 
             className="btn btn-secondary"
