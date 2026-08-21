@@ -677,6 +677,7 @@ export default function AgentCommandCenter() {
           </div>
         </div>
       </div>
-    </EditorAuthGate>
+    </div>
+  </EditorAuthGate>
   );
 }
