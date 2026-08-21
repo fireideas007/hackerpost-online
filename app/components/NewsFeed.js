@@ -12,6 +12,7 @@ export default function NewsFeed({ initialArticles = [] }) {
   const categories = [
     "All", 
     "SecTech & Startups", 
+    "AI Benchmarks",
     "M&A & Funding", 
     "Zero-Days", 
     "Ransomware", 
@@ -144,6 +145,7 @@ export default function NewsFeed({ initialArticles = [] }) {
               className={`filter-btn ${selectedCategory === cat ? "active" : ""}`}
             >
               {cat === "SecTech & Startups" && "🚀 "}
+              {cat === "AI Benchmarks" && "📊 "}
               {cat === "M&A & Funding" && "💼 "}
               {cat === "Zero-Days" && "🔥 "}
               {cat === "Ransomware" && "🛡️ "}

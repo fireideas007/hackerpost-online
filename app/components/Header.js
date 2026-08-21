@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sun, Moon, ShieldAlert, Radio, Code2, Bot } from "lucide-react";
+import { Sun, Moon, ShieldAlert, Radio, Code2, Bot, Award } from "lucide-react";
 
 export default function Header() {
   const [theme, setTheme] = useState("dark");
@@ -37,6 +37,17 @@ export default function Header() {
             className={`nav-link ${pathname === "/" ? "active" : ""}`}
           >
             Threat Feed
+          </Link>
+          <Link 
+            href="/benchmarks" 
+            className={`nav-link ${pathname === "/benchmarks" ? "active" : ""}`}
+            style={{ display: "flex", alignItems: "center", gap: "6px" }}
+          >
+            <Award size={15} style={{ color: "hsl(var(--warning))" }} />
+            AI Benchmarks
+            <span style={{ fontSize: "9px", padding: "1px 5px", borderRadius: "2px", background: "hsla(var(--warning), 0.15)", color: "hsl(var(--warning))", border: "1px solid hsla(var(--warning), 0.3)", fontWeight: 800 }}>
+              NEW
+            </span>
           </Link>
           <Link 
             href="/agent" 
