@@ -22,6 +22,7 @@ import {
   FileCheck2,
   Settings
 } from "lucide-react";
+import EditorAuthGate from "../components/EditorAuthGate";
 
 export default function AgentCommandCenter() {
   const [agentState, setAgentState] = useState(null);
@@ -158,7 +159,8 @@ export default function AgentCommandCenter() {
   }
 
   return (
-    <div className="container" style={{ paddingBottom: "100px", paddingTop: "40px" }}>
+    <EditorAuthGate title="Aegis AI Agent Command Room">
+      <div className="container" style={{ paddingBottom: "100px", paddingTop: "40px" }}>
       {/* Toast Notification */}
       {notification && (
         <div 
@@ -225,8 +227,35 @@ export default function AgentCommandCenter() {
             Aegis AI Editor-in-Chief
           </h1>
           <p style={{ color: "hsl(var(--muted-foreground))", fontSize: "14px", maxWidth: "680px" }}>
-            Continuously steers HackerPost: craws vulnerability telemetry, audits similarity scores, reformulates threat analyses, and publishes zero-plagiarism bulletins.
+            Autonomous CISO-grade intelligence engine: harvests global telemetry from CISA, The Hacker News, BleepingComputer, & GitHub, synthesizes executive threat briefings, and auto-publishes breaking bulletins.
           </p>
+
+          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "12px" }}>
+            <span style={{ fontSize: "11px", fontWeight: 700, color: "hsl(var(--muted-foreground))", alignSelf: "center", marginRight: "4px" }}>
+              ACTIVE THREAT FEEDS:
+            </span>
+            {["CISA Advisories", "The Hacker News", "BleepingComputer", "GitHub Advisories"].map((source, idx) => (
+              <span 
+                key={idx}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  padding: "2px 8px",
+                  borderRadius: "var(--radius-sm)",
+                  background: "hsla(var(--success), 0.08)",
+                  border: "1px solid hsla(var(--success), 0.25)",
+                  color: "hsl(var(--success))",
+                  fontSize: "10px",
+                  fontWeight: 700,
+                  fontFamily: "var(--font-mono)"
+                }}
+              >
+                <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "currentColor" }} />
+                {source}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
@@ -237,11 +266,11 @@ export default function AgentCommandCenter() {
             style={{ height: "46px", padding: "0 22px", display: "flex", alignItems: "center", gap: "8px" }}
           >
             {runningCycle ? (
-              <span className="sandbox-loading-pulse">Executing Autonomous Cycle...</span>
+              <span className="sandbox-loading-pulse">Harvesting & Synthesizing...</span>
             ) : (
               <>
                 <Zap size={16} />
-                Run Agent Cycle Now
+                Run Multi-Feed Cycle Now
               </>
             )}
           </button>
@@ -647,8 +676,7 @@ export default function AgentCommandCenter() {
             )}
           </div>
         </div>
-
       </div>
-    </div>
+    </EditorAuthGate>
   );
 }

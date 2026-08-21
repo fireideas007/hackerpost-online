@@ -18,6 +18,7 @@ import {
   Terminal,
   Activity
 } from "lucide-react";
+import EditorAuthGate from "../components/EditorAuthGate";
 
 export default function AdminDashboard() {
   const [rawArticles, setRawArticles] = useState([]);
@@ -246,7 +247,8 @@ export default function AdminDashboard() {
   const sortedRawList = getSortedRawArticles();
 
   return (
-    <div className="container" style={{ paddingBottom: "100px", paddingTop: "40px" }}>
+    <EditorAuthGate title="Threat Ingestion Hub">
+      <div className="container" style={{ paddingBottom: "100px", paddingTop: "40px" }}>
       {/* Alert Notifications */}
       {notification && (
         <div 
@@ -688,6 +690,6 @@ export default function AdminDashboard() {
           )}
         </div>
       </div>
-    </div>
+    </EditorAuthGate>
   );
 }
