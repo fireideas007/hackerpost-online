@@ -15,13 +15,19 @@ import {
   RefreshCw, 
   ChevronRight,
   Terminal,
-  ArrowDownToLine
+  ArrowDownToLine,
+  Rocket,
+  Briefcase,
+  TrendingUp,
+  DollarSign
 } from "lucide-react";
 
 export default function ArticleClient({ article }) {
   const [safeView, setSafeView] = useState(true);
   const [activeVersion, setActiveVersion] = useState(article.versions ? article.versions.length : 1);
   const [showDiff, setShowDiff] = useState(false);
+
+  const isStartup = article.category === "SecTech & Startups" || article.category === "M&A & Funding" || article.fundingAmount;
 
   // Check if content contains raw exploit payload characteristics
   const hasExploitPayload = /\\x[0-9a-fA-F]{2}|\/bin\/sh|shellcode|execve|jmp\s+\*/.test(article.content);
@@ -63,7 +69,6 @@ export default function ArticleClient({ article }) {
     const v1 = article.versions[0].content.split("\n");
     const v2 = article.versions[1].content.split("\n");
     
-    // Simple line-by-line diff
     const diffLines = [];
     const maxLines = Math.max(v1.length, v2.length);
     
@@ -80,7 +85,7 @@ export default function ArticleClient({ article }) {
     return diffLines;
   };
 
-  // Safe-View wrapper that renders markdown code blocks or blurs them
+  // Markdown renderer supporting callout alert boxes and safe-view code blocks
   const renderBody = (content) => {
     const parts = content.split("---");
     const bodyText = parts[0];
@@ -144,129 +149,127 @@ export default function ArticleClient({ article }) {
       } else {
         const trimmed = line.trim();
         if (trimmed.startsWith("# ")) {
-          renderedElements.push(<h1 key={idx} style={{ fontSize: "28px", fontWeight: 800, margin: "24px 0 16px 0", borderBottom: "1px solid hsl(var(--border))", paddingBottom: "8px" }}>{trimmed.slice(2)}</h1>);
+          renderedElements.push(<h1 key={idx} style={{ fontSize: "26px", fontWeight: 800, margin: "24px 0 16px 0", borderBottom: "1px solid hsl(var(--border))", paddingBottom: "8px" }}>{trimmed.slice(2)}</h1>);
         } else if (trimmed.startsWith("## ")) {
           renderedElements.push(<h2 key={idx} style={{ fontSize: "20px", fontWeight: 700, margin: "24px 0 12px 0" }}>{trimmed.slice(3)}</h2>);
         } else if (trimmed.startsWith("### ")) {
-          renderedElements.push(<h3 key={idx} style={{ fontSize: "16px", fontWeight: 700, margin: "20px 0 8px 0", color: "hsl(var(--primary))" }}>{trimmed.slice(4)}</h3>);
+          renderedElements.push(<h3 key={idx} style={{ fontSize: "17px", fontWeight: 700, margin: "20px 0 10px 0", color: "hsl(var(--primary))" }}>{trimmed.slice(4)}</h3>);
+        } else if (trimmed.startsWith("> [!IMPORTANT]") || trimmed.startsWith("> [!TIP]") || trimmed.startsWith("> [!NOTE]")) {
+          // GitHub style alert box
+          renderedElements.push(
+            <div key={idx} style={{
+              background: "hsla(var(--primary), 0.08)",
+              borderLeft: "4px solid hsl(var(--primary))",
+              padding: "16px 20px",
+              borderRadius: "var(--radius-sm)",
+              margin: "20px 0",
+              fontSize: "13px",
+              lineHeight: 1.6
+            }}>
+              {trimmed.replace(/^>\s*\[!(IMPORTANT|TIP|NOTE)\]/, "").trim()}
+            </div>
+          );
         } else if (trimmed.startsWith("> ")) {
-          renderedElements.push(<blockquote key={idx} style={{ fontStyle: "italic", borderLeft: "4px solid hsl(var(--primary))", paddingLeft: "16px", margin: "20px 0" }}>{trimmed.slice(2)}</blockquote>);
+          renderedElements.push(
+            <blockquote key={idx} style={{
+              borderLeft: "3px solid hsl(var(--border))",
+              paddingLeft: "16px",
+              margin: "12px 0",
+              color: "hsl(var(--foreground))",
+              fontStyle: "italic"
+            }}>
+              {trimmed.slice(2)}
+            </blockquote>
+          );
+        } else if (trimmed.startsWith("* ") || trimmed.startsWith("- ")) {
+          renderedElements.push(
+            <li key={idx} style={{ marginLeft: "20px", marginBottom: "6px", lineHeight: 1.6 }}>
+              {trimmed.slice(2)}
+            </li>
+          );
+        } else if (/^\d+\.\s/.test(trimmed)) {
+          renderedElements.push(
+            <div key={idx} style={{ marginLeft: "12px", marginBottom: "8px", lineHeight: 1.6 }}>
+              <b>{trimmed.match(/^\d+\./)[0]}</b> {trimmed.replace(/^\d+\.\s*/, "")}
+            </div>
+          );
         } else if (trimmed) {
-          renderedElements.push(<p key={idx} style={{ marginBottom: "16px" }}>{trimmed}</p>);
+          renderedElements.push(<p key={idx} style={{ marginBottom: "16px", lineHeight: 1.7, fontSize: "15px" }}>{trimmed}</p>);
         }
       }
     });
 
     return (
-      <div>
+      <>
         {renderedElements}
-        
         {footnoteText && (
-          <div className="citation-banner" style={{ marginTop: "40px" }}>
-            <div className="citation-header">
-              <ShieldCheck size={18} style={{ color: "hsl(var(--success))" }} />
-              Advisory Verification Sourcing
-            </div>
-            <p className="citation-text">
-              {footnoteText.replace(/\*/g, "").trim()}
-            </p>
-            <div style={{ marginTop: "14px", display: "flex", gap: "16px", flexWrap: "wrap", fontSize: "11px", color: "hsl(var(--muted-foreground))", fontFamily: "var(--font-mono)" }}>
-              <span>ORIGINAL ALIGNMENT: <b>{article.similarityScore || 0}%</b></span>
-              <span>•</span>
-              <span>VERIFICATION KEY: <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer" style={{ color: "hsl(var(--primary))", textDecoration: "underline" }}>NVD Registry Source</a></span>
-            </div>
+          <div style={{ marginTop: "40px", paddingTop: "20px", borderTop: "1px solid hsl(var(--border))", fontSize: "12px", color: "hsl(var(--muted-foreground))" }}>
+            <p>{footnoteText.trim()}</p>
           </div>
         )}
-      </div>
+      </>
     );
   };
 
   const diffResult = generateDiff();
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 300px", gap: "40px", padding: "40px 0" }}>
-      {/* Main Content Area */}
-      <div>
-        {/* Navigation Back */}
-        <Link href="/" style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "12px", fontWeight: "700", textTransform: "uppercase", color: "hsl(var(--muted-foreground))", marginBottom: "28px" }}>
-          <ArrowLeft size={14} />
-          Feed Stream
+    <div className="container" style={{ paddingBottom: "100px" }}>
+      {/* Back to feed header link */}
+      <div style={{ padding: "20px 0" }}>
+        <Link href="/" className="btn btn-secondary" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+          <ArrowLeft size={16} /> Back to Live Feed
         </Link>
+      </div>
 
-        {/* Responsible Disclosure Warning Banner */}
-        {hasExploitPayload && (
-          <div style={{
-            background: safeView ? "rgba(16, 185, 129, 0.05)" : "rgba(239, 68, 68, 0.05)",
-            border: safeView ? "1px solid rgba(16, 185, 129, 0.2)" : "1px solid rgba(239, 68, 68, 0.2)",
-            borderRadius: "var(--radius-sm)",
-            padding: "16px 20px",
-            marginBottom: "32px",
-            display: "flex",
-            alignItems: "flex-start",
-            gap: "16px"
-          }}>
-            {safeView ? (
-              <ShieldCheck size={24} style={{ color: "hsl(var(--success))", flexShrink: 0 }} />
-            ) : (
-              <ShieldAlert size={24} style={{ color: "hsl(var(--danger))", flexShrink: 0 }} />
-            )}
-            <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 800, fontSize: "13px", color: safeView ? "hsl(var(--success))" : "hsl(var(--danger))", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-                {safeView ? "Exploit Safe View Active" : "Exploit Code Exposed"}
-              </div>
-              <p style={{ fontSize: "12px", color: "hsl(var(--muted-foreground))", marginTop: "4px" }}>
-                {safeView 
-                  ? "Raw machine code blocks are suspended. This prevents execution vectors and ensures compliance with safe disclosure metrics." 
-                  : "Caution: Raw socket payloads are visible. Do not compile or run these buffers in production environments."}
-              </p>
-            </div>
-            <button 
-              onClick={() => setSafeView(!safeView)} 
-              className={`btn ${safeView ? "btn-secondary" : "btn-danger"}`}
-              style={{ fontSize: "10px", padding: "6px 12px", height: "30px" }}
-            >
-              {safeView ? <Unlock size={12} /> : <Lock size={12} />}
-              {safeView ? "Expose Code" : "Safe Shield"}
-            </button>
-          </div>
-        )}
-
-        <article>
+      <div style={{ display: "grid", gridTemplateColumns: "2.2fr 1fr", gap: "40px" }}>
+        {/* Main Article Section */}
+        <article className="article-container" style={{ minWidth: 0 }}>
           <header className="article-header">
-            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center", marginBottom: "16px" }}>
-              <span className="article-category">{article.category}</span>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center", marginBottom: "12px", flexWrap: "wrap" }}>
+              <span className="card-category-badge" style={{
+                background: isStartup ? "linear-gradient(135deg, hsla(var(--primary), 0.25), rgba(168, 85, 247, 0.25))" : undefined,
+                borderColor: isStartup ? "hsl(var(--primary))" : undefined,
+                color: isStartup ? "#ffffff" : undefined
+              }}>
+                {isStartup && "🚀 "}{article.category}
+              </span>
+              
               {article.cve && (
                 <span style={{ 
                   display: "inline-flex", 
                   alignItems: "center", 
-                  gap: "6px", 
+                  gap: "4px", 
+                  fontFamily: "var(--font-mono)", 
                   fontSize: "11px", 
                   fontWeight: "700", 
-                  color: "#000000", 
-                  backgroundColor: "hsl(var(--primary))", 
-                  padding: "4px 10px", 
-                  borderRadius: "var(--radius-sm)",
-                  fontFamily: "var(--font-mono)"
+                  color: "hsl(var(--primary))", 
+                  backgroundColor: "hsla(var(--primary), 0.1)", 
+                  border: "1px solid hsla(var(--primary), 0.3)",
+                  padding: "3px 10px", 
+                  borderRadius: "var(--radius-sm)" 
                 }}>
                   <Terminal size={11} />
                   {article.cve}
                 </span>
               )}
-              
-              {article.disclosureStatus && (
+
+              {isStartup && article.fundingAmount && (
                 <span style={{ 
                   display: "inline-flex", 
                   alignItems: "center", 
                   gap: "4px", 
+                  fontFamily: "var(--font-mono)", 
                   fontSize: "11px", 
                   fontWeight: "700", 
-                  color: "white", 
-                  backgroundColor: "rgba(255,255,255,0.05)", 
-                  border: "1px solid hsl(var(--border))",
+                  color: "hsl(var(--success))", 
+                  backgroundColor: "hsla(var(--success), 0.1)", 
+                  border: "1px solid hsla(var(--success), 0.3)",
                   padding: "3px 10px", 
                   borderRadius: "var(--radius-sm)" 
                 }}>
-                  {article.disclosureStatus}
+                  <DollarSign size={11} />
+                  {article.fundingAmount}
                 </span>
               )}
             </div>
@@ -279,7 +282,7 @@ export default function ArticleClient({ article }) {
                   AI
                 </div>
                 <div>
-                  <div className="author-name">Advisory Engine Coprocessor</div>
+                  <div className="author-name">HackerPost Newsroom Coprocessor</div>
                   <div className="author-date">{formatDate(article.publishedAt)}</div>
                 </div>
               </div>
@@ -349,19 +352,19 @@ export default function ArticleClient({ article }) {
                 {diffResult.map((line, idx) => {
                   let bgColor = "transparent";
                   let color = "hsl(var(--foreground))";
-                  let prefix = " ";
+                  let prefix = "  ";
                   if (line.type === "added") {
                     bgColor = "rgba(16, 185, 129, 0.15)";
                     color = "hsl(var(--success))";
-                    prefix = "+";
+                    prefix = "+ ";
                   } else if (line.type === "removed") {
                     bgColor = "rgba(239, 68, 68, 0.15)";
                     color = "hsl(var(--danger))";
-                    prefix = "-";
+                    prefix = "- ";
                   }
                   return (
-                    <div key={idx} style={{ background: bgColor, color: color, whiteSpace: "pre", padding: "2px 4px" }}>
-                      {prefix} {line.text}
+                    <div key={idx} style={{ background: bgColor, color: color, padding: "2px 4px", whiteSpace: "pre-wrap" }}>
+                      {prefix}{line.text}
                     </div>
                   );
                 })}
@@ -371,11 +374,9 @@ export default function ArticleClient({ article }) {
             )}
           </div>
         </article>
-      </div>
 
-      {/* Sidebar: Vulnerability Profile Card */}
-      <div>
-        <div style={{
+        {/* Right Sidebar: Dynamic Profile Card */}
+        <aside style={{
           background: "hsl(var(--card))",
           border: "1px solid hsl(var(--border))",
           borderRadius: "var(--radius-md)",
@@ -384,72 +385,143 @@ export default function ArticleClient({ article }) {
           top: "100px",
           boxShadow: "var(--shadow-md)"
         }}>
-          <div style={{ 
-            fontWeight: 800, 
-            fontSize: "12px", 
-            textTransform: "uppercase", 
-            letterSpacing: "0.5px", 
-            color: "hsl(var(--primary))",
-            marginBottom: "16px",
-            display: "flex",
-            alignItems: "center",
-            gap: "8px"
-          }}>
-            <ShieldCheck size={16} />
-            Vulnerability Profile
-          </div>
+          {isStartup ? (
+            /* Startup & Venture Profile Sidebar */
+            <div>
+              <div style={{ 
+                fontWeight: 800, 
+                fontSize: "12px", 
+                textTransform: "uppercase", 
+                letterSpacing: "0.5px", 
+                color: "hsl(var(--primary))",
+                marginBottom: "16px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px"
+              }}>
+                <Rocket size={16} />
+                SecTech & Venture Profile
+              </div>
 
-          {/* CVSS Severity Circle Scorecard */}
-          <div className={`scorecard ${getSeverityClass(article.severity)}`} style={{ padding: "16px", borderRadius: "var(--radius-sm)", marginBottom: "20px" }}>
-            <div className="score-circle" style={{ borderColor: getSeverityBadgeColor(article.severity) }}>
-              {article.severity === "Critical" ? "9.8" : "7.8"}
-            </div>
-            <div className="score-text">
-              <div className="score-title" style={{ color: getSeverityBadgeColor(article.severity) }}>{article.severity} CVSS</div>
-              <div className="score-desc" style={{ fontSize: "11px" }}>Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</div>
-            </div>
-          </div>
+              {/* Deal Scorecard */}
+              <div className="scorecard scorecard-low" style={{ padding: "16px", borderRadius: "var(--radius-sm)", marginBottom: "20px", background: "hsla(var(--primary), 0.08)", borderColor: "hsla(var(--primary), 0.3)" }}>
+                <div className="score-circle" style={{ borderColor: "hsl(var(--primary))", color: "hsl(var(--primary))", fontSize: "14px" }}>
+                  🚀
+                </div>
+                <div className="score-text">
+                  <div className="score-title" style={{ color: "hsl(var(--primary))" }}>
+                    {article.fundingAmount || "Venture Deal"}
+                  </div>
+                  <div className="score-desc" style={{ fontSize: "11px" }}>
+                    Round: {article.fundingRound || "Strategic Financing"}
+                  </div>
+                </div>
+              </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "16px", fontSize: "13px" }}>
-            <div>
-              <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>Affected Product</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>{article.affectedProduct || "Enterprise Node"}</div>
-            </div>
-            <div>
-              <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>CVE Identification</div>
-              <div style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>{article.cve || "N/A"}</div>
-            </div>
-            <div>
-              <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>Disclosure Status</div>
-              <div style={{ display: "flex", alignItems: "center", gap: "6px", fontWeight: 700 }}>
-                <span style={{ 
-                  width: "8px", 
-                  height: "8px", 
-                  borderRadius: "50%", 
-                  background: article.disclosureStatus === "Patched" ? "hsl(var(--success))" : "hsl(var(--warning))" 
-                }}></span>
-                {article.disclosureStatus || "Under Review"}
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px", fontSize: "13px" }}>
+                <div>
+                  <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>Company / Innovator</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontWeight: 700, fontSize: "14px" }}>{article.affectedProduct || "SecTech Startup"}</div>
+                </div>
+                <div>
+                  <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>Sector Domain</div>
+                  <div style={{ fontWeight: 600 }}>{article.category}</div>
+                </div>
+                <div>
+                  <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>Deal Status</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px", fontWeight: 700, color: "hsl(var(--success))" }}>
+                    <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "hsl(var(--success))" }}></span>
+                    {article.disclosureStatus || "Confirmed Transaction"}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>Primary Wire</div>
+                  <div style={{ fontSize: "12px", color: "hsl(var(--primary))", fontWeight: 700 }}>{article.providerName || "Verified Wire"}</div>
+                </div>
+
+                <hr style={{ border: "0", borderTop: "1px solid hsl(var(--border))", margin: "8px 0" }} />
+
+                <div>
+                  <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "6px" }}>CISO Market Adoption Indicators</div>
+                  <ul style={{ paddingLeft: "16px", fontSize: "12px", color: "hsl(var(--muted-foreground))", display: "flex", flexDirection: "column", gap: "6px" }}>
+                    <li>High SOC Consolidation ROI</li>
+                    <li>Fast 1-Click Multi-Cloud Deploy</li>
+                    <li>Zero-Trust & Compliance Ready</li>
+                  </ul>
+                </div>
               </div>
             </div>
-            {article.disclosureDate && (
-              <div>
-                <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>Disclosure Date</div>
-                <div>{article.disclosureDate}</div>
-              </div>
-            )}
-            
-            <hr style={{ border: "0", borderTop: "1px solid hsl(var(--border))", margin: "8px 0" }} />
-
+          ) : (
+            /* Standard Vulnerability Profile Sidebar */
             <div>
-              <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "6px" }}>Responsible Disclosure Flow</div>
-              <ul style={{ paddingLeft: "16px", fontSize: "12px", color: "hsl(var(--muted-foreground))", display: "flex", flexDirection: "column", gap: "6px" }}>
-                <li>Vendor Notified: T-90 days</li>
-                <li>Mitigation Validated: T-30 days</li>
-                <li>Public Advisory: Immediate</li>
-              </ul>
+              <div style={{ 
+                fontWeight: 800, 
+                fontSize: "12px", 
+                textTransform: "uppercase", 
+                letterSpacing: "0.5px", 
+                color: "hsl(var(--primary))",
+                marginBottom: "16px",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px"
+              }}>
+                <ShieldCheck size={16} />
+                Vulnerability Profile
+              </div>
+
+              {/* CVSS Severity Circle Scorecard */}
+              <div className={`scorecard ${getSeverityClass(article.severity)}`} style={{ padding: "16px", borderRadius: "var(--radius-sm)", marginBottom: "20px" }}>
+                <div className="score-circle" style={{ borderColor: getSeverityBadgeColor(article.severity) }}>
+                  {article.severity === "Critical" ? "9.8" : "7.8"}
+                </div>
+                <div className="score-text">
+                  <div className="score-title" style={{ color: getSeverityBadgeColor(article.severity) }}>{article.severity} CVSS</div>
+                  <div className="score-desc" style={{ fontSize: "11px" }}>Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</div>
+                </div>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px", fontSize: "13px" }}>
+                <div>
+                  <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>Affected Product</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>{article.affectedProduct || "Enterprise Node"}</div>
+                </div>
+                <div>
+                  <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>CVE Identification</div>
+                  <div style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>{article.cve || "N/A"}</div>
+                </div>
+                <div>
+                  <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>Disclosure Status</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px", fontWeight: 700 }}>
+                    <span style={{ 
+                      width: "8px", 
+                      height: "8px", 
+                      borderRadius: "50%", 
+                      background: article.disclosureStatus === "Patched" ? "hsl(var(--success))" : "hsl(var(--warning))" 
+                    }}></span>
+                    {article.disclosureStatus || "Under Review"}
+                  </div>
+                </div>
+                {article.disclosureDate && (
+                  <div>
+                    <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "2px" }}>Disclosure Date</div>
+                    <div>{article.disclosureDate}</div>
+                  </div>
+                )}
+                
+                <hr style={{ border: "0", borderTop: "1px solid hsl(var(--border))", margin: "8px 0" }} />
+
+                <div>
+                  <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "6px" }}>Responsible Disclosure Flow</div>
+                  <ul style={{ paddingLeft: "16px", fontSize: "12px", color: "hsl(var(--muted-foreground))", display: "flex", flexDirection: "column", gap: "6px" }}>
+                    <li>Vendor Notified: T-90 days</li>
+                    <li>Mitigation Validated: T-30 days</li>
+                    <li>Public Advisory: Immediate</li>
+                  </ul>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </aside>
       </div>
     </div>
   );

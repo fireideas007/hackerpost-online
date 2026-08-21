@@ -137,11 +137,12 @@ export default function AgentCommandCenter() {
   };
 
   const quickDirectives = [
+    "Prioritize SecTech startups & Series A/B funding",
+    "Track cybersecurity M&A and acquisitions",
     "Focus on VMware and Windows zero-days",
     "Set plagiarism threshold to 10%",
     "Enable full autonomous publishing",
-    "Disable auto-publish (Switch to Supervised Mode)",
-    "Run an immediate CISA crawl & ingest"
+    "Run an immediate multi-source crawl & ingest"
   ];
 
   const filteredLogs = agentState?.logs?.filter(log => {
@@ -227,14 +228,14 @@ export default function AgentCommandCenter() {
             Aegis AI Editor-in-Chief
           </h1>
           <p style={{ color: "hsl(var(--muted-foreground))", fontSize: "14px", maxWidth: "680px" }}>
-            Autonomous CISO-grade intelligence engine: harvests global telemetry from CISA, The Hacker News, BleepingComputer, & GitHub, synthesizes executive threat briefings, and auto-publishes breaking bulletins.
+            Autonomous SecTech & Threat Intelligence Engine: harvests global telemetry from TechCrunch, SecurityWeek, VentureBeat, CISA, THN, BleepingComputer, & GitHub, synthesizes executive venture & threat briefings, and auto-publishes breaking intelligence.
           </p>
 
           <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "12px" }}>
             <span style={{ fontSize: "11px", fontWeight: 700, color: "hsl(var(--muted-foreground))", alignSelf: "center", marginRight: "4px" }}>
-              ACTIVE THREAT FEEDS:
+              ACTIVE INTELLIGENCE WIRES:
             </span>
-            {["CISA Advisories", "The Hacker News", "BleepingComputer", "GitHub Advisories"].map((source, idx) => (
+            {["TechCrunch Security", "SecurityWeek M&A", "VentureBeat SecTech", "CISA Advisories", "The Hacker News", "BleepingComputer", "GitHub Advisories"].map((source, idx) => (
               <span 
                 key={idx}
                 style={{
