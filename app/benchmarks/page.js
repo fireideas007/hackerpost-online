@@ -16,7 +16,9 @@ import {
   Search,
   Layers,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  RefreshCw,
+  Clock
 } from "lucide-react";
 
 export default function BenchmarksPage() {
@@ -27,28 +29,50 @@ export default function BenchmarksPage() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
+  const [lastSyncTime, setLastSyncTime] = useState(null);
+
+  const fetchBenchmarks = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/benchmarks?type=${selectedType}&sort=${sortBy}`);
+      const data = await res.json();
+      if (data.success) {
+        setModels(data.models);
+        setEntities(data.entities);
+        if (!selectedModel && data.models.length > 0) {
+          setSelectedModel(data.models[0]);
+        }
+      }
+    } catch (err) {
+      console.error("Error loading benchmark data:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    async function fetchBenchmarks() {
-      try {
-        setLoading(true);
-        const res = await fetch(`/api/benchmarks?type=${selectedType}&sort=${sortBy}`);
-        const data = await res.json();
-        if (data.success) {
-          setModels(data.models);
-          setEntities(data.entities);
-          if (!selectedModel && data.models.length > 0) {
-            setSelectedModel(data.models[0]);
-          }
-        }
-      } catch (err) {
-        console.error("Error loading benchmark data:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
     fetchBenchmarks();
   }, [selectedType, sortBy]);
+
+  const handleTriggerSync = async () => {
+    try {
+      setSyncing(true);
+      const res = await fetch("/api/benchmarks/cron?force=true", { method: "POST" });
+      const data = await res.json();
+      if (data.success) {
+        setModels(data.models);
+        setLastSyncTime(data.lastDailySync);
+        if (data.models.length > 0) {
+          setSelectedModel(data.models[0]);
+        }
+      }
+    } catch (err) {
+      console.error("Error triggering sync:", err);
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   const filteredModels = models.filter(m => {
     if (!searchQuery) return true;
@@ -67,16 +91,36 @@ export default function BenchmarksPage() {
     <div className="container" style={{ paddingBottom: "100px", paddingTop: "32px" }}>
       {/* Hero Header */}
       <section style={{ marginBottom: "40px", textAlign: "center" }}>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", borderRadius: "var(--radius-sm)", background: "hsla(var(--primary), 0.1)", border: "1px solid hsla(var(--primary), 0.3)", color: "hsl(var(--primary))", fontSize: "11px", fontWeight: 800, fontFamily: "var(--font-mono)", marginBottom: "14px" }}>
-          <Award size={14} />
-          AUTHORITATIVE SECTECH BENCHMARKS
+        <div style={{ display: "flex", justifyContent: "center", gap: "10px", alignItems: "center", flexWrap: "wrap", marginBottom: "14px" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", borderRadius: "var(--radius-sm)", background: "hsla(var(--primary), 0.1)", border: "1px solid hsla(var(--primary), 0.3)", color: "hsl(var(--primary))", fontSize: "11px", fontWeight: 800, fontFamily: "var(--font-mono)" }}>
+            <Award size={14} />
+            AUTHORITATIVE SECTECH BENCHMARKS
+          </div>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "6px 14px", borderRadius: "var(--radius-sm)", background: "hsla(var(--success), 0.1)", border: "1px solid hsla(var(--success), 0.3)", color: "hsl(var(--success))", fontSize: "11px", fontWeight: 800, fontFamily: "var(--font-mono)" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "currentColor" }} />
+            UPDATED DAILY (24H REFRESH CADENCE)
+          </div>
         </div>
+
         <h1 style={{ fontSize: "38px", fontWeight: 900, letterSpacing: "-1px", textTransform: "uppercase", marginBottom: "12px" }}>
           AI Security Model <span style={{ color: "hsl(var(--primary))" }}>Leaderboard</span>
         </h1>
-        <p style={{ color: "hsl(var(--muted-foreground))", fontSize: "15px", maxWidth: "760px", margin: "0 auto 30px auto", lineHeight: 1.6 }}>
-          Authoritative cybersecurity evaluations of frontier LLMs and open-weights models across vulnerability remediation, autonomous threat hunting, prompt injection defense, and exploit discovery. Sourced directly from trusted benchmarking organizations.
+        <p style={{ color: "hsl(var(--muted-foreground))", fontSize: "15px", maxWidth: "760px", margin: "0 auto 24px auto", lineHeight: 1.6 }}>
+          Authoritative cybersecurity evaluations of frontier LLMs and open-weights models across vulnerability remediation, autonomous threat hunting, prompt injection defense, and exploit discovery. Sourced directly from trusted benchmarking organizations and refreshed daily.
         </p>
+
+        {/* Manual Refresh / Auto-Sync Telemetry Button */}
+        <div style={{ display: "flex", justifyContent: "center", gap: "12px", alignItems: "center", marginBottom: "32px" }}>
+          <button
+            onClick={handleTriggerSync}
+            disabled={syncing}
+            className="btn btn-secondary"
+            style={{ fontSize: "11px", padding: "6px 16px", height: "34px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+          >
+            <RefreshCw size={13} className={syncing ? "sandbox-loading-pulse" : ""} />
+            {syncing ? "Recalibrating Leaderboard..." : "Force Daily Recalibration"}
+          </button>
+        </div>
 
         {/* Highlight Stats */}
         <div style={{
@@ -185,7 +229,7 @@ export default function BenchmarksPage() {
         <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
           <div style={{ padding: "16px 20px", borderBottom: "1px solid hsl(var(--border))", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div style={{ fontWeight: 800, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-              Global Cybersecurity Model Matrix
+              Global Cybersecurity Model Matrix (Daily Sync)
             </div>
             <span style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))" }}>
               Showing {filteredModels.length} Models
@@ -372,7 +416,7 @@ export default function BenchmarksPage() {
 
             <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "16px", display: "flex", justifyContent: "space-between" }}>
               <span>Evaluated by: <b>{selectedModel.testedBy.join(", ")}</b></span>
-              <span>Tested: {selectedModel.lastTested}</span>
+              <span>Last Tested: {selectedModel.lastTested}</span>
             </div>
           </div>
         )}
