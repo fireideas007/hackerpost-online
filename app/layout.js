@@ -4,17 +4,17 @@ import Ticker from "./components/Ticker";
 import Footer from "./components/Footer";
 
 export const metadata = {
-  title: "HyperLocal.AI | Verified Hyperlocal News Feed",
-  description: "Verified news and alerts aggregated from trusted public registries and local agencies, rewritten by AI to prevent plagiarism and localized to your neighborhood.",
-  metadataBase: new URL("http://localhost:3000"),
+  title: "HackerPost.online | CISO Cyber Threat Intelligence, SecTech & AI Model Benchmarks",
+  description: "Real-time cybersecurity intelligence portal for CISOs: zero-day threat advisories, ransomware attack telemetry, SecTech startup funding, M&A deals, and AI security model benchmark rankings.",
+  metadataBase: new URL("https://hackerpost.online"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "HyperLocal.AI | Verified Hyperlocal News Feed",
-    description: "Verified news and alerts aggregated from trusted public registries and local agencies, rewritten by AI to prevent plagiarism and localized to your neighborhood.",
-    url: "/",
-    siteName: "HyperLocal.AI",
+    title: "HackerPost.online | CISO Cyber Threat Intelligence, SecTech & AI Model Benchmarks",
+    description: "Real-time cybersecurity intelligence portal for CISOs: zero-day threat advisories, ransomware attack telemetry, SecTech startup funding, M&A deals, and AI security model benchmark rankings.",
+    url: "https://hackerpost.online",
+    siteName: "HackerPost.online",
     locale: "en_US",
     type: "website",
   },
