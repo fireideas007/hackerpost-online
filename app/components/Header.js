@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sun, Moon, ShieldAlert, Radio, Code2, Bot, Award } from "lucide-react";
+import { Sun, Moon, ShieldAlert, Radio, Code2, Bot, Award, Lock, ShieldCheck } from "lucide-react";
 
 export default function Header() {
   const [theme, setTheme] = useState("dark");
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const pathname = usePathname();
 
   // Load theme from localStorage on mount (default to dark)
@@ -14,7 +15,12 @@ export default function Header() {
     const savedTheme = localStorage.getItem("theme") || "dark";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
-  }, []);
+
+    const token = localStorage.getItem("hp_editor_token");
+    if (token) {
+      setIsAdminLoggedIn(true);
+    }
+  }, [pathname]);
 
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
@@ -50,23 +56,6 @@ export default function Header() {
             </span>
           </Link>
           <Link 
-            href="/agent" 
-            className={`nav-link ${pathname === "/agent" ? "active" : ""}`}
-            style={{ display: "flex", alignItems: "center", gap: "6px" }}
-          >
-            <Bot size={16} style={{ color: "hsl(var(--primary))" }} />
-            AI Agent
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "hsl(var(--success))", boxShadow: "0 0 6px hsl(var(--success))" }} />
-          </Link>
-          <Link 
-            href="/admin" 
-            className={`nav-link ${pathname === "/admin" ? "active" : ""}`}
-            style={{ display: "flex", alignItems: "center", gap: "6px" }}
-          >
-            <Radio size={16} className="sandbox-loading-pulse" style={{ color: "hsl(var(--danger))" }} />
-            Ingestion Hub
-          </Link>
-          <Link 
             href="/b2b" 
             className={`nav-link ${pathname === "/b2b" ? "active" : ""}`}
             style={{ display: "flex", alignItems: "center", gap: "6px" }}
@@ -74,6 +63,18 @@ export default function Header() {
             <Code2 size={16} />
             Integrations
           </Link>
+
+          {/* Admin link only visible if authenticated or navigating admin */}
+          {isAdminLoggedIn && (
+            <Link 
+              href="/agent" 
+              className={`nav-link ${pathname === "/agent" || pathname === "/admin" ? "active" : ""}`}
+              style={{ display: "flex", alignItems: "center", gap: "6px", color: "hsl(var(--success))" }}
+            >
+              <ShieldCheck size={15} />
+              Admin Portal
+            </Link>
+          )}
           
           <button 
             onClick={toggleTheme} 
