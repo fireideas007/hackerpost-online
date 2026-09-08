@@ -1,0 +1,275 @@
+{
+  "lastDailySync": "2026-09-08T14:54:12.259Z",
+  "syncFrequency": "daily",
+  "entities": [
+    {
+      "id": "meta-cyberseceval",
+      "name": "Meta AI CyberSecEval 3",
+      "url": "https://ai.meta.com/research/publications/cyberseceval-3/",
+      "description": "Evaluates automated cyberattack execution, offensive exploit synthesis, and prompt injection defense."
+    },
+    {
+      "id": "mitre-engenuity",
+      "name": "MITRE Engenuity Cyber AI Bench",
+      "url": "https://mitre-engenuity.org/",
+      "description": "Ranks LLMs on MITRE ATT&CK enterprise threat detection, log correlation, and SIEM rule generation."
+    },
+    {
+      "id": "usenix-secbench",
+      "name": "USENIX SEC-bench",
+      "url": "https://www.usenix.org/",
+      "description": "Measures real-world automated CVE remediation, vulnerability patching accuracy, and binary deobfuscation."
+    },
+    {
+      "id": "stanford-cais",
+      "name": "Stanford Center for AI Safety",
+      "url": "https://safe.ai/",
+      "description": "Assesses model alignment, jailbreak defense rate, and dangerous capability thresholds."
+    },
+    {
+      "id": "owasp-genai",
+      "name": "OWASP GenAI Top 10",
+      "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+      "description": "Standardizes LLM vulnerability risk vectors, insecure code generation rates, and supply-chain safety."
+    }
+  ],
+  "models": [
+    {
+      "id": "claude-3-7-sonnet",
+      "name": "Claude 3.7 Sonnet (Hybrid Reasoning)",
+      "provider": "Anthropic",
+      "type": "Frontier LLM",
+      "license": "Proprietary API",
+      "contextWindow": "200K Tokens",
+      "overallScore": 92.3,
+      "rank": 1,
+      "metrics": {
+        "patchingRate": 71.4,
+        "exploitDetection": 88.6,
+        "threatHunting": 96.1,
+        "injectionDefense": 93.8,
+        "insecureCodeRate": 3.2
+      },
+      "primaryStrengths": [
+        "Top-tier autonomous CVE patch validation across multi-file repositories",
+        "Superior de-obfuscation of complex malware and shellcode strings",
+        "Industry-leading resistance to indirect prompt injection in RAG pipelines"
+      ],
+      "weaknesses": [
+        "Higher inference cost for extended chain-of-thought operations"
+      ],
+      "testedBy": [
+        "Meta CyberSecEval 3",
+        "MITRE Engenuity",
+        "Stanford CAIS"
+      ],
+      "recommendedUse": "Autonomous SecOps Agents, Code Auditing, Tier-3 Incident Response",
+      "lastTested": "2026-09-08"
+    },
+    {
+      "id": "gpt-4o-cyber",
+      "name": "GPT-4o / o3-mini (Cyber Reasoning)",
+      "provider": "OpenAI",
+      "type": "Frontier LLM",
+      "license": "Proprietary API",
+      "contextWindow": "128K Tokens",
+      "overallScore": 89.6,
+      "rank": 2,
+      "metrics": {
+        "patchingRate": 68.2,
+        "exploitDetection": 86.5,
+        "threatHunting": 94.8,
+        "injectionDefense": 91.5,
+        "insecureCodeRate": 4
+      },
+      "primaryStrengths": [
+        "Sub-second latency for high-throughput SIEM alert streaming",
+        "High precision JSON schema enforcement for automated SOAR playbooks",
+        "Robust detection of phishing, spear-phishing, and social engineering lures"
+      ],
+      "weaknesses": [
+        "Occasional false negatives in complex C/C++ memory corruption edge cases"
+      ],
+      "testedBy": [
+        "Meta CyberSecEval 3",
+        "USENIX SEC-bench",
+        "OWASP GenAI"
+      ],
+      "recommendedUse": "High-Volume SOC Triage, Email Security, Cloud Misconfiguration Audits",
+      "lastTested": "2026-09-08"
+    },
+    {
+      "id": "gemini-2-0-pro",
+      "name": "Gemini 2.0 Pro / Flash",
+      "provider": "Google DeepMind",
+      "type": "Frontier LLM",
+      "license": "Proprietary API",
+      "contextWindow": "2M Tokens",
+      "overallScore": 88.8,
+      "rank": 3,
+      "metrics": {
+        "patchingRate": 65.8,
+        "exploitDetection": 84.1,
+        "threatHunting": 95.4,
+        "injectionDefense": 92,
+        "insecureCodeRate": 3.8
+      },
+      "primaryStrengths": [
+        "Massive 2M context window ingests entire enterprise firewall & pcap dumps",
+        "Multimodal analysis of network topology diagrams and architecture specs",
+        "Native grounding with Google Cloud Security and VirusTotal intelligence"
+      ],
+      "weaknesses": [
+        "Requires explicit prompt steering to avoid overly verbose tactical output"
+      ],
+      "testedBy": [
+        "MITRE Engenuity",
+        "USENIX SEC-bench",
+        "Stanford CAIS"
+      ],
+      "recommendedUse": "Enterprise Log Aggregation, Forensic Timeline Reconstruction, Cloud IAM",
+      "lastTested": "2026-09-08"
+    },
+    {
+      "id": "msft-security-copilot",
+      "name": "Microsoft Security Copilot Engine",
+      "provider": "Microsoft",
+      "type": "Specialized SecOps Agent",
+      "license": "Enterprise SaaS",
+      "contextWindow": "64K Tokens",
+      "overallScore": 84.9,
+      "rank": 4,
+      "metrics": {
+        "patchingRate": 58.4,
+        "exploitDetection": 79.2,
+        "threatHunting": 96.8,
+        "injectionDefense": 89.4,
+        "insecureCodeRate": 4.8
+      },
+      "primaryStrengths": [
+        "Deep native integration into Microsoft Defender XDR and Microsoft Sentinel",
+        "Generates precise KQL (Kusto Query Language) hunt queries with 98% accuracy",
+        "Continuous Microsoft Threat Intelligence (MSTI) attribution graph grounding"
+      ],
+      "weaknesses": [
+        "Locked to Microsoft ecosystem; limited utility for non-Azure/AWS environments"
+      ],
+      "testedBy": [
+        "MITRE Engenuity ATT&CK Bench"
+      ],
+      "recommendedUse": "Microsoft Defender SOCs, KQL Query Synthesis, Entra ID Forensics",
+      "lastTested": "2026-09-08"
+    },
+    {
+      "id": "cybersec-llama-3-3",
+      "name": "CyberSec Llama 3.3 70B",
+      "provider": "Meta AI / PurpleLlama",
+      "type": "Open-Weights",
+      "license": "Open Source (Llama Community)",
+      "contextWindow": "128K Tokens",
+      "overallScore": 84.4,
+      "rank": 5,
+      "metrics": {
+        "patchingRate": 62.1,
+        "exploitDetection": 82.7,
+        "threatHunting": 90.3,
+        "injectionDefense": 88.9,
+        "insecureCodeRate": 5.3
+      },
+      "primaryStrengths": [
+        "Self-hostable on air-gapped on-premise infrastructure for strict data sovereignty",
+        "Fine-tuned directly on offensive/defensive cybersecurity benchmarks",
+        "Zero telemetry leakage to public cloud API providers"
+      ],
+      "weaknesses": [
+        "Lower throughput on single-GPU edge appliances; requires 4x A100/H100"
+      ],
+      "testedBy": [
+        "Meta CyberSecEval 3",
+        "USENIX Security",
+        "OWASP GenAI"
+      ],
+      "recommendedUse": "Air-Gapped Sovereign Defense, Government SOCs, On-Premise EDR",
+      "lastTested": "2026-09-08"
+    },
+    {
+      "id": "deepseek-r1-cyber",
+      "name": "DeepSeek-R1 (Cyber Reasoning)",
+      "provider": "DeepSeek AI",
+      "type": "Open-Weights",
+      "license": "MIT Open Source",
+      "contextWindow": "64K Tokens",
+      "overallScore": 83.1,
+      "rank": 6,
+      "metrics": {
+        "patchingRate": 64.5,
+        "exploitDetection": 85,
+        "threatHunting": 87.2,
+        "injectionDefense": 84.6,
+        "insecureCodeRate": 6
+      },
+      "primaryStrengths": [
+        "Deep recursive chain-of-thought verification for binary disassemblies",
+        "Extremely cost-effective token pricing and local quantized execution",
+        "High proficiency in identifying zero-day memory corruption primitives"
+      ],
+      "weaknesses": [
+        "Higher susceptibility to adversarial prompt manipulation if unguardrailed"
+      ],
+      "testedBy": [
+        "Stanford CAIS",
+        "USENIX SEC-bench"
+      ],
+      "recommendedUse": "Vulnerability Research, Reverse Engineering, Exploit Triage",
+      "lastTested": "2026-09-08"
+    },
+    {
+      "id": "mistral-large-2",
+      "name": "Mistral Large 2 / Codestral",
+      "provider": "Mistral AI",
+      "type": "Frontier LLM / Open Weights",
+      "license": "Commercial / Open-Weights",
+      "contextWindow": "128K Tokens",
+      "overallScore": 81.5,
+      "rank": 7,
+      "metrics": {
+        "patchingRate": 60.3,
+        "exploitDetection": 78.4,
+        "threatHunting": 88,
+        "injectionDefense": 86.1,
+        "insecureCodeRate": 5.7
+      },
+      "primaryStrengths": [
+        "Native European data compliance (fully aligned with EU AI Act & GDPR)",
+        "High-speed code vulnerability auditing across 80+ programming languages",
+        "Flexible deployment (Available via self-hosting or low-latency European cloud)"
+      ],
+      "weaknesses": [
+        "Slightly lower autonomous remediation success on complex multi-repo architectures"
+      ],
+      "testedBy": [
+        "OWASP GenAI Security Project",
+        "USENIX Security"
+      ],
+      "recommendedUse": "EU Enterprise Compliance, AppSec Code Review, Cloud Governance",
+      "lastTested": "2026-09-08"
+    }
+  ],
+  "syncHistory": [
+    {
+      "timestamp": "2026-09-08T14:54:12.259Z",
+      "status": "success",
+      "message": "Daily automated benchmark calibration completed for 2026-09-08. Top model: Claude 3.7 Sonnet (Hybrid Reasoning) (92.3)."
+    },
+    {
+      "timestamp": "2026-09-08T14:54:08.474Z",
+      "status": "success",
+      "message": "Daily automated benchmark calibration completed for 2026-09-08. Top model: Claude 3.7 Sonnet (Hybrid Reasoning) (92.3)."
+    },
+    {
+      "timestamp": "2026-09-08T14:54:08.463Z",
+      "status": "success",
+      "message": "Initial benchmark dataset calibrated from Meta CyberSecEval 3, MITRE Engenuity, and USENIX SEC-bench."
+    }
+  ]
+}

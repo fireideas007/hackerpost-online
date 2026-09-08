@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getBenchmarkModels, getBenchmarkEntities } from "@/lib/benchmarkStore";
+import { getBenchmarkModels, getBenchmarkEntities, getBenchmarkData } from "@/lib/benchmarkStore";
 
 export const dynamic = "force-dynamic";
 
@@ -9,6 +9,7 @@ export async function GET(req) {
     const filter = searchParams.get("type") || "all";
     const sortBy = searchParams.get("sort") || "rank"; // "rank", "overall", "patching", "hunting", "injection"
 
+    const fullData = getBenchmarkData();
     let models = [...getBenchmarkModels(filter)];
 
     if (sortBy === "patching") {
@@ -28,6 +29,7 @@ export async function GET(req) {
     return NextResponse.json({
       success: true,
       totalModels: models.length,
+      lastDailySync: fullData.lastDailySync,
       models,
       entities
     });

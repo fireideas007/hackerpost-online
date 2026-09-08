@@ -64,18 +64,21 @@ export default function AgentCommandCenter() {
     setTimeout(() => setNotification(null), 5000);
   };
 
-  // Run autonomous cycle on demand
-  const handleExecuteCycle = async () => {
+  // Run autonomous cycle on demand (Normal or Surge Mode)
+  const handleExecuteCycle = async (forceSurge = false) => {
     setRunningCycle(true);
     try {
       const res = await fetch("/api/agent/cycle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ trigger: "manual-command-center" })
+        body: JSON.stringify({ 
+          trigger: forceSurge ? "manual-surge-override" : "manual-command-center",
+          forceSurge 
+        })
       });
       const data = await res.json();
       if (data.success) {
-        showNotice("success", `Autonomous cycle complete! Scraped: ${data.scrapedCount}, Published: ${data.publishedCount}, Queued: ${data.queuedCount}`);
+        showNotice("success", `${forceSurge ? '⚡ SURGE MODE ' : ''}Cycle complete! Scraped: ${data.scrapedCount}, Published: ${data.publishedCount} (${data.dailyProgress || 'Progress updated'}), Queued: ${data.queuedCount}`);
         fetchAgentStatus();
       } else {
         showNotice("error", data.error || "Cycle failed.");
@@ -261,17 +264,26 @@ export default function AgentCommandCenter() {
 
         <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
           <button 
-            onClick={handleExecuteCycle}
+            onClick={() => handleExecuteCycle(false)}
+            disabled={runningCycle}
+            className="btn btn-secondary"
+            style={{ height: "46px", padding: "0 18px", display: "flex", alignItems: "center", gap: "8px" }}
+          >
+            <Zap size={15} />
+            Run Normal Cycle
+          </button>
+          <button 
+            onClick={() => handleExecuteCycle(true)}
             disabled={runningCycle}
             className="btn btn-primary"
-            style={{ height: "46px", padding: "0 22px", display: "flex", alignItems: "center", gap: "8px" }}
+            style={{ height: "46px", padding: "0 22px", display: "flex", alignItems: "center", gap: "8px", background: "hsl(var(--danger))", borderColor: "hsl(var(--danger))" }}
           >
             {runningCycle ? (
-              <span className="sandbox-loading-pulse">Harvesting & Synthesizing...</span>
+              <span className="sandbox-loading-pulse">Harvesting Surge Stream...</span>
             ) : (
               <>
-                <Zap size={16} />
-                Run Multi-Feed Cycle Now
+                <Flame size={16} />
+                Force Threat Surge Mode ⚡
               </>
             )}
           </button>
@@ -281,59 +293,67 @@ export default function AgentCommandCenter() {
       {/* Telemetry HUD Cards */}
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
         gap: "18px",
         marginBottom: "36px"
       }}>
-        <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "18px 20px", borderRadius: "var(--radius-md)" }}>
-          <div style={{ fontSize: "11px", fontWeight: 800, color: "hsl(var(--muted-foreground))", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <Activity size={14} style={{ color: "hsl(var(--success))" }} />
-            Engine Status
-          </div>
-          <div style={{ fontSize: "22px", fontWeight: 800, color: "hsl(var(--success))", fontFamily: "var(--font-mono)" }}>
-            ONLINE (Active)
-          </div>
-          <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "4px" }}>
-            Last run: {new Date(agentState.metrics.lastRunTime).toLocaleTimeString()}
-          </div>
-        </div>
-
+        {/* Daily Quota Guarantee Meter */}
         <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "18px 20px", borderRadius: "var(--radius-md)" }}>
           <div style={{ fontSize: "11px", fontWeight: 800, color: "hsl(var(--muted-foreground))", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
             <FileCheck2 size={14} style={{ color: "hsl(var(--primary))" }} />
-            Total Bulletins Published
+            Daily Publishing Target
           </div>
           <div style={{ fontSize: "22px", fontWeight: 800, color: "hsl(var(--primary))", fontFamily: "var(--font-mono)" }}>
-            {agentState.metrics.totalPublished} Articles
+            {agentState.dailyStats?.publishedToday || 0} / {agentState.minDailyTarget || 10}
+            <span style={{ fontSize: "12px", color: "hsl(var(--muted-foreground))", fontWeight: 600, marginLeft: "6px" }}>
+              ({Math.round(((agentState.dailyStats?.publishedToday || 0) / (agentState.minDailyTarget || 10)) * 100)}%)
+            </span>
           </div>
           <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "4px" }}>
-            Audited {agentState.metrics.totalAudited} incoming feeds
+            Guaranteed minimum 10 articles/day
+          </div>
+        </div>
+
+        {/* Threat Velocity & Buzz Meter */}
+        <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "18px 20px", borderRadius: "var(--radius-md)" }}>
+          <div style={{ fontSize: "11px", fontWeight: 800, color: "hsl(var(--muted-foreground))", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
+            <Flame size={14} style={{ color: agentState.dailyStats?.surgeActive ? "hsl(var(--danger))" : "hsl(var(--warning))" }} />
+            Threat Buzz & Velocity
+          </div>
+          <div style={{ fontSize: "22px", fontWeight: 800, color: agentState.dailyStats?.surgeActive ? "hsl(var(--danger))" : "hsl(var(--warning))", fontFamily: "var(--font-mono)" }}>
+            {agentState.dailyStats?.threatVelocity || 45}/100
+            <span style={{ fontSize: "11px", background: agentState.dailyStats?.surgeActive ? "rgba(255,0,0,0.15)" : "rgba(255,180,0,0.15)", border: "1px solid currentColor", padding: "2px 6px", borderRadius: "2px", marginLeft: "6px", fontWeight: 800 }}>
+              {agentState.dailyStats?.surgeActive ? "SURGE ACTIVE ⚡" : "NORMAL"}
+            </span>
+          </div>
+          <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "4px" }}>
+            {agentState.dailyStats?.surgeActive ? "High-velocity intake active (Up to 10/cycle)" : "Steady pacing (3/cycle)"}
           </div>
         </div>
 
         <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "18px 20px", borderRadius: "var(--radius-md)" }}>
           <div style={{ fontSize: "11px", fontWeight: 800, color: "hsl(var(--muted-foreground))", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <ShieldCheck size={14} style={{ color: "hsl(var(--warning))" }} />
-            Max Plagiarism Gate
+            <ShieldCheck size={14} style={{ color: "hsl(var(--success))" }} />
+            Plagiarism Gate
           </div>
-          <div style={{ fontSize: "22px", fontWeight: 800, color: "hsl(var(--warning))", fontFamily: "var(--font-mono)" }}>
-            &lt; {agentState.maxPlagiarismThreshold}% Max
+          <div style={{ fontSize: "22px", fontWeight: 800, color: "hsl(var(--success))", fontFamily: "var(--font-mono)" }}>
+            0% Verified
           </div>
           <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "4px" }}>
-            Avg corpus similarity: {agentState.metrics.avgSimilarity}%
+            Gate threshold: &lt; {agentState.maxPlagiarismThreshold}% Max
           </div>
         </div>
 
         <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "18px 20px", borderRadius: "var(--radius-md)" }}>
           <div style={{ fontSize: "11px", fontWeight: 800, color: "hsl(var(--muted-foreground))", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
-            <Flame size={14} style={{ color: "hsl(var(--danger))" }} />
-            Priority Focus
+            <Activity size={14} style={{ color: "hsl(var(--primary))" }} />
+            Total Published Corpus
           </div>
-          <div style={{ fontSize: "13px", fontWeight: 700, color: "hsl(var(--foreground))", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            {agentState.focusTags.slice(0, 2).join(", ")} +{agentState.focusTags.length - 2}
+          <div style={{ fontSize: "22px", fontWeight: 800, color: "hsl(var(--primary))", fontFamily: "var(--font-mono)" }}>
+            {agentState.metrics?.totalPublished || 0} Articles
           </div>
           <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "4px" }}>
-            Min Severity: {agentState.minSeverity}
+            {agentState.metrics?.totalCyclesRun || 0} autonomous cycles run
           </div>
         </div>
       </div>

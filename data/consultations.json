@@ -1,0 +1,67 @@
+[
+  {
+    "id": "consult-1788879263333-in8a",
+    "companyName": "Enterprise Vanguard Defense",
+    "contactName": "David Sterling, CISO",
+    "contactEmail": "d.sterling@vanguarddefense.com",
+    "role": "Chief Information Security Officer (CISO)",
+    "infraSize": "5,000 - 10,000 Cloud Instances",
+    "serviceNeeded": "Zero-Day Attack Surface Audit",
+    "threatConcern": "Validating exposure to CVE-2026-3829 across public IP perimeters",
+    "urgency": "urgent",
+    "status": "architect_assigned",
+    "submittedAt": "2026-09-08T14:54:23.333Z"
+  },
+  {
+    "id": "consult-1788878426215-7xqf",
+    "companyName": "Enterprise Vanguard Defense",
+    "contactName": "David Sterling, CISO",
+    "contactEmail": "d.sterling@vanguarddefense.com",
+    "role": "Chief Information Security Officer (CISO)",
+    "infraSize": "5,000 - 10,000 Cloud Instances",
+    "serviceNeeded": "Zero-Day Attack Surface Audit",
+    "threatConcern": "Validating exposure to CVE-2026-3829 across public IP perimeters",
+    "urgency": "urgent",
+    "status": "architect_assigned",
+    "submittedAt": "2026-09-08T14:40:26.215Z"
+  },
+  {
+    "id": "consult-1788878410503-782q",
+    "companyName": "Enterprise Vanguard Defense",
+    "contactName": "David Sterling, CISO",
+    "contactEmail": "d.sterling@vanguarddefense.com",
+    "role": "Chief Information Security Officer (CISO)",
+    "infraSize": "5,000 - 10,000 Cloud Instances",
+    "serviceNeeded": "Zero-Day Attack Surface Audit",
+    "threatConcern": "Validating exposure to CVE-2026-3829 across public IP perimeters",
+    "urgency": "urgent",
+    "status": "architect_assigned",
+    "submittedAt": "2026-09-08T14:40:10.504Z"
+  },
+  {
+    "id": "consult-1788867927469-llfo",
+    "companyName": "Enterprise Vanguard Defense",
+    "contactName": "David Sterling, CISO",
+    "contactEmail": "d.sterling@vanguarddefense.com",
+    "role": "Chief Information Security Officer (CISO)",
+    "infraSize": "5,000 - 10,000 Cloud Instances",
+    "serviceNeeded": "Zero-Day Attack Surface Audit",
+    "threatConcern": "Validating exposure to CVE-2026-3829 across public IP perimeters",
+    "urgency": "urgent",
+    "status": "architect_assigned",
+    "submittedAt": "2026-09-08T11:45:27.469Z"
+  },
+  {
+    "id": "consult-seed-1",
+    "companyName": "Global FinTech Holdings",
+    "contactName": "Marcus Vance",
+    "contactEmail": "marcus.vance@globalfintech.io",
+    "role": "Chief Information Security Officer (CISO)",
+    "infraSize": "1,000 - 5,000 Cloud Instances (AWS/Azure)",
+    "serviceNeeded": "Zero-Day Attack Surface Audit & SEC Compliance Readiness",
+    "threatConcern": "Concerned about recent unauthenticated RCE and supply chain exposures.",
+    "urgency": "urgent",
+    "status": "new_inquiry",
+    "submittedAt": "2026-08-25T14:20:00Z"
+  }
+]

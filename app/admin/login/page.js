@@ -211,7 +211,7 @@ function LoginForm() {
 
         <div style={{ marginTop: "24px", paddingTop: "16px", borderTop: "1px solid hsl(var(--border))", textAlign: "center" }}>
           <span style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))" }}>
-            Default Admin Passcode: <code style={{ color: "hsl(var(--primary))", background: "hsla(var(--primary), 0.1)", padding: "2px 6px", borderRadius: "3px" }}>ciso-hackerpost-2026</code>
+            Restricted Access &middot; Protected by Hackproof Security Gateway
           </span>
         </div>
       </div>

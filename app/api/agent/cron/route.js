@@ -20,7 +20,10 @@ export async function GET(req) {
       });
     }
 
-    const newsResult = await runAgentCycle("autonomous-cron-scheduler");
+    const { searchParams } = new URL(req.url);
+    const forceSurge = searchParams.get("mode") === "surge" || searchParams.get("surge") === "true";
+
+    const newsResult = await runAgentCycle("autonomous-cron-scheduler", { forceSurge });
     return NextResponse.json({
       ...newsResult,
       benchmarksUpdated: benchmarkResult.updated,

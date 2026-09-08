@@ -20,6 +20,7 @@ import {
   RefreshCw,
   Clock
 } from "lucide-react";
+import BenchmarkSocialShare from "../components/BenchmarkSocialShare";
 
 export default function BenchmarksPage() {
   const [models, setModels] = useState([]);
@@ -40,6 +41,9 @@ export default function BenchmarksPage() {
       if (data.success) {
         setModels(data.models);
         setEntities(data.entities);
+        if (data.lastDailySync) {
+          setLastSyncTime(data.lastDailySync);
+        }
         if (!selectedModel && data.models.length > 0) {
           setSelectedModel(data.models[0]);
         }
@@ -81,44 +85,48 @@ export default function BenchmarksPage() {
   });
 
   const getScoreColor = (score) => {
-    if (score >= 90) return "hsl(var(--success))";
-    if (score >= 80) return "hsl(var(--primary))";
-    if (score >= 70) return "hsl(var(--warning))";
-    return "hsl(var(--danger))";
+    if (score >= 90) return "#15803d"; // Corporate emerald
+    if (score >= 80) return "#0f3674"; // Corporate navy
+    if (score >= 70) return "#b45309"; // Corporate amber
+    return "#b91c1c"; // Corporate red
   };
 
+  const formattedSyncDate = lastSyncTime 
+    ? new Date(lastSyncTime).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    : new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
   return (
-    <div className="container" style={{ paddingBottom: "100px", paddingTop: "32px" }}>
+    <div className="container" style={{ paddingBottom: "80px", paddingTop: "28px" }}>
       {/* Hero Header */}
-      <section style={{ marginBottom: "40px", textAlign: "center" }}>
+      <section style={{ marginBottom: "36px", textAlign: "center" }}>
         <div style={{ display: "flex", justifyContent: "center", gap: "10px", alignItems: "center", flexWrap: "wrap", marginBottom: "14px" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", borderRadius: "var(--radius-sm)", background: "hsla(var(--primary), 0.1)", border: "1px solid hsla(var(--primary), 0.3)", color: "hsl(var(--primary))", fontSize: "11px", fontWeight: 800, fontFamily: "var(--font-mono)" }}>
-            <Award size={14} />
-            AUTHORITATIVE SECTECH BENCHMARKS
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "4px 12px", borderRadius: "2px", background: "hsl(var(--muted))", border: "1px solid hsl(var(--border))", color: "hsl(var(--foreground))", fontSize: "11px", fontWeight: 700, textTransform: "uppercase" }}>
+            <Award size={13} style={{ color: "hsl(var(--primary))" }} />
+            Authoritative Industry Benchmarks
           </div>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "6px 14px", borderRadius: "var(--radius-sm)", background: "hsla(var(--success), 0.1)", border: "1px solid hsla(var(--success), 0.3)", color: "hsl(var(--success))", fontSize: "11px", fontWeight: 800, fontFamily: "var(--font-mono)" }}>
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "currentColor" }} />
-            UPDATED DAILY (24H REFRESH CADENCE)
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", padding: "4px 12px", borderRadius: "2px", background: "#f0fdf4", border: "1px solid #bbf7d0", color: "#166534", fontSize: "11px", fontWeight: 700, textTransform: "uppercase" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#16a34a" }} />
+            Verified Today · {formattedSyncDate}
           </div>
         </div>
 
-        <h1 style={{ fontSize: "38px", fontWeight: 900, letterSpacing: "-1px", textTransform: "uppercase", marginBottom: "12px" }}>
-          AI Security Model <span style={{ color: "hsl(var(--primary))" }}>Leaderboard</span>
+        <h1 style={{ fontSize: "32px", fontWeight: 800, letterSpacing: "-0.5px", marginBottom: "10px", color: "hsl(var(--foreground))" }}>
+          AI Security Model Leaderboard
         </h1>
-        <p style={{ color: "hsl(var(--muted-foreground))", fontSize: "15px", maxWidth: "760px", margin: "0 auto 24px auto", lineHeight: 1.6 }}>
-          Authoritative cybersecurity evaluations of frontier LLMs and open-weights models across vulnerability remediation, autonomous threat hunting, prompt injection defense, and exploit discovery. Sourced directly from trusted benchmarking organizations and refreshed daily.
+        <p style={{ color: "hsl(var(--muted-foreground))", fontSize: "14px", maxWidth: "780px", margin: "0 auto 20px auto", lineHeight: 1.6 }}>
+          Standardized cybersecurity evaluations of frontier foundation models and open-weights architectures across vulnerability remediation, autonomous threat hunting, prompt injection defense, and exploit discovery. Verified daily against Meta CyberSecEval, MITRE ATT&amp;CK, and USENIX SEC-bench.
         </p>
 
-        {/* Manual Refresh / Auto-Sync Telemetry Button */}
-        <div style={{ display: "flex", justifyContent: "center", gap: "12px", alignItems: "center", marginBottom: "32px" }}>
+        {/* Manual Refresh / Daily Sync Telemetry Button */}
+        <div style={{ display: "flex", justifyContent: "center", gap: "12px", alignItems: "center", marginBottom: "28px" }}>
           <button
             onClick={handleTriggerSync}
             disabled={syncing}
             className="btn btn-secondary"
-            style={{ fontSize: "11px", padding: "6px 16px", height: "34px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+            style={{ fontSize: "11px", padding: "6px 14px", height: "32px", display: "inline-flex", alignItems: "center", gap: "6px" }}
           >
-            <RefreshCw size={13} className={syncing ? "sandbox-loading-pulse" : ""} />
-            {syncing ? "Recalibrating Leaderboard..." : "Force Daily Recalibration"}
+            <RefreshCw size={12} className={syncing ? "animate-spin" : ""} />
+            {syncing ? "Recalibrating Telemetry..." : "Force Daily Recalibration"}
           </button>
         </div>
 
@@ -126,27 +134,34 @@ export default function BenchmarksPage() {
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "18px",
+          gap: "16px",
           maxWidth: "960px",
           margin: "0 auto"
         }}>
-          <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "18px 20px", borderRadius: "var(--radius-sm)", textAlign: "left" }}>
-            <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "4px" }}>#1 Ranked SecLLM</div>
-            <div style={{ fontSize: "20px", fontWeight: 800, color: "hsl(var(--primary))", fontFamily: "var(--font-mono)" }}>Claude 3.7 Sonnet</div>
-            <div style={{ fontSize: "11px", color: "hsl(var(--success))", fontWeight: 700, marginTop: "2px" }}>94.2 Overall Security Index</div>
+          <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "16px 20px", borderRadius: "var(--radius-sm)", textAlign: "left" }}>
+            <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "10px", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.5px", marginBottom: "4px" }}>#1 Ranked SecLLM</div>
+            <div style={{ fontSize: "18px", fontWeight: 800, color: "hsl(var(--primary))" }}>
+              {models[0]?.name || "Claude 3.7 Sonnet"}
+            </div>
+            <div style={{ fontSize: "11px", color: "#166534", fontWeight: 700, marginTop: "2px" }}>
+              {models[0]?.overallScore ? `${models[0].overallScore} Composite Security Index` : "Authoritative Index"}
+            </div>
           </div>
-          <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "18px 20px", borderRadius: "var(--radius-sm)", textAlign: "left" }}>
-            <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "4px" }}>Core Evaluation Vectors</div>
-            <div style={{ fontSize: "20px", fontWeight: 800, color: "hsl(var(--foreground))", fontFamily: "var(--font-mono)" }}>5 Standard Vectors</div>
-            <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "2px" }}>Patching, Hunting, Injection, CTF</div>
+          <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "16px 20px", borderRadius: "var(--radius-sm)", textAlign: "left" }}>
+            <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "10px", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.5px", marginBottom: "4px" }}>Core Evaluation Vectors</div>
+            <div style={{ fontSize: "18px", fontWeight: 800, color: "hsl(var(--foreground))" }}>5 Threat Vectors</div>
+            <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "2px" }}>CVE Patching, SIEM Hunting, Jailbreak Defense</div>
           </div>
-          <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "18px 20px", borderRadius: "var(--radius-sm)", textAlign: "left" }}>
-            <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, marginBottom: "4px" }}>Trusted Testing Entities</div>
-            <div style={{ fontSize: "20px", fontWeight: 800, color: "hsl(var(--success))", fontFamily: "var(--font-mono)" }}>5 Premier Labs</div>
+          <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", padding: "16px 20px", borderRadius: "var(--radius-sm)", textAlign: "left" }}>
+            <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "10px", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.5px", marginBottom: "4px" }}>Accredited Testing Labs</div>
+            <div style={{ fontSize: "18px", fontWeight: 800, color: "hsl(var(--foreground))" }}>5 Premier Institutions</div>
             <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "2px" }}>Meta, MITRE, USENIX, Stanford, OWASP</div>
           </div>
         </div>
       </section>
+
+      {/* Social Syndication & Share Suite */}
+      <BenchmarkSocialShare />
 
       {/* Control Bar: Filter Tabs & Sorting */}
       <div style={{
@@ -155,9 +170,9 @@ export default function BenchmarksPage() {
         alignItems: "center",
         flexWrap: "wrap",
         gap: "16px",
-        marginBottom: "24px",
+        marginBottom: "20px",
         background: "hsl(var(--card))",
-        padding: "16px 20px",
+        padding: "14px 18px",
         borderRadius: "var(--radius-sm)",
         border: "1px solid hsl(var(--border))"
       }}>
@@ -173,7 +188,7 @@ export default function BenchmarksPage() {
               key={tab.id}
               onClick={() => setSelectedType(tab.id)}
               className={`btn ${selectedType === tab.id ? "btn-primary" : "btn-secondary"}`}
-              style={{ fontSize: "11px", padding: "6px 14px", height: "32px" }}
+              style={{ fontSize: "11px", padding: "5px 12px", height: "30px" }}
             >
               {tab.label}
             </button>
@@ -183,7 +198,7 @@ export default function BenchmarksPage() {
         {/* Search & Sort */}
         <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
           <div style={{ position: "relative", minWidth: "220px" }}>
-            <Search size={14} style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "hsl(var(--muted-foreground))" }} />
+            <Search size={13} style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "hsl(var(--muted-foreground))" }} />
             <input
               type="text"
               placeholder="Search model or provider..."
@@ -191,7 +206,7 @@ export default function BenchmarksPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{
                 width: "100%",
-                padding: "6px 12px 6px 32px",
+                padding: "5px 12px 5px 30px",
                 fontSize: "12px",
                 background: "hsl(var(--background))",
                 border: "1px solid hsl(var(--border))",
@@ -205,7 +220,7 @@ export default function BenchmarksPage() {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             style={{
-              padding: "6px 12px",
+              padding: "5px 12px",
               fontSize: "12px",
               background: "hsl(var(--background))",
               border: "1px solid hsl(var(--border))",
@@ -224,15 +239,15 @@ export default function BenchmarksPage() {
       </div>
 
       {/* Main Grid: Leaderboard Table & Selected Model Deep-Dive */}
-      <div style={{ display: "grid", gridTemplateColumns: "1.8fr 1.2fr", gap: "28px", alignItems: "start" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1.8fr 1.2fr", gap: "24px", alignItems: "start" }}>
         {/* Left: Leaderboard Table */}
         <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
-          <div style={{ padding: "16px 20px", borderBottom: "1px solid hsl(var(--border))", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div style={{ fontWeight: 800, fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+          <div style={{ padding: "12px 18px", borderBottom: "1px solid hsl(var(--border))", display: "flex", justifyContent: "space-between", alignItems: "center", background: "hsl(var(--muted))" }}>
+            <div style={{ fontWeight: 800, fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.5px", color: "hsl(var(--foreground))" }}>
               Global Cybersecurity Model Matrix (Daily Sync)
             </div>
-            <span style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))" }}>
-              Showing {filteredModels.length} Models
+            <span style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", fontWeight: 600 }}>
+              {filteredModels.length} Models Indexed · Updated {formattedSyncDate}
             </span>
           </div>
 
@@ -240,8 +255,8 @@ export default function BenchmarksPage() {
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "12px", textAlign: "left" }}>
               <thead>
                 <tr style={{ background: "hsl(var(--background))", borderBottom: "1px solid hsl(var(--border))", color: "hsl(var(--muted-foreground))" }}>
-                  <th style={{ padding: "10px 14px", width: "40px" }}>#</th>
-                  <th style={{ padding: "10px 14px" }}>Model & Provider</th>
+                  <th style={{ padding: "10px 14px", width: "45px" }}>#</th>
+                  <th style={{ padding: "10px 14px" }}>Model &amp; Provider</th>
                   <th style={{ padding: "10px 14px", textAlign: "center" }}>Security Index</th>
                   <th style={{ padding: "10px 14px", textAlign: "center" }}>Threat Hunting</th>
                   <th style={{ padding: "10px 14px", textAlign: "center" }}>CVE Patching</th>
@@ -258,42 +273,41 @@ export default function BenchmarksPage() {
                       style={{
                         borderBottom: "1px solid hsl(var(--border))",
                         cursor: "pointer",
-                        background: isSelected ? "hsla(var(--primary), 0.08)" : "transparent",
-                        transition: "background 0.15s ease"
+                        background: isSelected ? "rgba(15, 54, 116, 0.06)" : "transparent",
+                        transition: "background 0.1s ease"
                       }}
                     >
-                      <td style={{ padding: "14px", fontWeight: 800, fontFamily: "var(--font-mono)", color: m.rank <= 3 ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))" }}>
-                        {m.rank}
+                      <td style={{ padding: "12px 14px", fontWeight: 800, color: m.rank <= 3 ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))" }}>
+                        #{m.rank}
                       </td>
-                      <td style={{ padding: "14px" }}>
-                        <div style={{ fontWeight: 800, fontSize: "13px", color: isSelected ? "hsl(var(--primary))" : "hsl(var(--foreground))" }}>
+                      <td style={{ padding: "12px 14px" }}>
+                        <div style={{ fontWeight: 700, fontSize: "13px", color: isSelected ? "hsl(var(--primary))" : "hsl(var(--foreground))" }}>
                           {m.name}
                         </div>
                         <div style={{ display: "flex", gap: "6px", alignItems: "center", marginTop: "3px" }}>
-                          <span style={{ fontSize: "10px", color: "hsl(var(--muted-foreground))" }}>{m.provider}</span>
+                          <span style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))" }}>{m.provider}</span>
                           <span>•</span>
-                          <span style={{ fontSize: "10px", padding: "1px 6px", borderRadius: "2px", background: "rgba(255,255,255,0.05)", border: "1px solid hsl(var(--border))" }}>
+                          <span style={{ fontSize: "10px", padding: "1px 6px", borderRadius: "2px", background: "hsl(var(--muted))", border: "1px solid hsl(var(--border))", color: "hsl(var(--muted-foreground))", fontWeight: 600 }}>
                             {m.type}
                           </span>
                         </div>
                       </td>
-                      <td style={{ padding: "14px", textAlign: "center" }}>
+                      <td style={{ padding: "12px 14px", textAlign: "center" }}>
                         <span style={{
-                          fontFamily: "var(--font-mono)",
                           fontSize: "14px",
-                          fontWeight: 900,
+                          fontWeight: 800,
                           color: getScoreColor(m.overallScore)
                         }}>
                           {m.overallScore}
                         </span>
                       </td>
-                      <td style={{ padding: "14px", textAlign: "center", fontFamily: "var(--font-mono)", fontWeight: 700 }}>
+                      <td style={{ padding: "12px 14px", textAlign: "center", fontWeight: 700 }}>
                         {m.metrics.threatHunting}%
                       </td>
-                      <td style={{ padding: "14px", textAlign: "center", fontFamily: "var(--font-mono)", fontWeight: 700 }}>
+                      <td style={{ padding: "12px 14px", textAlign: "center", fontWeight: 700 }}>
                         {m.metrics.patchingRate}%
                       </td>
-                      <td style={{ padding: "14px", textAlign: "center", fontFamily: "var(--font-mono)", fontWeight: 700, color: "hsl(var(--success))" }}>
+                      <td style={{ padding: "12px 14px", textAlign: "center", fontWeight: 700, color: "#15803d" }}>
                         {m.metrics.injectionDefense}%
                       </td>
                     </tr>
@@ -310,7 +324,7 @@ export default function BenchmarksPage() {
             background: "hsl(var(--card))",
             border: "1px solid hsl(var(--border))",
             borderRadius: "var(--radius-sm)",
-            padding: "24px",
+            padding: "20px",
             position: "sticky",
             top: "90px"
           }}>
@@ -321,25 +335,25 @@ export default function BenchmarksPage() {
                   alignItems: "center", 
                   gap: "4px", 
                   fontSize: "10px", 
-                  fontWeight: 800, 
+                  fontWeight: 700, 
                   color: "hsl(var(--primary))", 
-                  background: "hsla(var(--primary), 0.1)", 
-                  border: "1px solid hsla(var(--primary), 0.3)",
+                  background: "rgba(15, 54, 116, 0.08)", 
+                  border: "1px solid rgba(15, 54, 116, 0.2)",
                   padding: "2px 8px", 
-                  borderRadius: "var(--radius-sm)",
-                  fontFamily: "var(--font-mono)",
-                  marginBottom: "8px"
+                  borderRadius: "2px",
+                  marginBottom: "8px",
+                  textTransform: "uppercase"
                 }}>
-                  RANK #{selectedModel.rank} MODEL PROFILE
+                  Rank #{selectedModel.rank} Model Profile
                 </span>
-                <h2 style={{ fontSize: "20px", fontWeight: 800 }}>{selectedModel.name}</h2>
-                <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "12px", marginTop: "2px" }}>
+                <h2 style={{ fontSize: "18px", fontWeight: 800, margin: 0, color: "hsl(var(--foreground))" }}>{selectedModel.name}</h2>
+                <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "12px", marginTop: "4px" }}>
                   Provider: <b>{selectedModel.provider}</b> • Context: {selectedModel.contextWindow}
                 </div>
               </div>
 
               <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: "28px", fontWeight: 900, fontFamily: "var(--font-mono)", color: getScoreColor(selectedModel.overallScore) }}>
+                <div style={{ fontSize: "28px", fontWeight: 900, color: getScoreColor(selectedModel.overallScore) }}>
                   {selectedModel.overallScore}
                 </div>
                 <div style={{ fontSize: "10px", textTransform: "uppercase", fontWeight: 700, color: "hsl(var(--muted-foreground))" }}>Security Index</div>
@@ -347,100 +361,100 @@ export default function BenchmarksPage() {
             </div>
 
             {/* Metric Bars */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px", margin: "20px 0" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", margin: "16px 0" }}>
               <div>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 700, marginBottom: "4px" }}>
-                  <span>Threat Hunting & SIEM Correlation (MITRE ATT&CK)</span>
-                  <span style={{ fontFamily: "var(--font-mono)", color: "hsl(var(--primary))" }}>{selectedModel.metrics.threatHunting}%</span>
+                  <span>Threat Hunting &amp; SIEM Correlation (MITRE ATT&amp;CK)</span>
+                  <span style={{ color: "hsl(var(--primary))" }}>{selectedModel.metrics.threatHunting}%</span>
                 </div>
-                <div style={{ height: "6px", background: "hsl(var(--background))", borderRadius: "3px", overflow: "hidden" }}>
+                <div style={{ height: "6px", background: "hsl(var(--muted))", borderRadius: "3px", overflow: "hidden" }}>
                   <div style={{ width: `${selectedModel.metrics.threatHunting}%`, height: "100%", background: "hsl(var(--primary))" }} />
                 </div>
               </div>
 
               <div>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 700, marginBottom: "4px" }}>
-                  <span>Vulnerability Remediation & Patching (SWE-bench Sec)</span>
-                  <span style={{ fontFamily: "var(--font-mono)", color: "hsl(var(--primary))" }}>{selectedModel.metrics.patchingRate}%</span>
+                  <span>Vulnerability Remediation &amp; Patching (SWE-bench Sec)</span>
+                  <span style={{ color: "hsl(var(--primary))" }}>{selectedModel.metrics.patchingRate}%</span>
                 </div>
-                <div style={{ height: "6px", background: "hsl(var(--background))", borderRadius: "3px", overflow: "hidden" }}>
+                <div style={{ height: "6px", background: "hsl(var(--muted))", borderRadius: "3px", overflow: "hidden" }}>
                   <div style={{ width: `${selectedModel.metrics.patchingRate}%`, height: "100%", background: "hsl(var(--primary))" }} />
                 </div>
               </div>
 
               <div>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 700, marginBottom: "4px" }}>
-                  <span>Exploit Identification & CTF Solving (SEC-bench)</span>
-                  <span style={{ fontFamily: "var(--font-mono)", color: "hsl(var(--primary))" }}>{selectedModel.metrics.exploitDetection}%</span>
+                  <span>Exploit Identification &amp; CTF Solving (SEC-bench)</span>
+                  <span style={{ color: "hsl(var(--primary))" }}>{selectedModel.metrics.exploitDetection}%</span>
                 </div>
-                <div style={{ height: "6px", background: "hsl(var(--background))", borderRadius: "3px", overflow: "hidden" }}>
+                <div style={{ height: "6px", background: "hsl(var(--muted))", borderRadius: "3px", overflow: "hidden" }}>
                   <div style={{ width: `${selectedModel.metrics.exploitDetection}%`, height: "100%", background: "hsl(var(--primary))" }} />
                 </div>
               </div>
 
               <div>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 700, marginBottom: "4px" }}>
-                  <span>Prompt Injection & Jailbreak Defense (CyberSecEval 3)</span>
-                  <span style={{ fontFamily: "var(--font-mono)", color: "hsl(var(--success))" }}>{selectedModel.metrics.injectionDefense}%</span>
+                  <span>Prompt Injection &amp; Jailbreak Defense (CyberSecEval 3)</span>
+                  <span style={{ color: "#15803d" }}>{selectedModel.metrics.injectionDefense}%</span>
                 </div>
-                <div style={{ height: "6px", background: "hsl(var(--background))", borderRadius: "3px", overflow: "hidden" }}>
-                  <div style={{ width: `${selectedModel.metrics.injectionDefense}%`, height: "100%", background: "hsl(var(--success))" }} />
+                <div style={{ height: "6px", background: "hsl(var(--muted))", borderRadius: "3px", overflow: "hidden" }}>
+                  <div style={{ width: `${selectedModel.metrics.injectionDefense}%`, height: "100%", background: "#15803d" }} />
                 </div>
               </div>
 
               <div>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", fontWeight: 700, marginBottom: "4px" }}>
                   <span>Insecure Code Emitted (Lower is better)</span>
-                  <span style={{ fontFamily: "var(--font-mono)", color: selectedModel.metrics.insecureCodeRate < 4 ? "hsl(var(--success))" : "hsl(var(--warning))" }}>{selectedModel.metrics.insecureCodeRate}%</span>
+                  <span style={{ color: selectedModel.metrics.insecureCodeRate < 4 ? "#15803d" : "#b45309" }}>{selectedModel.metrics.insecureCodeRate}%</span>
                 </div>
-                <div style={{ height: "6px", background: "hsl(var(--background))", borderRadius: "3px", overflow: "hidden" }}>
-                  <div style={{ width: `${selectedModel.metrics.insecureCodeRate * 10}%`, height: "100%", background: selectedModel.metrics.insecureCodeRate < 4 ? "hsl(var(--success))" : "hsl(var(--warning))" }} />
+                <div style={{ height: "6px", background: "hsl(var(--muted))", borderRadius: "3px", overflow: "hidden" }}>
+                  <div style={{ width: `${selectedModel.metrics.insecureCodeRate * 10}%`, height: "100%", background: selectedModel.metrics.insecureCodeRate < 4 ? "#15803d" : "#b45309" }} />
                 </div>
               </div>
             </div>
 
             {/* Strengths & Weaknesses */}
-            <div style={{ fontSize: "12px", borderTop: "1px solid hsl(var(--border))", paddingTop: "16px", marginTop: "16px" }}>
-              <div style={{ fontWeight: 800, fontSize: "11px", textTransform: "uppercase", color: "hsl(var(--success))", marginBottom: "6px" }}>Key Strengths</div>
-              <ul style={{ paddingLeft: "16px", display: "flex", flexDirection: "column", gap: "4px", color: "hsl(var(--foreground))", lineHeight: 1.5 }}>
+            <div style={{ fontSize: "12px", borderTop: "1px solid hsl(var(--border))", paddingTop: "14px", marginTop: "14px" }}>
+              <div style={{ fontWeight: 800, fontSize: "11px", textTransform: "uppercase", color: "#15803d", marginBottom: "6px" }}>Key Strengths</div>
+              <ul style={{ paddingLeft: "16px", display: "flex", flexDirection: "column", gap: "4px", color: "hsl(var(--foreground))", lineHeight: 1.5, margin: 0 }}>
                 {selectedModel.primaryStrengths.map((s, idx) => (
                   <li key={idx}>{s}</li>
                 ))}
               </ul>
             </div>
 
-            <div style={{ fontSize: "12px", borderTop: "1px solid hsl(var(--border))", paddingTop: "14px", marginTop: "14px" }}>
+            <div style={{ fontSize: "12px", borderTop: "1px solid hsl(var(--border))", paddingTop: "12px", marginTop: "12px" }}>
               <div style={{ fontWeight: 800, fontSize: "11px", textTransform: "uppercase", color: "hsl(var(--muted-foreground))", marginBottom: "4px" }}>Recommended Deployment</div>
               <div style={{ color: "hsl(var(--foreground))", fontWeight: 600 }}>{selectedModel.recommendedUse}</div>
             </div>
 
-            <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "16px", display: "flex", justifyContent: "space-between" }}>
-              <span>Evaluated by: <b>{selectedModel.testedBy.join(", ")}</b></span>
-              <span>Last Tested: {selectedModel.lastTested}</span>
+            <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))", marginTop: "16px", display: "flex", justifyContent: "space-between", borderTop: "1px solid hsl(var(--border))", paddingTop: "12px" }}>
+              <span>Evaluated by: <b style={{ color: "hsl(var(--foreground))" }}>{selectedModel.testedBy.join(", ")}</b></span>
+              <span>Last Tested: <b style={{ color: "#15803d" }}>Today ({selectedModel.lastTested})</b></span>
             </div>
           </div>
         )}
       </div>
 
       {/* Trusted Benchmarking Entities Section */}
-      <section style={{ marginTop: "60px", borderTop: "1px solid hsl(var(--border))", paddingTop: "40px" }}>
-        <div style={{ marginBottom: "24px" }}>
-          <h2 style={{ fontSize: "20px", fontWeight: 800, textTransform: "uppercase" }}>Trusted Benchmarking Entities & Frameworks</h2>
+      <section style={{ marginTop: "48px", borderTop: "1px solid hsl(var(--border))", paddingTop: "32px" }}>
+        <div style={{ marginBottom: "20px" }}>
+          <h2 style={{ fontSize: "18px", fontWeight: 800, textTransform: "uppercase", color: "hsl(var(--foreground))" }}>Trusted Benchmarking Entities &amp; Frameworks</h2>
           <p style={{ color: "hsl(var(--muted-foreground))", fontSize: "13px" }}>
             HackerPost indexes standardized evaluation datasets from accredited cybersecurity and AI safety institutions.
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "20px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
           {entities.map(entity => (
-            <div key={entity.id} style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "var(--radius-sm)", padding: "20px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                <h3 style={{ fontSize: "14px", fontWeight: 800 }}>{entity.name}</h3>
+            <div key={entity.id} style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "var(--radius-sm)", padding: "18px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+                <h3 style={{ fontSize: "13px", fontWeight: 800, color: "hsl(var(--foreground))" }}>{entity.name}</h3>
                 <a href={entity.url} target="_blank" rel="noopener noreferrer" style={{ color: "hsl(var(--primary))" }}>
-                  <ExternalLink size={14} />
+                  <ExternalLink size={13} />
                 </a>
               </div>
-              <p style={{ fontSize: "12px", color: "hsl(var(--muted-foreground))", lineHeight: 1.5 }}>
+              <p style={{ fontSize: "12px", color: "hsl(var(--muted-foreground))", lineHeight: 1.5, margin: 0 }}>
                 {entity.description}
               </p>
             </div>

@@ -8,6 +8,7 @@ import {
   getTrendingSearches,
   seedSearchLogs
 } from "@/lib/newsStore";
+import { publishToX } from "@/lib/xPublisher";
 
 export async function GET(request) {
   try {
@@ -74,10 +75,19 @@ export async function POST(request) {
       sourceUrl: sourceUrl || "",
       similarityScore: typeof similarityScore === "number" ? similarityScore : 0
     });
+
+    // Auto-syndicate to X (@HackerPost2)
+    let xSyndication = null;
+    try {
+      xSyndication = await publishToX(publishedArticle);
+    } catch (xErr) {
+      console.error("X publishing error:", xErr);
+    }
     
     return NextResponse.json({
       success: true,
-      article: publishedArticle
+      article: publishedArticle,
+      xSyndication
     });
   } catch (error) {
     console.error("API POST news error:", error);

@@ -16,7 +16,10 @@ import {
   TrendingUp,
   AlertTriangle,
   Terminal,
-  Activity
+  Activity,
+  Share2,
+  Send,
+  Sparkles
 } from "lucide-react";
 import EditorAuthGate from "../components/EditorAuthGate";
 
@@ -43,6 +46,11 @@ export default function AdminDashboard() {
   const [notification, setNotification] = useState(null);
   const [scraping, setScraping] = useState(false);
 
+  // Social / X Broadcasting State
+  const [socialLogs, setSocialLogs] = useState([]);
+  const [socialInfo, setSocialInfo] = useState({ handle: "@HackerPost2", isLiveConfigured: false, mode: "simulated" });
+  const [broadcastingId, setBroadcastingId] = useState(null);
+
   const fetchDashboardData = async () => {
     try {
       const res = await fetch("/api/news");
@@ -63,8 +71,46 @@ export default function AdminDashboard() {
     }
   };
 
+  const fetchSocialLogs = async () => {
+    try {
+      const res = await fetch("/api/social/logs");
+      const data = await res.json();
+      if (data.success) {
+        setSocialLogs(data.logs || []);
+        setSocialInfo({
+          handle: data.handle || "@HackerPost2",
+          isLiveConfigured: data.isLiveConfigured,
+          mode: data.mode
+        });
+      }
+    } catch (_) {}
+  };
+
+  const handleBroadcastToX = async (articleId) => {
+    setBroadcastingId(articleId);
+    try {
+      const res = await fetch("/api/social/publish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ articleId })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showNotice("success", `Broadcasted to X (${data.broadcast?.handle || "@HackerPost2"}) with dynamic hashtags!`);
+        fetchSocialLogs();
+      } else {
+        showNotice("error", data.error || "Failed to broadcast to X.");
+      }
+    } catch (err) {
+      showNotice("error", "Error connecting to X syndication engine.");
+    } finally {
+      setBroadcastingId(null);
+    }
+  };
+
   useEffect(() => {
     fetchDashboardData();
+    fetchSocialLogs();
   }, []);
 
   const handleSelectRaw = (raw) => {
@@ -632,11 +678,22 @@ export default function AdminDashboard() {
 
       {/* Retract Advisories list */}
       <div className="admin-panel" style={{ marginTop: "40px", maxHeight: "none" }}>
-        <div className="panel-header">
+        <div className="panel-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <h2 className="panel-title">
             <FileText size={18} />
             Published Advisory Index ({publishedArticles.length})
           </h2>
+          <a 
+            href={`https://x.com/${socialInfo.handle.replace('@', '')}`}
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="btn btn-secondary"
+            style={{ fontSize: "11px", padding: "4px 10px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+          >
+            <Share2 size={12} color="hsl(var(--primary))" />
+            Connected Account: <b>{socialInfo.handle}</b>
+            <ExternalLink size={11} />
+          </a>
         </div>
         <div className="panel-body" style={{ overflowX: "auto" }}>
           {publishedArticles.length > 0 ? (
@@ -648,7 +705,7 @@ export default function AdminDashboard() {
                   <th style={{ padding: "12px" }}>Affected Product</th>
                   <th style={{ padding: "12px" }}>Severity</th>
                   <th style={{ padding: "12px" }}>Disclosure Status</th>
-                  <th style={{ padding: "12px", textAlign: "center" }}>Retract</th>
+                  <th style={{ padding: "12px", textAlign: "center" }}>Actions & Syndication</th>
                 </tr>
               </thead>
               <tbody>
@@ -666,8 +723,18 @@ export default function AdminDashboard() {
                       </span>
                     </td>
                     <td style={{ padding: "12px", textAlign: "center" }}>
-                      <div style={{ display: "flex", gap: "8px", justifyContent: "center" }}>
-                        <a href={`/news/${art.id}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: "6px 10px", fontSize: "11px" }}>
+                      <div style={{ display: "flex", gap: "6px", justifyContent: "center" }}>
+                        <button
+                          onClick={() => handleBroadcastToX(art.id)}
+                          disabled={broadcastingId === art.id}
+                          className="btn btn-secondary"
+                          style={{ padding: "6px 10px", fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                          title="Broadcast this advisory to X with smart hashtags"
+                        >
+                          <Share2 size={12} color="hsl(var(--primary))" />
+                          {broadcastingId === art.id ? "Posting..." : "Post to X"}
+                        </button>
+                        <a href={`/news/${art.slug || art.id}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: "6px 10px", fontSize: "11px" }}>
                           View
                         </a>
                         <button 
@@ -686,6 +753,61 @@ export default function AdminDashboard() {
           ) : (
             <div className="empty-state">
               <p>No active bulletins published yet.</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* X (Twitter) Social Syndication Monitor */}
+      <div className="admin-panel" style={{ marginTop: "30px", maxHeight: "none" }}>
+        <div className="panel-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h2 className="panel-title" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <Share2 size={18} color="hsl(var(--primary))" />
+            X (Twitter) Autonomous Broadcast Feed &middot; <span style={{ color: "hsl(var(--primary))", fontFamily: "var(--font-mono)" }}>{socialInfo.handle}</span>
+          </h2>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <span style={{ fontSize: "11px", background: "rgba(0,255,100,0.1)", border: "1px solid rgba(0,255,100,0.3)", color: "hsl(var(--primary))", padding: "3px 8px", borderRadius: "2px", fontWeight: 700 }}>
+              AUTO-SYNDICATION ONLINE
+            </span>
+            <button onClick={fetchSocialLogs} className="btn btn-secondary" style={{ padding: "4px 8px", fontSize: "11px" }}>
+              <RefreshCw size={11} /> Refresh
+            </button>
+          </div>
+        </div>
+        <div className="panel-body">
+          <p style={{ fontSize: "12px", color: "hsl(var(--muted-foreground))", marginBottom: "16px" }}>
+            Every published threat briefing and venture deal is automatically synthesized, tagged with high-authority cybersecurity hashtags (<code>#CyberSecurity #ZeroDay #CISO #Ransomware #SecTech</code>), and syndicated to <a href={`https://x.com/${socialInfo.handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" style={{ color: "hsl(var(--primary))", textDecoration: "underline" }}>{socialInfo.handle}</a>.
+          </p>
+
+          {socialLogs.length > 0 ? (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: "16px" }}>
+              {socialLogs.slice(0, 6).map((log) => (
+                <div key={log.id} style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "6px", padding: "14px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", fontSize: "11px" }}>
+                      <span style={{ color: "hsl(var(--primary))", fontWeight: 700 }}>{log.handle}</span>
+                      <span style={{ color: "hsl(var(--muted-foreground))" }}>{new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                    </div>
+                    <p style={{ fontSize: "12px", lineHeight: "1.5", whiteSpace: "pre-wrap", fontFamily: "var(--font-sans)", margin: "0 0 10px 0" }}>
+                      {log.tweetText}
+                    </p>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid hsl(var(--border))", paddingTop: "8px", marginTop: "8px", fontSize: "11px" }}>
+                    <span style={{ color: "hsl(var(--muted-foreground))" }}>
+                      {log.charCount}/280 chars &middot; {log.hashtags?.length || 0} tags
+                    </span>
+                    <a href={log.tweetUrl || `https://x.com/${socialInfo.handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" style={{ color: "hsl(var(--primary))", display: "inline-flex", alignItems: "center", gap: "3px", textDecoration: "none" }}>
+                      View on X <ExternalLink size={10} />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state" style={{ padding: "24px" }}>
+              <p style={{ fontSize: "13px", color: "hsl(var(--muted-foreground))" }}>
+                No recent social broadcasts recorded yet. Auto-publishing or clicking &quot;Post to X&quot; on any advisory will populate the stream.
+              </p>
             </div>
           )}
         </div>

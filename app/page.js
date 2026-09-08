@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getPublishedArticles } from "@/lib/newsStore";
 import NewsFeed from "./components/NewsFeed";
 
@@ -10,7 +11,10 @@ export default function Home() {
 
   return (
     <div style={{ paddingBottom: "80px" }}>
-      <NewsFeed initialArticles={articles} />
+      <Suspense fallback={<div className="container" style={{ padding: "60px 0", textAlign: "center", color: "hsl(var(--muted-foreground))" }}>Loading threat intelligence feed...</div>}>
+        <NewsFeed initialArticles={articles} />
+      </Suspense>
     </div>
   );
 }
+

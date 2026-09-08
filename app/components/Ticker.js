@@ -1,14 +1,30 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShieldAlert } from "lucide-react";
+import Link from "next/link";
 
 export default function Ticker() {
   const [tickerItems, setTickerItems] = useState([
-    "CRITICAL ALERT: Zero-day remote code execution vulnerability identified in OpenSSH (sshd) under active scan telemetry.",
-    "THREAT BULLETIN: Active ransomware campaign targeting VMware ESXi hypervisors. Mitigation recommended immediately.",
-    "BREACH LOG: Enterprise transactional database leak exposed. Incident response teams active.",
-    "INTEL BRIEF: Cyber group Storm-1204 observed deploying double-free kernel exploits in local systems."
+    {
+      title: "Zero-day remote code execution vulnerability identified in OpenSSH (sshd) [CVE-2026-3829]",
+      url: "/news/critical-rce-regression-openssh-sshd-patched-cve-2026-3829",
+      tag: "ZERO-DAY"
+    },
+    {
+      title: "Meta Releases CyberSecEval 3: Standardized Benchmarks for AI in Cybersecurity",
+      url: "/benchmarks",
+      tag: "AI BENCHMARK"
+    },
+    {
+      title: "Cyera Secures $300M Series D to Lead Enterprise AI Data Security (DSPM)",
+      url: "/news/cyera-secures-300m-series-d-enterprise-ai-dspm",
+      tag: "FINANCING"
+    },
+    {
+      title: "Palo Alto Networks Completes $650M Strategic Acquisition of Agentic Identity Startup",
+      url: "/news/palo-alto-networks-completes-650m-acquisition-agentic-identity",
+      tag: "M&A"
+    }
   ]);
 
   useEffect(() => {
@@ -16,34 +32,41 @@ export default function Ticker() {
       .then((res) => res.json())
       .then((data) => {
         if (data && data.published && data.published.length > 0) {
-          const titles = data.published.map(
-            (art) => `THREAT BULLETIN: ${art.title} [${art.cve || art.location || "UNTAGGED"}]`
-          );
-          setTickerItems((prev) => [...titles, ...prev]);
+          const fresh = data.published.slice(0, 8).map((art) => ({
+            title: art.title,
+            url: `/news/${art.slug || art.id}`,
+            tag: art.category === "Zero-Days" ? "ZERO-DAY" : (art.category === "SecTech & Startups" ? "FINANCING" : "ADVISORY")
+          }));
+          setTickerItems(fresh);
         }
       })
       .catch((err) => console.log("Ticker fetch error", err));
   }, []);
 
   return (
-    <div className="ticker-wrapper">
+    <div className="ticker-wrapper" aria-label="Breaking Threat Intel Marquee">
       <div className="ticker-label">
-        <ShieldAlert size={14} style={{ marginRight: "6px" }} />
-        Threat Stream
+        BREAKING WIRE
       </div>
       <div className="ticker-content">
         {tickerItems.map((item, idx) => (
-          <div key={idx} className="ticker-item">
+          <Link key={idx} href={item.url} className="ticker-item">
             <span className="ticker-dot"></span>
-            {item}
-          </div>
+            <span style={{ fontSize: "10px", fontWeight: 700, textTransform: "uppercase", color: item.tag === "ZERO-DAY" ? "hsl(var(--danger))" : "hsl(var(--primary))" }}>
+              [{item.tag}]
+            </span>
+            <span>{item.title}</span>
+          </Link>
         ))}
-        {/* Duplicate items for infinite scroll feel */}
+        {/* Duplicate for smooth marquee looping */}
         {tickerItems.map((item, idx) => (
-          <div key={`dup-${idx}`} className="ticker-item">
+          <Link key={`dup-${idx}`} href={item.url} className="ticker-item">
             <span className="ticker-dot"></span>
-            {item}
-          </div>
+            <span style={{ fontSize: "10px", fontWeight: 700, textTransform: "uppercase", color: item.tag === "ZERO-DAY" ? "hsl(var(--danger))" : "hsl(var(--primary))" }}>
+              [{item.tag}]
+            </span>
+            <span>{item.title}</span>
+          </Link>
         ))}
       </div>
     </div>

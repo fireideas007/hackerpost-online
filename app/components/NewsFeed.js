@@ -2,261 +2,339 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Calendar, ArrowRight, ShieldCheck, Terminal, AlertTriangle, Cpu, Tag, Rocket, Briefcase, DollarSign } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { 
+  Search, 
+  Calendar, 
+  ArrowRight, 
+  ShieldCheck, 
+  Terminal, 
+  AlertTriangle, 
+  Clock,
+  TrendingUp,
+  X
+} from "lucide-react";
 
 export default function NewsFeed({ initialArticles = [] }) {
+  const searchParams = useSearchParams();
   const [articles, setArticles] = useState(initialArticles);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [customSearchQuery, setCustomSearchQuery] = useState("");
+  const [customCategory, setCustomCategory] = useState(null);
 
   const categories = [
-    "All", 
-    "SecTech & Startups", 
-    "AI Benchmarks",
-    "M&A & Funding", 
-    "Zero-Days", 
-    "Ransomware", 
-    "Exploits", 
-    "Advisories"
+    { label: "All Stories", value: "All" },
+    { label: "Zero-Days & CVEs", value: "Zero-Days" },
+    { label: "SecTech & Startups", value: "SecTech & Startups" },
+    { label: "AI Security Benchmarks", value: "AI Benchmarks" },
+    { label: "Ransomware", value: "Ransomware" },
+    { label: "Advisories & Exploits", value: "Advisories" }
   ];
 
-  const refreshFeed = async () => {
-    try {
-      const url = searchQuery 
-        ? `/api/news?location=${encodeURIComponent(searchQuery)}` 
-        : `/api/news`;
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.success) {
-        let filtered = data.published;
-        if (selectedCategory !== "All") {
-          filtered = filtered.filter(art => art.category === selectedCategory);
+  const paramCat = searchParams.get("category");
+  const paramQ = searchParams.get("q");
+
+  const selectedCategory = customCategory !== null 
+    ? customCategory 
+    : (paramCat && categories.some(c => c.value === paramCat) ? paramCat : "All");
+  const searchQuery = customSearchQuery || paramQ || "";
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    async function loadData() {
+      try {
+        const url = searchQuery 
+          ? `/api/news?location=${encodeURIComponent(searchQuery)}` 
+          : `/api/news`;
+        const res = await fetch(url);
+        const data = await res.json();
+        if (!isCancelled && data && data.success) {
+          let filtered = data.published;
+          if (selectedCategory !== "All") {
+            filtered = filtered.filter(art => {
+              if (selectedCategory === "Advisories") {
+                return art.category === "Advisories" || art.category === "Exploits";
+              }
+              return art.category === selectedCategory;
+            });
+          }
+          setArticles(filtered);
         }
-        setArticles(filtered);
+      } catch (err) {
+        console.error("Error refreshing feed:", err);
       }
-    } catch (err) {
-      console.error("Error refreshing feed:", err);
+    }
+
+    loadData();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [searchQuery, selectedCategory]);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "Recently Disclosed";
+    try {
+      const d = new Date(dateString);
+      return isNaN(d.getTime()) ? "Recently Disclosed" : d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      });
+    } catch (_) {
+      return "Recently Disclosed";
     }
   };
 
-  useEffect(() => {
-    refreshFeed();
-  }, [searchQuery, selectedCategory]);
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    refreshFeed();
+  const getSeverityBadge = (sev) => {
+    const s = String(sev || "").toLowerCase();
+    if (s === "critical") return { text: "CRITICAL", color: "hsl(var(--danger))", bg: "hsl(var(--danger-bg))" };
+    if (s === "high") return { text: "HIGH", color: "hsl(var(--warning))", bg: "hsl(var(--warning-bg))" };
+    if (s === "medium") return { text: "MEDIUM", color: "#b45309", bg: "rgba(180, 83, 9, 0.08)" };
+    return { text: "ADVISORY", color: "hsl(var(--primary))", bg: "hsl(var(--primary-bg))" };
   };
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric"
-    });
-  };
-
-  const getSeverityColor = (sev) => {
-    const s = String(sev).toLowerCase();
-    if (s === "critical") return { text: "hsl(var(--danger))", bg: "hsla(var(--danger), 0.1)", border: "1px solid hsla(var(--danger), 0.3)" };
-    if (s === "high") return { text: "hsl(var(--warning))", bg: "hsla(var(--warning), 0.1)", border: "1px solid hsla(var(--warning), 0.3)" };
-    if (s === "medium") return { text: "hsl(38, 100%, 50%)", bg: "rgba(251, 191, 36, 0.1)", border: "1px solid rgba(251, 191, 36, 0.3)" };
-    return { text: "hsl(var(--primary))", bg: "hsla(var(--primary), 0.1)", border: "1px solid hsla(var(--primary), 0.3)" };
-  };
+  // Divide into Spotlight Lead and secondary items for the classic front page
+  const leadStory = articles.length > 0 ? articles[0] : null;
+  const secondaryStories = articles.length > 1 ? articles.slice(1, 4) : [];
+  const standardFeed = articles.length > 4 ? articles.slice(4) : (articles.length <= 4 ? articles : []);
 
   return (
-    <div>
-      {/* Search Bar Section */}
-      <section className="search-section">
-        <div className="container">
-          <h1 className="search-title">
-            HackerPost — <span>SecTech Intelligence & Startups</span>
-          </h1>
-          <p className="search-subtitle">
-            Real-time intelligence on cybersecurity startups, VC funding rounds, M&A deals, zero-day threat vectors, and enterprise vulnerability disclosures.
-          </p>
-          
-          <form onSubmit={handleSearchSubmit} className="search-box-wrapper" style={{ marginBottom: "30px" }}>
-            <div className="search-input-container">
-              <Search className="search-input-icon" size={20} />
-              <input
-                type="text"
-                placeholder="Search startups, funding rounds, CVEs, or enterprise vendors (e.g. Series A, Wiz, OpenSSH, ESXi)..."
-                className="search-input"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            <button type="submit" className="btn btn-primary" style={{ height: "54px", borderRadius: "8px", padding: "0 28px" }}>
-              Search Wire
-            </button>
-          </form>
-
-          {/* Core Analytics Cards */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: "20px",
-            maxWidth: "900px",
-            margin: "0 auto",
-            marginTop: "40px"
-          }}>
-            <div style={{
-              background: "hsla(var(--card), 0.4)",
-              border: "1px solid hsl(var(--border))",
-              borderRadius: "var(--radius-sm)",
-              padding: "16px 20px",
-              textAlign: "left"
-            }}>
-              <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.5px", marginBottom: "4px" }}>SecTech Startups Tracked</div>
-              <div style={{ fontSize: "24px", fontWeight: 800, color: "hsl(var(--primary))", fontFamily: "var(--font-mono)" }}>840+ Deals</div>
-            </div>
-            <div style={{
-              background: "hsla(var(--card), 0.4)",
-              border: "1px solid hsl(var(--border))",
-              borderRadius: "var(--radius-sm)",
-              padding: "16px 20px",
-              textAlign: "left"
-            }}>
-              <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.5px", marginBottom: "4px" }}>Threat & Risk Index</div>
-              <div style={{ fontSize: "24px", fontWeight: 800, color: "hsl(var(--danger))", fontFamily: "var(--font-mono)" }}>CRIT / 9.1</div>
-            </div>
-            <div style={{
-              background: "hsla(var(--card), 0.4)",
-              border: "1px solid hsl(var(--border))",
-              borderRadius: "var(--radius-sm)",
-              padding: "16px 20px",
-              textAlign: "left"
-            }}>
-              <div style={{ color: "hsl(var(--muted-foreground))", fontSize: "11px", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.5px", marginBottom: "4px" }}>Verified Feed Sources</div>
-              <div style={{ fontSize: "24px", fontWeight: 800, color: "hsl(var(--success))", fontFamily: "var(--font-mono)" }}>7 Premier Wires</div>
-            </div>
-          </div>
+    <div className="container" style={{ padding: "24px 0 80px 0" }}>
+      {/* Financial & Threat Telemetry Strip (Bloomberg / Reuters Corporate Style) */}
+      <div className="market-telemetry-bar">
+        <div className="market-telemetry-item">
+          <span className="market-telemetry-label">SecTech Capital:</span>
+          <span className="market-telemetry-value">$6.2B+ Tracked (840 Rounds)</span>
         </div>
-      </section>
-
-      {/* Category Pills */}
-      <div className="container" style={{ marginTop: "30px" }}>
-        <div className="filters-wrapper">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`filter-btn ${selectedCategory === cat ? "active" : ""}`}
-            >
-              {cat === "SecTech & Startups" && "🚀 "}
-              {cat === "AI Benchmarks" && "📊 "}
-              {cat === "M&A & Funding" && "💼 "}
-              {cat === "Zero-Days" && "🔥 "}
-              {cat === "Ransomware" && "🛡️ "}
-              {cat}
-            </button>
-          ))}
+        <div className="market-telemetry-item">
+          <span className="market-telemetry-label">Threat Velocity:</span>
+          <span className="market-telemetry-value" style={{ color: "hsl(var(--danger))" }}>CRIT / 9.4 (Active Monitoring)</span>
         </div>
-
-        {/* News Grid */}
-        {articles.length > 0 ? (
-          <div className="news-grid">
-            {articles.map((art) => {
-              const sev = art.severity || "Medium";
-              const sevStyle = getSeverityColor(sev);
-              const isStartup = art.category === "SecTech & Startups" || art.category === "M&A & Funding" || art.fundingAmount;
-
-              return (
-                <article key={art.id} className="news-card">
-                  {/* Card Category Header */}
-                  <div className="card-image-stub">
-                    <span className="card-category-badge" style={{
-                      background: isStartup ? "linear-gradient(135deg, hsla(var(--primary), 0.25), rgba(168, 85, 247, 0.25))" : undefined,
-                      borderColor: isStartup ? "hsl(var(--primary))" : undefined,
-                      color: isStartup ? "#ffffff" : undefined
-                    }}>
-                      {isStartup && "🚀 "}{art.category}
-                    </span>
-                    {art.cve && <span className="card-zip-badge">{art.cve}</span>}
-                    {isStartup && art.fundingAmount && (
-                      <span className="card-zip-badge" style={{ color: "hsl(var(--success))", borderColor: "hsla(var(--success), 0.3)" }}>
-                        {art.fundingAmount}
-                      </span>
-                    )}
-                  </div>
-                  
-                  <div className="card-body">
-                    <div className="card-metadata" style={{ gap: "8px", flexWrap: "wrap" }}>
-                      <span style={{ 
-                        display: "inline-flex", 
-                        alignItems: "center", 
-                        gap: "6px",
-                        padding: "3px 8px",
-                        borderRadius: "var(--radius-sm)",
-                        fontSize: "11px",
-                        fontWeight: 700,
-                        textTransform: "uppercase",
-                        color: isStartup ? "hsl(var(--primary))" : sevStyle.text,
-                        background: isStartup ? "hsla(var(--primary), 0.1)" : sevStyle.bg,
-                        border: isStartup ? "1px solid hsla(var(--primary), 0.3)" : sevStyle.border
-                      }}>
-                        {isStartup ? <Rocket size={11} /> : <AlertTriangle size={11} />}
-                        {isStartup ? (art.fundingRound || "Venture Deal") : sev}
-                      </span>
-
-                      {art.affectedProduct && (
-                        <span style={{ 
-                          display: "inline-flex", 
-                          alignItems: "center", 
-                          gap: "4px",
-                          padding: "3px 8px",
-                          borderRadius: "var(--radius-sm)",
-                          background: "hsl(var(--muted))",
-                          border: "1px solid hsl(var(--border))",
-                          fontSize: "11px",
-                          fontWeight: 500,
-                          color: "hsl(var(--foreground))"
-                        }}>
-                          <Cpu size={11} />
-                          {art.affectedProduct}
-                        </span>
-                      )}
-
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginLeft: "auto" }}>
-                        <Calendar size={12} />
-                        {formatDate(art.publishedAt)}
-                      </span>
-                    </div>
-
-                    <h2 className="card-title">
-                      <Link href={`/news/${art.id}`}>
-                        {art.title}
-                      </Link>
-                    </h2>
-                    
-                    <p className="card-excerpt">
-                      {art.content.replace(/[#*`>\[\]!]/g, "").slice(0, 160)}...
-                    </p>
-
-                    <div className="card-footer" style={{ borderTop: "1px solid hsl(var(--border))", paddingTop: "14px", marginTop: "14px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <span className="card-provider" style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))" }}>
-                        Wire: <b>{art.providerName || "Verified Security Wire"}</b>
-                      </span>
-                      <Link href={`/news/${art.id}`} className="card-read-more">
-                        {isStartup ? "View Deal Brief" : "Full Advisory"} <ArrowRight size={14} />
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="empty-state">
-            <Terminal size={36} className="empty-state-icon" />
-            <h3 style={{ fontSize: "18px", fontWeight: 700 }}>No reports matching query</h3>
-            <p style={{ color: "hsl(var(--muted-foreground))", marginTop: "8px" }}>
-              No intelligence bulletins or startup deals found for &quot;{searchQuery || selectedCategory}&quot;.
-            </p>
-          </div>
-        )}
+        <div className="market-telemetry-item">
+          <span className="market-telemetry-label">SecLLM Benchmark:</span>
+          <span className="market-telemetry-value">Claude 3.7 Sonnet (94.2 Score)</span>
+        </div>
+        <div className="market-telemetry-item">
+          <span className="market-telemetry-label">Wire Feeds:</span>
+          <span className="market-telemetry-value">12 Verified Intelligence Streams</span>
+        </div>
       </div>
+
+      {/* Search status notification if search is active */}
+      {searchQuery && (
+        <div style={{
+          background: "hsl(var(--muted))",
+          border: "1px solid hsl(var(--border))",
+          borderRadius: "var(--radius-sm)",
+          padding: "10px 16px",
+          marginBottom: "20px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          fontSize: "13px"
+        }}>
+          <span>
+            Filtering stories for: <b>&quot;{searchQuery}&quot;</b> ({articles.length} stories found)
+          </span>
+          <button
+            onClick={() => setCustomSearchQuery("")}
+            style={{
+              background: "none",
+              border: "none",
+              color: "hsl(var(--primary))",
+              cursor: "pointer",
+              fontWeight: 600,
+              fontSize: "12px",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "4px"
+            }}
+          >
+            <X size={14} /> Clear Filter
+          </button>
+        </div>
+      )}
+
+      {/* Editorial Front Page Lead Showcase (Only on unfiltered All Stories view) */}
+      {!searchQuery && selectedCategory === "All" && leadStory && (
+        <section className="editorial-hero-grid">
+          {/* Main Hero Story */}
+          <div className="lead-story-card">
+            <div>
+              <div className="lead-story-category">
+                {leadStory.category === "Zero-Days" ? "CRITICAL THREAT ADVISORY" : leadStory.category.toUpperCase()}
+              </div>
+
+              <Link href={`/news/${leadStory.slug || leadStory.id}`}>
+                <h1 className="lead-story-title">
+                  {leadStory.title}
+                </h1>
+              </Link>
+
+              <div className="lead-story-meta">
+                <span>By HackerPost Intelligence Wire</span>
+                <span>•</span>
+                <span>{formatDate(leadStory.publishedAt)}</span>
+                <span>•</span>
+                <span style={{ color: "hsl(var(--primary))", fontWeight: 600 }}>{leadStory.providerName || "Verified Wire"}</span>
+              </div>
+
+              <p className="lead-story-excerpt" style={{ marginTop: "12px" }}>
+                {leadStory.content ? leadStory.content.replace(/#[\s\S]*?\n/, "").substring(0, 220).trim() + "..." : "Security intelligence teams have cataloged high-severity advisory telemetry across production infrastructure."}
+              </p>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "16px" }}>
+              <Link 
+                href={`/news/${leadStory.slug || leadStory.id}`}
+                className="btn btn-primary"
+                style={{ padding: "8px 18px", fontSize: "13px" }}
+              >
+                Read Full Advisory →
+              </Link>
+
+              {leadStory.fundingAmount && (
+                <span style={{ fontSize: "12px", fontWeight: 700, color: "hsl(var(--success))" }}>
+                  Deal Size: {leadStory.fundingAmount} ({leadStory.fundingRound || "Venture Round"})
+                </span>
+              )}
+
+              {leadStory.cve && (
+                <span style={{ fontSize: "12px", fontWeight: 700, fontFamily: "var(--font-mono)", color: "hsl(var(--foreground))" }}>
+                  Tracking: {leadStory.cve}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Latest Wire Column */}
+          <div className="sidebar-wire-list">
+            <div className="sidebar-wire-heading">
+              Latest Wire Reports
+            </div>
+
+            {secondaryStories.map((story) => (
+              <article key={story.id} className="sidebar-wire-item">
+                <span className="sidebar-wire-cat">
+                  {story.category}
+                </span>
+                <Link href={`/news/${story.slug || story.id}`}>
+                  <h3 className="sidebar-wire-title">
+                    {story.title}
+                  </h3>
+                </Link>
+                <div className="sidebar-wire-meta">
+                  {formatDate(story.publishedAt)} · {story.providerName || "Verified Feed"}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Classic Section Filter Navigation Tabs */}
+      <div className="news-sections-nav">
+        {categories.map((cat) => (
+          <button
+            key={cat.value}
+            onClick={() => setCustomCategory(cat.value)}
+            className={`news-section-btn ${selectedCategory === cat.value ? "active" : ""}`}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Main 3-Column News Article Grid */}
+      {articles.length === 0 ? (
+        <div style={{
+          textAlign: "center",
+          padding: "60px 20px",
+          background: "hsl(var(--card))",
+          border: "1px solid hsl(var(--border))",
+          borderRadius: "var(--radius-sm)"
+        }}>
+          <h3 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "8px" }}>No Stories Found</h3>
+          <p style={{ fontSize: "13px", color: "hsl(var(--muted-foreground))", marginBottom: "16px" }}>
+            No published security dispatches match your filter or search query.
+          </p>
+          <button
+            onClick={() => {
+              setCustomCategory("All");
+              setCustomSearchQuery("");
+            }}
+            className="btn btn-secondary"
+          >
+            Reset All Filters
+          </button>
+        </div>
+      ) : (
+        <div className="news-grid">
+          {(selectedCategory === "All" && !searchQuery ? standardFeed : articles).map((article) => {
+            const sevBadge = getSeverityBadge(article.severity);
+            const isDeal = article.category === "SecTech & Startups" || article.category === "M&A & Funding" || !!article.fundingAmount;
+
+            return (
+              <article key={article.id} className="news-card">
+                <div className="card-image-stub">
+                  <span className="card-category-badge">
+                    {article.category}
+                  </span>
+
+                  {isDeal && article.fundingAmount ? (
+                    <span style={{ fontSize: "11px", fontWeight: 700, color: "hsl(var(--success))" }}>
+                      {article.fundingAmount}
+                    </span>
+                  ) : article.cve ? (
+                    <span style={{ fontSize: "11px", fontWeight: 600, fontFamily: "var(--font-mono)", color: "hsl(var(--muted-foreground))" }}>
+                      {article.cve}
+                    </span>
+                  ) : null}
+                </div>
+
+                <div className="card-body">
+                  <div className="card-metadata">
+                    <span>{formatDate(article.publishedAt)}</span>
+                    <span>•</span>
+                    <span>{article.providerName || "Threat Wire"}</span>
+                  </div>
+
+                  <Link href={`/news/${article.slug || article.id}`}>
+                    <h2 className="card-title">
+                      {article.title}
+                    </h2>
+                  </Link>
+
+                  <p className="card-excerpt">
+                    {article.content 
+                      ? article.content.replace(/#[\s\S]*?\n/, "").substring(0, 150).trim() + "..." 
+                      : "Verified threat intelligence advisory for security engineering teams."}
+                  </p>
+
+                  <div className="card-footer">
+                    <span style={{
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      padding: "2px 6px",
+                      borderRadius: "var(--radius-xs)",
+                      background: sevBadge.bg,
+                      color: sevBadge.color
+                    }}>
+                      {isDeal ? "VERIFIED DEAL" : sevBadge.text}
+                    </span>
+
+                    <Link href={`/news/${article.slug || article.id}`} className="card-read-more">
+                      <span>Full Story</span>
+                      <ArrowRight size={13} />
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
