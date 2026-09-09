@@ -29,10 +29,10 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nextjs:nodejs /app/data ./data
-COPY --from=builder --chown=nextjs:nodejs /app/lib ./lib
+COPY --from=builder /app/lib ./lib
+RUN chmod -R 777 /app/data
 
-USER nextjs
-
+# Ensure container has full write permissions to data volume
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
