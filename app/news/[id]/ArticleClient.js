@@ -344,6 +344,18 @@ Direct CISO Consultation Hotline: https://hackerpost.online/consult
                 <span style={{ color: "hsl(var(--primary))", fontWeight: 600 }}>{article.providerName || "Verified Feed"}</span>
               </div>
             </div>
+
+            {article.imageUrl && (
+              <div className="article-hero-banner" style={{ marginTop: "20px" }}>
+                <img
+                  src={article.imageUrl}
+                  alt={currentTitle}
+                  className="article-hero-img"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            )}
           </header>
 
           {/* CISO Executive Action Center (Clean Corporate News Box) */}
