@@ -1,21 +1,21 @@
 import { NextResponse } from "next/server";
-import { getSocialLogs } from "@/lib/xPublisher";
+import { getSocialLogs, getMaskedTwitterConfig } from "@/lib/xPublisher";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
     const logs = getSocialLogs();
-    const handle = process.env.X_ACCOUNT_HANDLE || "@HackerPost2";
-    const apiKey = process.env.X_API_KEY || process.env.TWITTER_API_KEY;
-    const isLiveConfigured = !!(apiKey && (process.env.X_ACCESS_TOKEN || process.env.TWITTER_ACCESS_TOKEN));
+    const config = getMaskedTwitterConfig();
 
     return NextResponse.json({
       success: true,
-      handle,
-      accountUrl: `https://x.com/${handle.replace('@', '')}`,
-      isLiveConfigured,
-      mode: isLiveConfigured ? "live" : "simulated",
+      handle: config.handle,
+      accountUrl: config.accountUrl,
+      isLiveConfigured: config.isLiveConfigured,
+      isVerified: config.isVerified,
+      mode: config.mode,
+      config,
       totalBroadcasts: logs.length,
       logs
     });

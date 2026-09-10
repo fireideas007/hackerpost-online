@@ -19,7 +19,12 @@ import {
   Activity,
   Share2,
   Send,
-  Sparkles
+  Sparkles,
+  Key,
+  Settings,
+  X,
+  Check,
+  RotateCw
 } from "lucide-react";
 import EditorAuthGate from "../components/EditorAuthGate";
 
@@ -46,10 +51,22 @@ export default function AdminDashboard() {
   const [notification, setNotification] = useState(null);
   const [scraping, setScraping] = useState(false);
 
-  // Social / X Broadcasting State
+  // Social / X Broadcasting & Handle Configuration State
   const [socialLogs, setSocialLogs] = useState([]);
-  const [socialInfo, setSocialInfo] = useState({ handle: "@HackerPost2", isLiveConfigured: false, mode: "simulated" });
+  const [socialInfo, setSocialInfo] = useState({ handle: "@HackerPost2", isLiveConfigured: false, isVerified: false, mode: "simulated" });
   const [broadcastingId, setBroadcastingId] = useState(null);
+  const [showTwitterModal, setShowTwitterModal] = useState(false);
+  const [twitterForm, setTwitterForm] = useState({
+    handle: "",
+    apiKey: "",
+    apiSecret: "",
+    accessToken: "",
+    accessSecret: "",
+    autoPost: true
+  });
+  const [testingConnection, setTestingConnection] = useState(false);
+  const [savingTwitter, setSavingTwitter] = useState(false);
+  const [syncingAll, setSyncingAll] = useState(false);
 
   const fetchDashboardData = async () => {
     try {
@@ -79,9 +96,21 @@ export default function AdminDashboard() {
         setSocialLogs(data.logs || []);
         setSocialInfo({
           handle: data.handle || "@HackerPost2",
-          isLiveConfigured: data.isLiveConfigured,
-          mode: data.mode
+          isLiveConfigured: !!data.isLiveConfigured,
+          isVerified: !!data.isVerified,
+          mode: data.mode || "simulated",
+          config: data.config || null
         });
+        if (data.config) {
+          setTwitterForm({
+            handle: data.config.handle || "",
+            apiKey: data.config.apiKeySnippet || "",
+            apiSecret: data.config.hasApiSecret ? "••••••••••••••••" : "",
+            accessToken: data.config.accessTokenSnippet || "",
+            accessSecret: data.config.hasAccessSecret ? "••••••••••••••••" : "",
+            autoPost: typeof data.config.autoPost === "boolean" ? data.config.autoPost : true
+          });
+        }
       }
     } catch (_) {}
   };
@@ -92,12 +121,13 @@ export default function AdminDashboard() {
       const res = await fetch("/api/social/publish", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ articleId })
+        body: JSON.stringify({ articleId, force: true })
       });
       const data = await res.json();
       if (data.success) {
-        showNotice("success", `Broadcasted to X (${data.broadcast?.handle || "@HackerPost2"}) with dynamic hashtags!`);
+        showNotice("success", `Broadcasted to X (${data.broadcast?.handle || socialInfo.handle}) with dynamic hashtags!`);
         fetchSocialLogs();
+        fetchDashboardData();
       } else {
         showNotice("error", data.error || "Failed to broadcast to X.");
       }
@@ -105,6 +135,87 @@ export default function AdminDashboard() {
       showNotice("error", "Error connecting to X syndication engine.");
     } finally {
       setBroadcastingId(null);
+    }
+  };
+
+  const handleTestTwitterConnection = async () => {
+    setTestingConnection(true);
+    try {
+      const res = await fetch("/api/social/test", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      });
+      const data = await res.json();
+      if (data.success) {
+        showNotice("success", `Twitter Verified! Authenticated as ${data.result?.handle} (${data.result?.user?.name || ""})`);
+        fetchSocialLogs();
+      } else {
+        showNotice("error", `Verification Failed: ${data.result?.error || data.error || "Please check credentials."}`);
+      }
+    } catch (err) {
+      showNotice("error", "Failed to contact Twitter verification endpoint.");
+    } finally {
+      setTestingConnection(false);
+    }
+  };
+
+  const handleSaveTwitterConfig = async (e) => {
+    if (e) e.preventDefault();
+    setSavingTwitter(true);
+    try {
+      const res = await fetch("/api/social/config", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          handle: twitterForm.handle,
+          apiKey: twitterForm.apiKey,
+          apiSecret: twitterForm.apiSecret,
+          accessToken: twitterForm.accessToken,
+          accessSecret: twitterForm.accessSecret,
+          autoPost: twitterForm.autoPost,
+          verifyNow: true
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showNotice("success", "Twitter handle and configuration updated!");
+        if (data.verification?.success) {
+          showNotice("success", `Verified handle: ${data.verification.handle}`);
+        } else if (data.verification?.error) {
+          showNotice("error", `Saved, but verification warned: ${data.verification.error}`);
+        }
+        setShowTwitterModal(false);
+        fetchSocialLogs();
+      } else {
+        showNotice("error", data.error || "Failed to save Twitter configuration.");
+      }
+    } catch (err) {
+      showNotice("error", "Network error saving Twitter settings.");
+    } finally {
+      setSavingTwitter(false);
+    }
+  };
+
+  const handleSyncAllToX = async () => {
+    setSyncingAll(true);
+    try {
+      const res = await fetch("/api/social/sync-all", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ limit: 15, force: false })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showNotice("success", data.message || `Syndicated ${data.count} articles to X!`);
+        fetchDashboardData();
+        fetchSocialLogs();
+      } else {
+        showNotice("error", data.error || "Failed to syndicate unposted articles.");
+      }
+    } catch (err) {
+      showNotice("error", "Network error during bulk syndication.");
+    } finally {
+      setSyncingAll(false);
     }
   };
 
@@ -678,22 +789,32 @@ export default function AdminDashboard() {
 
       {/* Retract Advisories list */}
       <div className="admin-panel" style={{ marginTop: "40px", maxHeight: "none" }}>
-        <div className="panel-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div className="panel-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
           <h2 className="panel-title">
             <FileText size={18} />
             Published Advisory Index ({publishedArticles.length})
           </h2>
-          <a 
-            href={`https://x.com/${socialInfo.handle.replace('@', '')}`}
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="btn btn-secondary"
-            style={{ fontSize: "11px", padding: "4px 10px", display: "inline-flex", alignItems: "center", gap: "6px" }}
-          >
-            <Share2 size={12} color="hsl(var(--primary))" />
-            Connected Account: <b>{socialInfo.handle}</b>
-            <ExternalLink size={11} />
-          </a>
+          <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
+            <button
+              onClick={handleSyncAllToX}
+              disabled={syncingAll}
+              className="btn btn-secondary"
+              style={{ fontSize: "11px", padding: "5px 12px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+              title="Broadcast all unposted articles to X"
+            >
+              <Send size={12} color="hsl(var(--primary))" />
+              {syncingAll ? "Syndicating..." : "Syndicate Unposted to X"}
+            </button>
+            <button 
+              onClick={() => setShowTwitterModal(true)}
+              className="btn btn-secondary"
+              style={{ fontSize: "11px", padding: "5px 12px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+            >
+              <Share2 size={12} color="hsl(var(--primary))" />
+              Connected Handle: <b>{socialInfo.handle}</b>
+              <Settings size={11} />
+            </button>
+          </div>
         </div>
         <div className="panel-body" style={{ overflowX: "auto" }}>
           {publishedArticles.length > 0 ? (
@@ -705,7 +826,7 @@ export default function AdminDashboard() {
                   <th style={{ padding: "12px" }}>Affected Product</th>
                   <th style={{ padding: "12px" }}>Severity</th>
                   <th style={{ padding: "12px" }}>Disclosure Status</th>
-                  <th style={{ padding: "12px", textAlign: "center" }}>Actions & Syndication</th>
+                  <th style={{ padding: "12px", textAlign: "center" }}>Actions &amp; X Syndication</th>
                 </tr>
               </thead>
               <tbody>
@@ -723,26 +844,48 @@ export default function AdminDashboard() {
                       </span>
                     </td>
                     <td style={{ padding: "12px", textAlign: "center" }}>
-                      <div style={{ display: "flex", gap: "6px", justifyContent: "center" }}>
+                      <div style={{ display: "flex", gap: "6px", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
+                        {art.tweetUrl ? (
+                          <a 
+                            href={art.tweetUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="btn btn-secondary" 
+                            style={{ padding: "5px 8px", fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "4px", color: "hsl(var(--primary))", borderColor: "hsla(var(--primary), 0.4)" }}
+                            title="View published tweet on X"
+                          >
+                            <CheckCircle2 size={12} color="hsl(var(--primary))" />
+                            Live on X
+                            <ExternalLink size={9} />
+                          </a>
+                        ) : art.xStatus === "simulated" ? (
+                          <span 
+                            style={{ fontSize: "10px", padding: "3px 6px", background: "rgba(255,255,255,0.05)", border: "1px dashed hsl(var(--border))", borderRadius: "3px", color: "hsl(var(--muted-foreground))" }}
+                            title="Simulated broadcast in sandbox"
+                          >
+                            Simulated
+                          </span>
+                        ) : null}
+
                         <button
                           onClick={() => handleBroadcastToX(art.id)}
                           disabled={broadcastingId === art.id}
                           className="btn btn-secondary"
-                          style={{ padding: "6px 10px", fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                          style={{ padding: "5px 8px", fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "4px" }}
                           title="Broadcast this advisory to X with smart hashtags"
                         >
                           <Share2 size={12} color="hsl(var(--primary))" />
                           {broadcastingId === art.id ? "Posting..." : "Post to X"}
                         </button>
-                        <a href={`/news/${art.slug || art.id}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: "6px 10px", fontSize: "11px" }}>
+                        <a href={`/news/${art.slug || art.id}`} target="_blank" rel="noopener noreferrer" className="btn btn-secondary" style={{ padding: "5px 8px", fontSize: "11px" }}>
                           View
                         </a>
                         <button 
                           onClick={() => handleDeletePublished(art.id)}
                           className="btn btn-danger" 
-                          style={{ padding: "6px 10px", fontSize: "11px" }}
+                          style={{ padding: "5px 8px", fontSize: "11px" }}
                         >
-                          <Trash2 size={13} />
+                          <Trash2 size={12} />
                         </button>
                       </div>
                     </td>
@@ -760,21 +903,106 @@ export default function AdminDashboard() {
 
       {/* X (Twitter) Social Syndication Monitor */}
       <div className="admin-panel" style={{ marginTop: "30px", maxHeight: "none" }}>
-        <div className="panel-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h2 className="panel-title" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div className="panel-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
             <Share2 size={18} color="hsl(var(--primary))" />
-            X (Twitter) Autonomous Broadcast Feed &middot; <span style={{ color: "hsl(var(--primary))", fontFamily: "var(--font-mono)" }}>{socialInfo.handle}</span>
-          </h2>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ fontSize: "11px", background: "rgba(0,255,100,0.1)", border: "1px solid rgba(0,255,100,0.3)", color: "hsl(var(--primary))", padding: "3px 8px", borderRadius: "2px", fontWeight: 700 }}>
-              AUTO-SYNDICATION ONLINE
-            </span>
-            <button onClick={fetchSocialLogs} className="btn btn-secondary" style={{ padding: "4px 8px", fontSize: "11px" }}>
+            <h2 className="panel-title" style={{ margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+              X (Twitter) Autonomous Broadcast Feed &middot;{" "}
+              <a 
+                href={`https://x.com/${socialInfo.handle.replace('@', '')}`}
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ color: "hsl(var(--primary))", fontFamily: "var(--font-mono)", textDecoration: "underline" }}
+              >
+                {socialInfo.handle}
+              </a>
+            </h2>
+            {socialInfo.isVerified ? (
+              <span style={{ fontSize: "10px", background: "rgba(0,255,100,0.15)", border: "1px solid rgba(0,255,100,0.4)", color: "hsl(var(--success))", padding: "2px 8px", borderRadius: "3px", fontWeight: 800, letterSpacing: "0.5px" }}>
+                ● LIVE &amp; VERIFIED
+              </span>
+            ) : socialInfo.isLiveConfigured ? (
+              <span style={{ fontSize: "10px", background: "rgba(255,190,0,0.15)", border: "1px solid rgba(255,190,0,0.4)", color: "hsl(var(--warning))", padding: "2px 8px", borderRadius: "3px", fontWeight: 800, letterSpacing: "0.5px" }}>
+                ● CONFIGURED (UNVERIFIED)
+              </span>
+            ) : (
+              <span style={{ fontSize: "10px", background: "rgba(255,255,255,0.08)", border: "1px solid hsl(var(--border))", color: "hsl(var(--muted-foreground))", padding: "2px 8px", borderRadius: "3px", fontWeight: 700 }}>
+                ○ SIMULATION / SANDBOX
+              </span>
+            )}
+          </div>
+          
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+            <button 
+              onClick={() => setShowTwitterModal(true)} 
+              className="btn btn-primary" 
+              style={{ padding: "6px 12px", fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+            >
+              <Key size={12} /> Connect Twitter Handle
+            </button>
+            
+            {socialInfo.isLiveConfigured && (
+              <button 
+                onClick={handleTestTwitterConnection} 
+                disabled={testingConnection}
+                className="btn btn-secondary" 
+                style={{ padding: "6px 12px", fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+                title="Verify credentials directly with Twitter API v2"
+              >
+                <Activity size={12} color="hsl(var(--primary))" />
+                {testingConnection ? "Testing..." : "Test Connection"}
+              </button>
+            )}
+
+            <button 
+              onClick={handleSyncAllToX} 
+              disabled={syncingAll}
+              className="btn btn-secondary" 
+              style={{ padding: "6px 12px", fontSize: "11px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+              title="Broadcast all unposted articles to X feed"
+            >
+              <Send size={12} color="hsl(var(--primary))" />
+              {syncingAll ? "Broadcasting..." : "Syndicate Unposted"}
+            </button>
+
+            <button onClick={fetchSocialLogs} className="btn btn-secondary" style={{ padding: "6px 10px", fontSize: "11px" }}>
               <RefreshCw size={11} /> Refresh
             </button>
           </div>
         </div>
+
         <div className="panel-body">
+          {!socialInfo.isLiveConfigured && (
+            <div style={{
+              background: "rgba(0, 255, 100, 0.04)",
+              border: "1px dashed hsla(var(--primary), 0.35)",
+              borderRadius: "6px",
+              padding: "16px 20px",
+              marginBottom: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "12px"
+            }}>
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 700, fontSize: "13px", color: "hsl(var(--primary))", marginBottom: "4px" }}>
+                  <Sparkles size={14} /> Connect Your Official Twitter / X Handle
+                </div>
+                <p style={{ margin: 0, fontSize: "12px", color: "hsl(var(--muted-foreground))", maxWidth: "680px" }}>
+                  Every post published on HackerPost is automatically synthesized with CISO threat tags (<code>#ZeroDay #CyberSecurity #InfoSec</code>) and can be broadcasted live to your Twitter feed. Connect your API credentials below to switch from sandbox simulation to live syndication.
+                </p>
+              </div>
+              <button 
+                onClick={() => setShowTwitterModal(true)}
+                className="btn btn-primary"
+                style={{ fontSize: "12px", padding: "8px 16px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+              >
+                <Key size={13} /> Link Handle &amp; API Keys
+              </button>
+            </div>
+          )}
+
           <p style={{ fontSize: "12px", color: "hsl(var(--muted-foreground))", marginBottom: "16px" }}>
             Every published threat briefing and venture deal is automatically synthesized, tagged with high-authority cybersecurity hashtags (<code>#CyberSecurity #ZeroDay #CISO #Ransomware #SecTech</code>), and syndicated to <a href={`https://x.com/${socialInfo.handle.replace('@', '')}`} target="_blank" rel="noopener noreferrer" style={{ color: "hsl(var(--primary))", textDecoration: "underline" }}>{socialInfo.handle}</a>.
           </p>
@@ -785,7 +1013,14 @@ export default function AdminDashboard() {
                 <div key={log.id} style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "6px", padding: "14px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", fontSize: "11px" }}>
-                      <span style={{ color: "hsl(var(--primary))", fontWeight: 700 }}>{log.handle}</span>
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                        <span style={{ color: "hsl(var(--primary))", fontWeight: 700 }}>{log.handle}</span>
+                        {log.status === "published" ? (
+                          <span style={{ fontSize: "9px", background: "rgba(0,255,100,0.15)", color: "hsl(var(--success))", padding: "1px 5px", borderRadius: "2px", fontWeight: 700 }}>LIVE</span>
+                        ) : (
+                          <span style={{ fontSize: "9px", background: "rgba(255,255,255,0.08)", color: "hsl(var(--muted-foreground))", padding: "1px 5px", borderRadius: "2px", fontWeight: 700 }}>SIMULATED</span>
+                        )}
+                      </div>
                       <span style={{ color: "hsl(var(--muted-foreground))" }}>{new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
                     <p style={{ fontSize: "12px", lineHeight: "1.5", whiteSpace: "pre-wrap", fontFamily: "var(--font-sans)", margin: "0 0 10px 0" }}>
@@ -812,6 +1047,189 @@ export default function AdminDashboard() {
           )}
         </div>
       </div>
+
+      {/* Twitter / X Connection Settings Modal */}
+      {showTwitterModal && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "rgba(0, 0, 0, 0.85)",
+          backdropFilter: "blur(4px)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 2000,
+          padding: "20px"
+        }}>
+          <div style={{
+            background: "hsl(var(--card))",
+            border: "1px solid hsl(var(--border))",
+            borderRadius: "8px",
+            width: "100%",
+            maxWidth: "600px",
+            maxHeight: "90vh",
+            overflowY: "auto",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.7)",
+            padding: "24px 28px"
+          }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid hsl(var(--border))", paddingBottom: "14px", marginBottom: "18px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <Share2 size={20} color="hsl(var(--primary))" />
+                <h3 style={{ margin: 0, fontSize: "18px", fontWeight: 800 }}>Connect Twitter (X) Handle</h3>
+              </div>
+              <button 
+                onClick={() => setShowTwitterModal(false)}
+                style={{ background: "transparent", border: "none", color: "hsl(var(--muted-foreground))", cursor: "pointer", padding: "4px" }}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <p style={{ fontSize: "12px", color: "hsl(var(--muted-foreground))", marginBottom: "20px", lineHeight: "1.5" }}>
+              Link your official Twitter account to enable automated syndication. Every news post will be formatted with high-authority security tags and broadcasted via Twitter API v2.
+            </p>
+
+            <form onSubmit={handleSaveTwitterConfig}>
+              <div style={{ marginBottom: "16px" }}>
+                <label style={{ display: "block", fontSize: "12px", fontWeight: 700, marginBottom: "6px" }}>
+                  Twitter / X Handle
+                </label>
+                <input 
+                  type="text"
+                  placeholder="@YourTwitterHandle"
+                  className="sandbox-input"
+                  value={twitterForm.handle}
+                  onChange={(e) => setTwitterForm({ ...twitterForm, handle: e.target.value })}
+                  style={{ height: "38px", fontFamily: "var(--font-mono)" }}
+                  required
+                />
+              </div>
+
+              <div style={{ background: "hsl(var(--background))", border: "1px solid hsl(var(--border))", borderRadius: "6px", padding: "14px", marginBottom: "18px" }}>
+                <div style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", color: "hsl(var(--primary))", marginBottom: "10px", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <Key size={12} /> Twitter API v2 OAuth 1.0a Credentials
+                </div>
+
+                <div style={{ marginBottom: "12px" }}>
+                  <label style={{ display: "block", fontSize: "11px", color: "hsl(var(--muted-foreground))", marginBottom: "4px" }}>
+                    API Key (Consumer Key)
+                  </label>
+                  <input 
+                    type="text"
+                    placeholder="Enter API Key"
+                    className="sandbox-input"
+                    value={twitterForm.apiKey}
+                    onChange={(e) => setTwitterForm({ ...twitterForm, apiKey: e.target.value })}
+                    style={{ height: "36px", fontSize: "12px", fontFamily: "var(--font-mono)" }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: "12px" }}>
+                  <label style={{ display: "block", fontSize: "11px", color: "hsl(var(--muted-foreground))", marginBottom: "4px" }}>
+                    API Key Secret (Consumer Secret)
+                  </label>
+                  <input 
+                    type="password"
+                    placeholder="Enter API Key Secret"
+                    className="sandbox-input"
+                    value={twitterForm.apiSecret}
+                    onChange={(e) => setTwitterForm({ ...twitterForm, apiSecret: e.target.value })}
+                    style={{ height: "36px", fontSize: "12px", fontFamily: "var(--font-mono)" }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: "12px" }}>
+                  <label style={{ display: "block", fontSize: "11px", color: "hsl(var(--muted-foreground))", marginBottom: "4px" }}>
+                    Access Token
+                  </label>
+                  <input 
+                    type="text"
+                    placeholder="Enter Access Token"
+                    className="sandbox-input"
+                    value={twitterForm.accessToken}
+                    onChange={(e) => setTwitterForm({ ...twitterForm, accessToken: e.target.value })}
+                    style={{ height: "36px", fontSize: "12px", fontFamily: "var(--font-mono)" }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: "block", fontSize: "11px", color: "hsl(var(--muted-foreground))", marginBottom: "4px" }}>
+                    Access Token Secret
+                  </label>
+                  <input 
+                    type="password"
+                    placeholder="Enter Access Token Secret"
+                    className="sandbox-input"
+                    value={twitterForm.accessSecret}
+                    onChange={(e) => setTwitterForm({ ...twitterForm, accessSecret: e.target.value })}
+                    style={{ height: "36px", fontSize: "12px", fontFamily: "var(--font-mono)" }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ marginBottom: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
+                <input 
+                  type="checkbox"
+                  id="autoPostCheckbox"
+                  checked={twitterForm.autoPost}
+                  onChange={(e) => setTwitterForm({ ...twitterForm, autoPost: e.target.checked })}
+                  style={{ width: "16px", height: "16px", accentColor: "hsl(var(--primary))", cursor: "pointer" }}
+                />
+                <label htmlFor="autoPostCheckbox" style={{ fontSize: "13px", cursor: "pointer", fontWeight: 600 }}>
+                  Automatically broadcast every newly published article to X
+                </label>
+              </div>
+
+              {/* Developer guide collapsible tip */}
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid hsl(var(--border))", borderRadius: "6px", padding: "12px 14px", marginBottom: "20px", fontSize: "11px", color: "hsl(var(--muted-foreground))" }}>
+                <b style={{ color: "hsl(var(--foreground))" }}>Quick Setup Guide:</b>
+                <ol style={{ margin: "6px 0 0 0", paddingLeft: "16px", lineHeight: "1.6" }}>
+                  <li>Open <a href="https://developer.x.com" target="_blank" rel="noopener noreferrer" style={{ color: "hsl(var(--primary))", textDecoration: "underline" }}>developer.x.com</a> and sign in with your handle.</li>
+                  <li>In your Project / App settings, set <b>User authentication settings</b> to <b>Read and Write</b> (OAuth 1.0a).</li>
+                  <li>Under <b>Keys and tokens</b>, generate Consumer Keys &amp; Authentication Tokens.</li>
+                  <li>Paste the keys above and click <b>Save &amp; Test Connection</b>.</li>
+                </ol>
+              </div>
+
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
+                <button
+                  type="button"
+                  onClick={handleTestTwitterConnection}
+                  disabled={testingConnection}
+                  className="btn btn-secondary"
+                  style={{ fontSize: "12px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+                >
+                  <Activity size={13} color="hsl(var(--primary))" />
+                  {testingConnection ? "Verifying with Twitter..." : "Test Connection"}
+                </button>
+
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <button 
+                    type="button" 
+                    onClick={() => setShowTwitterModal(false)}
+                    className="btn btn-secondary"
+                    style={{ fontSize: "12px" }}
+                  >
+                    Cancel
+                  </button>
+                  <button 
+                    type="submit" 
+                    disabled={savingTwitter}
+                    className="btn btn-primary"
+                    style={{ fontSize: "12px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+                  >
+                    <Check size={13} />
+                    {savingTwitter ? "Saving & Verifying..." : "Save & Connect"}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   </EditorAuthGate>
   );

@@ -162,6 +162,19 @@ export default function NewsFeed({ initialArticles = [] }) {
           {/* Main Hero Story */}
           <div className="lead-story-card">
             <div>
+              {/* Featured Lead Story Thumbnail Banner */}
+              {leadStory.imageUrl && (
+                <Link href={`/news/${leadStory.slug || leadStory.id}`} className="lead-story-image-wrap">
+                  <img 
+                    src={leadStory.imageUrl} 
+                    alt={leadStory.title}
+                    className="lead-story-img"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </Link>
+              )}
+
               <div className="lead-story-category">
                 {leadStory.category === "Zero-Days" ? "CRITICAL THREAT ADVISORY" : leadStory.category.toUpperCase()}
               </div>
@@ -216,16 +229,29 @@ export default function NewsFeed({ initialArticles = [] }) {
 
             {secondaryStories.map((story) => (
               <article key={story.id} className="sidebar-wire-item">
-                <span className="sidebar-wire-cat">
-                  {story.category}
-                </span>
-                <Link href={`/news/${story.slug || story.id}`}>
-                  <h3 className="sidebar-wire-title">
-                    {story.title}
-                  </h3>
-                </Link>
-                <div className="sidebar-wire-meta">
-                  {formatDate(story.publishedAt)} · {story.providerName || "Verified Feed"}
+                {story.imageUrl && (
+                  <Link href={`/news/${story.slug || story.id}`} className="sidebar-wire-thumb-wrap">
+                    <img 
+                      src={story.imageUrl} 
+                      alt={story.title} 
+                      className="sidebar-wire-thumb"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </Link>
+                )}
+                <div className="sidebar-wire-content">
+                  <span className="sidebar-wire-cat">
+                    {story.category}
+                  </span>
+                  <Link href={`/news/${story.slug || story.id}`}>
+                    <h3 className="sidebar-wire-title">
+                      {story.title}
+                    </h3>
+                  </Link>
+                  <div className="sidebar-wire-meta">
+                    {formatDate(story.publishedAt)} · {story.providerName || "Verified Feed"}
+                  </div>
                 </div>
               </article>
             ))}
@@ -277,21 +303,51 @@ export default function NewsFeed({ initialArticles = [] }) {
 
             return (
               <article key={article.id} className="news-card">
-                <div className="card-image-stub">
-                  <span className="card-category-badge">
-                    {article.category}
-                  </span>
+                {article.imageUrl ? (
+                  <Link href={`/news/${article.slug || article.id}`} className="card-thumbnail-container">
+                    <img 
+                      src={article.imageUrl} 
+                      alt={article.title}
+                      className="card-thumbnail-img"
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                    <div className="card-thumbnail-badges">
+                      <span className="card-category-badge">
+                        {article.category}
+                      </span>
 
-                  {isDeal && article.fundingAmount ? (
-                    <span style={{ fontSize: "11px", fontWeight: 700, color: "hsl(var(--success))" }}>
-                      {article.fundingAmount}
+                      {isDeal && article.fundingAmount ? (
+                        <span className="card-thumbnail-tag deal">
+                          {article.fundingAmount}
+                        </span>
+                      ) : article.cve ? (
+                        <span className="card-thumbnail-tag cve">
+                          {article.cve}
+                        </span>
+                      ) : null}
+                    </div>
+                  </Link>
+                ) : (
+                  <div className="card-image-stub">
+                    <span className="card-category-badge">
+                      {article.category}
                     </span>
-                  ) : article.cve ? (
-                    <span style={{ fontSize: "11px", fontWeight: 600, fontFamily: "var(--font-mono)", color: "hsl(var(--muted-foreground))" }}>
-                      {article.cve}
-                    </span>
-                  ) : null}
-                </div>
+
+                    {isDeal && article.fundingAmount ? (
+                      <span style={{ fontSize: "11px", fontWeight: 700, color: "hsl(var(--success))" }}>
+                        {article.fundingAmount}
+                      </span>
+                    ) : article.cve ? (
+                      <span style={{ fontSize: "11px", fontWeight: 600, fontFamily: "var(--font-mono)", color: "hsl(var(--muted-foreground))" }}>
+                        {article.cve}
+                      </span>
+                    ) : null}
+                  </div>
+                )}
 
                 <div className="card-body">
                   <div className="card-metadata">

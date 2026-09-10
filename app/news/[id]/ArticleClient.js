@@ -338,12 +338,49 @@ Direct CISO Consultation Hotline: https://hackerpost.online/consult
                 </div>
               </div>
               
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
                 <span>{article.views || 0} views</span>
                 <span>•</span>
                 <span style={{ color: "hsl(var(--primary))", fontWeight: 600 }}>{article.providerName || "Verified Feed"}</span>
+                {article.tweetUrl && (
+                  <>
+                    <span>•</span>
+                    <a 
+                      href={article.tweetUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      style={{ 
+                        color: "hsl(var(--primary))", 
+                        display: "inline-flex", 
+                        alignItems: "center", 
+                        gap: "5px", 
+                        textDecoration: "none", 
+                        fontWeight: 600,
+                        fontSize: "12px"
+                      }}
+                      title="View verified advisory broadcast on X"
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                      Broadcast on X
+                    </a>
+                  </>
+                )}
               </div>
             </div>
+
+            {article.imageUrl && (
+              <div className="article-hero-banner" style={{ marginTop: "20px" }}>
+                <img
+                  src={article.imageUrl}
+                  alt={currentTitle}
+                  className="article-hero-img"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            )}
           </header>
 
           {/* CISO Executive Action Center (Clean Corporate News Box) */}

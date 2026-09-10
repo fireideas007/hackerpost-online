@@ -1,5 +1,71 @@
 [
   {
+    "id": "x_post_1789042598012_vl1h",
+    "articleId": "pub-1789042598008",
+    "articleTitle": "Zero-Day Exploitation Bulletin: Threat Actor Targeting Edge Gateways (CVE-2026-8819)",
+    "handle": "@HackerPostOnline",
+    "accountUrl": "https://x.com/HackerPostOnline",
+    "tweetText": "🚨 CRITICAL 0-DAY ALERT: Zero-Day Exploitation Bulletin: Threat Actor Targeting Edg... [CVE-2026-8819]\n\n#CyberSecurity #InfoSec #HackerPost #CVE20268819 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/zero-day-exploitation-bulletin-threat-actor-targeting-edge-gateways",
+    "charCount": 276,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CVE20268819",
+      "#0day",
+      "#Vulnerability"
+    ],
+    "articleUrl": "https://hackerpost.online/news/zero-day-exploitation-bulletin-threat-actor-targeting-edge-gateways",
+    "timestamp": "2026-09-10T12:16:38.012Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPostOnline. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPostOnline"
+  },
+  {
+    "id": "x_post_1789041533971_26ek",
+    "articleId": "test-cve-1",
+    "articleTitle": "Critical Zero-Day Remote Code Execution Vulnerability in Enterprise Fortinet Firewalls (CVE-2026-4401)",
+    "handle": "@CyberDefenseWire",
+    "accountUrl": "https://x.com/CyberDefenseWire",
+    "tweetText": "🚨 CRITICAL 0-DAY ALERT: Critical Zero-Day Remote Code Execution Vulnerability in Enterprise Fortinet Firewalls (CVE-2026-4401) [CVE-2026-4401]\n\n#CyberSecurity #InfoSec #HackerPost #CVE20264401 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/fortinet-cve-2026-4401-rce",
+    "charCount": 276,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CVE20264401",
+      "#0day",
+      "#Vulnerability"
+    ],
+    "articleUrl": "https://hackerpost.online/news/fortinet-cve-2026-4401-rce",
+    "timestamp": "2026-09-10T11:58:53.971Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @CyberDefenseWire. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/CyberDefenseWire"
+  },
+  {
+    "id": "x_post_1789041533965_w33x",
+    "articleId": "test-cve-1",
+    "articleTitle": "Critical Zero-Day Remote Code Execution Vulnerability in Enterprise Fortinet Firewalls (CVE-2026-4401)",
+    "handle": "@CyberDefenseWire",
+    "accountUrl": "https://x.com/CyberDefenseWire",
+    "tweetText": "🚨 CRITICAL 0-DAY ALERT: Critical Zero-Day Remote Code Execution Vulnerability in Enterprise Fortinet Firewalls (CVE-2026-4401) [CVE-2026-4401]\n\n#CyberSecurity #InfoSec #HackerPost #CVE20264401 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/fortinet-cve-2026-4401-rce",
+    "charCount": 276,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CVE20264401",
+      "#0day",
+      "#Vulnerability"
+    ],
+    "articleUrl": "https://hackerpost.online/news/fortinet-cve-2026-4401-rce",
+    "timestamp": "2026-09-10T11:58:53.959Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @CyberDefenseWire. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/CyberDefenseWire"
+  },
+  {
     "id": "x_post_1788879348202_yksp",
     "articleId": "pub-startup-1",
     "articleTitle": "SecTech Venture: Cyera Secures $300M Series D to Lead Enterprise AI Data Security Posture Management (DSPM)",

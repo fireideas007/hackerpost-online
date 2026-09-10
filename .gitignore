@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/node_modules.nosync
+/node_modules*
 /.pnp
 .pnp.*
 .yarn/*
@@ -15,6 +17,9 @@
 
 # next.js
 /.next/
+/.next
+/.next.nosync
+/.next*
 /out/
 
 # production

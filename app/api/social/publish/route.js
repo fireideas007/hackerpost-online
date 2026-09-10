@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getPublishedArticleById } from "@/lib/newsStore";
-import { composeTweet, publishToX } from "@/lib/xPublisher";
+import { composeTweet, publishToX, getTwitterConfig } from "@/lib/xPublisher";
 
 export const dynamic = "force-dynamic";
 
@@ -19,10 +19,14 @@ export async function GET(request) {
       return NextResponse.json({ success: false, error: "Article not found" }, { status: 404 });
     }
 
+    const config = getTwitterConfig();
     const tweetPreview = composeTweet(article);
+
     return NextResponse.json({
       success: true,
-      handle: process.env.X_ACCOUNT_HANDLE || "@HackerPost2",
+      handle: config.handle,
+      isLiveConfigured: config.isLiveConfigured,
+      isVerified: config.isVerified,
       tweet: tweetPreview
     });
   } catch (err) {
@@ -30,11 +34,11 @@ export async function GET(request) {
   }
 }
 
-// POST /api/social/publish - Broadcast an article to X (@HackerPost2)
+// POST /api/social/publish - Broadcast an article to X
 export async function POST(request) {
   try {
     const body = await request.json().catch(() => ({}));
-    const { articleId, article } = body;
+    const { articleId, article, force } = body;
 
     let targetArticle = article;
     if (!targetArticle && articleId) {
@@ -48,7 +52,7 @@ export async function POST(request) {
       );
     }
 
-    const result = await publishToX(targetArticle);
+    const result = await publishToX(targetArticle, { force: force !== false });
     return NextResponse.json({
       success: true,
       message: `Article successfully processed for X syndication (${result.handle}).`,
