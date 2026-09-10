@@ -6,7 +6,7 @@ export const metadata = {
   },
   openGraph: {
     title: "AI Security Model Leaderboard (2026) | HackerPost",
-    description: "Authoritative cybersecurity evaluations ranking Claude 3.7 Sonnet, GPT-4o, and CyberSec Llama across 5 rigorous threat vectors.",
+    description: "Authoritative cybersecurity evaluations ranking Claude 3.7 Sonnet, OpenAI o3-mini, Gemini 2.0, Grok 3, and DeepSeek-R1 across 5 rigorous threat vectors.",
     url: "/benchmarks",
     siteName: "HackerPost.online",
     images: [
@@ -24,7 +24,7 @@ export const metadata = {
     site: "@HackerPost2",
     creator: "@HackerPost2",
     title: "AI Security Model Leaderboard (2026) | HackerPost",
-    description: "Authoritative cybersecurity evaluations ranking Claude 3.7 Sonnet, GPT-4o, and CyberSec Llama across 5 rigorous threat vectors.",
+    description: "Authoritative cybersecurity evaluations ranking Claude 3.7 Sonnet, OpenAI o3-mini, Gemini 2.0, Grok 3, and DeepSeek-R1 across 5 rigorous threat vectors.",
     images: ["/ai-benchmark-card.svg"]
   }
 };

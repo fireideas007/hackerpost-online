@@ -21,7 +21,7 @@ export default function BenchmarkSocialShare() {
 
   const benchmarkUrl = "https://hackerpost.online/benchmarks";
   const shareTitle = "AI Security Model Leaderboard (2026) — Authoritative LLM Evaluation";
-  const sharePreText = "📊 2026 AI Security Model Leaderboard: Claude 3.7 Sonnet, GPT-4o, and CyberSec Llama ranked on CVE patching, prompt injection defense, & exploit synthesis. Check live rankings on @HackerPost2:";
+  const sharePreText = "📊 2026 AI Security Model Leaderboard: Claude 3.7 Sonnet, OpenAI o3-mini, Gemini 2.0 Flash Thinking, and DeepSeek-R1 ranked on CVE patching, prompt injection defense, & exploit synthesis. Check live rankings on @HackerPost2:";
   const hashtags = "AISecurity,CyberSecurity,InfoSec,LLM,GenAI,CISO,HackerPost";
 
   // Share URLs
