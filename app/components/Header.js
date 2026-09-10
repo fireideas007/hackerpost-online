@@ -67,6 +67,10 @@ export default function Header() {
           </div>
 
           <div className="telemetry-actions">
+            <Link href="/leaderboard" className="top-bar-link">
+              <span>CISO Vendor Index</span>
+            </Link>
+            <span className="telemetry-divider">|</span>
             <Link href="/advertise" className="top-bar-link">
               <span>Media Kit &amp; PR Wire</span>
             </Link>
@@ -179,6 +183,13 @@ export default function Header() {
             </Link>
 
             <Link 
+              href="/leaderboard" 
+              className={`nav-link ${pathname === "/leaderboard" ? "active" : ""}`}
+            >
+              CISO Vendor Index
+            </Link>
+
+            <Link 
               href="/consult" 
               className={`nav-link ${pathname === "/consult" ? "active" : ""}`}
             >
@@ -244,6 +255,13 @@ export default function Header() {
             onClick={() => setMobileMenuOpen(false)}
           >
             AI Security Benchmarks
+          </Link>
+          <Link 
+            href="/leaderboard" 
+            className={`mobile-nav-link ${pathname === "/leaderboard" ? "active" : ""}`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            CISO Vendor Index
           </Link>
           <Link 
             href="/consult" 

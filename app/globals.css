@@ -1361,3 +1361,25 @@ button, input, select, textarea {
   color: hsl(var(--foreground));
   border-color: hsl(var(--muted-foreground));
 }
+
+/* ==============================================================================
+   CISO Capability Leaderboard & Matrix Styles
+   ============================================================================== */
+.vendor-table-row:hover {
+  background: rgba(15, 54, 116, 0.035) !important;
+}
+
+[data-theme="dark"] .vendor-table-row:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+[data-theme="dark"] .hackproof-lead-box {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.15) 0%, rgba(30, 58, 138, 0.25) 100%) !important;
+  border-color: rgba(96, 165, 250, 0.3) !important;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
