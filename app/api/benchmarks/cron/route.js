@@ -17,10 +17,13 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    let force = false;
+    const { searchParams } = new URL(req.url);
+    let force = searchParams.get("force") === "true";
     try {
       const body = await req.json();
-      force = !!body.force;
+      if (body && typeof body.force === "boolean") {
+        force = body.force;
+      }
     } catch (_) {}
 
     const result = updateDailyBenchmarks(force);

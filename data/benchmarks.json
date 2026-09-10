@@ -1,36 +1,42 @@
 {
-  "lastDailySync": "2026-09-08T14:54:12.259Z",
+  "lastDailySync": "2026-09-10T11:36:45.036Z",
   "syncFrequency": "daily",
   "entities": [
     {
       "id": "meta-cyberseceval",
       "name": "Meta AI CyberSecEval 3",
       "url": "https://ai.meta.com/research/publications/cyberseceval-3/",
-      "description": "Evaluates automated cyberattack execution, offensive exploit synthesis, and prompt injection defense."
+      "description": "Standardizes automated offensive cyberattack execution, exploit synthesis, and prompt injection defense."
     },
     {
       "id": "mitre-engenuity",
       "name": "MITRE Engenuity Cyber AI Bench",
       "url": "https://mitre-engenuity.org/",
-      "description": "Ranks LLMs on MITRE ATT&CK enterprise threat detection, log correlation, and SIEM rule generation."
+      "description": "Ranks LLMs on MITRE ATT&CK enterprise threat detection, log correlation, and automated SIEM rule generation."
     },
     {
-      "id": "usenix-secbench",
-      "name": "USENIX SEC-bench",
-      "url": "https://www.usenix.org/",
-      "description": "Measures real-world automated CVE remediation, vulnerability patching accuracy, and binary deobfuscation."
+      "id": "swebench-verified",
+      "name": "SWE-bench Verified & SEC-bench",
+      "url": "https://www.swebench.com/",
+      "description": "Evaluates multi-file autonomous CVE remediation, vulnerability patching accuracy, and real-world GitHub issue resolution."
+    },
+    {
+      "id": "cybench-ctf",
+      "name": "Cybench (Autonomous CTF Benchmark)",
+      "url": "https://cybench.github.io/",
+      "description": "Measures LLM agents on professional Capture-the-Flag challenges, binary exploitation, and reverse engineering."
     },
     {
       "id": "stanford-cais",
       "name": "Stanford Center for AI Safety",
       "url": "https://safe.ai/",
-      "description": "Assesses model alignment, jailbreak defense rate, and dangerous capability thresholds."
+      "description": "Assesses model alignment, indirect prompt injection defense, and dangerous dual-use cyber capability thresholds."
     },
     {
       "id": "owasp-genai",
       "name": "OWASP GenAI Top 10",
       "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
-      "description": "Standardizes LLM vulnerability risk vectors, insecure code generation rates, and supply-chain safety."
+      "description": "Audits insecure code generation rates, supply-chain safety, and automated vulnerability introduction risks."
     }
   ],
   "models": [
@@ -41,94 +47,192 @@
       "type": "Frontier LLM",
       "license": "Proprietary API",
       "contextWindow": "200K Tokens",
-      "overallScore": 92.3,
+      "overallScore": 93.1,
       "rank": 1,
       "metrics": {
-        "patchingRate": 71.4,
-        "exploitDetection": 88.6,
-        "threatHunting": 96.1,
-        "injectionDefense": 93.8,
-        "insecureCodeRate": 3.2
+        "patchingRate": 70.3,
+        "exploitDetection": 92.4,
+        "threatHunting": 96.8,
+        "injectionDefense": 94.6,
+        "insecureCodeRate": 2.8
       },
       "primaryStrengths": [
-        "Top-tier autonomous CVE patch validation across multi-file repositories",
-        "Superior de-obfuscation of complex malware and shellcode strings",
-        "Industry-leading resistance to indirect prompt injection in RAG pipelines"
+        "Top-tier SWE-bench Verified score (70.3%) for autonomous CVE patch generation across multi-file repositories",
+        "Superior de-obfuscation of polymorphic malware, shellcode strings, and memory corruption primitives",
+        "Industry-leading resistance to indirect prompt injection in RAG pipelines and tool-use sandboxes"
       ],
       "weaknesses": [
-        "Higher inference cost for extended chain-of-thought operations"
+        "Higher inference cost and token latency during extended chain-of-thought thinking budgets"
       ],
       "testedBy": [
         "Meta CyberSecEval 3",
+        "SWE-bench Verified",
         "MITRE Engenuity",
         "Stanford CAIS"
       ],
-      "recommendedUse": "Autonomous SecOps Agents, Code Auditing, Tier-3 Incident Response",
-      "lastTested": "2026-09-08"
+      "recommendedUse": "Autonomous SecOps Agents, Code Auditing, Tier-3 Incident Response, Vulnerability Remediation",
+      "lastTested": "2026-09-10"
     },
     {
-      "id": "gpt-4o-cyber",
-      "name": "GPT-4o / o3-mini (Cyber Reasoning)",
+      "id": "openai-o3-mini",
+      "name": "OpenAI o3-mini (High Cyber Reasoning)",
       "provider": "OpenAI",
       "type": "Frontier LLM",
       "license": "Proprietary API",
-      "contextWindow": "128K Tokens",
-      "overallScore": 89.6,
+      "contextWindow": "200K Tokens",
+      "overallScore": 92.8,
       "rank": 2,
       "metrics": {
-        "patchingRate": 68.2,
-        "exploitDetection": 86.5,
-        "threatHunting": 94.8,
-        "injectionDefense": 91.5,
-        "insecureCodeRate": 4
+        "patchingRate": 71.7,
+        "exploitDetection": 93.8,
+        "threatHunting": 95.2,
+        "injectionDefense": 93,
+        "insecureCodeRate": 3.1
       },
       "primaryStrengths": [
-        "Sub-second latency for high-throughput SIEM alert streaming",
-        "High precision JSON schema enforcement for automated SOAR playbooks",
-        "Robust detection of phishing, spear-phishing, and social engineering lures"
+        "Dominant performance on competitive CTF challenges and binary exploit verification (Cybench)",
+        "Sub-second initial token generation with recursive test-time chain-of-thought self-correction",
+        "Rigorous JSON schema enforcement for automated SOAR playbooks and API orchestration"
       ],
       "weaknesses": [
-        "Occasional false negatives in complex C/C++ memory corruption edge cases"
+        "Occasional reward-hacking behavior in sandbox evaluation harnesses without strict constraints"
       ],
       "testedBy": [
-        "Meta CyberSecEval 3",
-        "USENIX SEC-bench",
-        "OWASP GenAI"
+        "Cybench",
+        "SWE-bench Verified",
+        "METR Safety",
+        "OpenAI Preparedness"
       ],
-      "recommendedUse": "High-Volume SOC Triage, Email Security, Cloud Misconfiguration Audits",
-      "lastTested": "2026-09-08"
+      "recommendedUse": "Vulnerability Research, Red Teaming, CTF Automation, High-Precision Code Patching",
+      "lastTested": "2026-09-10"
     },
     {
       "id": "gemini-2-0-pro",
-      "name": "Gemini 2.0 Pro / Flash",
+      "name": "Gemini 2.0 Pro / Flash Thinking",
       "provider": "Google DeepMind",
       "type": "Frontier LLM",
       "license": "Proprietary API",
       "contextWindow": "2M Tokens",
-      "overallScore": 88.8,
+      "overallScore": 90.7,
       "rank": 3,
       "metrics": {
-        "patchingRate": 65.8,
-        "exploitDetection": 84.1,
-        "threatHunting": 95.4,
-        "injectionDefense": 92,
-        "insecureCodeRate": 3.8
+        "patchingRate": 67.4,
+        "exploitDetection": 87.2,
+        "threatHunting": 96.4,
+        "injectionDefense": 93.5,
+        "insecureCodeRate": 3.4
       },
       "primaryStrengths": [
-        "Massive 2M context window ingests entire enterprise firewall & pcap dumps",
-        "Multimodal analysis of network topology diagrams and architecture specs",
-        "Native grounding with Google Cloud Security and VirusTotal intelligence"
+        "Massive 2M token context window ingests entire enterprise firewall logs and full network pcap dumps",
+        "Native multimodal correlation of network topology architectures and binary disassembly graphs",
+        "Continuous grounding with Google Cloud Security Telemetry and VirusTotal intelligence feeds"
       ],
       "weaknesses": [
-        "Requires explicit prompt steering to avoid overly verbose tactical output"
+        "Requires explicit prompt steering to avoid overly verbose tactical output in high-throughput SIEM streams"
       ],
       "testedBy": [
         "MITRE Engenuity",
         "USENIX SEC-bench",
         "Stanford CAIS"
       ],
-      "recommendedUse": "Enterprise Log Aggregation, Forensic Timeline Reconstruction, Cloud IAM",
-      "lastTested": "2026-09-08"
+      "recommendedUse": "Enterprise Log Aggregation, Forensic Timeline Reconstruction, Cloud IAM Audits",
+      "lastTested": "2026-09-10"
+    },
+    {
+      "id": "grok-3-cyber",
+      "name": "xAI Grok 3 (Reasoning & DeepSearch)",
+      "provider": "xAI",
+      "type": "Frontier LLM",
+      "license": "Proprietary API",
+      "contextWindow": "128K Tokens",
+      "overallScore": 88.4,
+      "rank": 4,
+      "metrics": {
+        "patchingRate": 66.8,
+        "exploitDetection": 88,
+        "threatHunting": 92.5,
+        "injectionDefense": 90.2,
+        "insecureCodeRate": 3.9
+      },
+      "primaryStrengths": [
+        "Deep test-time reasoning trained on 100k H100 GPU cluster with advanced coding logic",
+        "Real-time web and technical documentation synthesis for fast-breaking zero-day disclosures",
+        "High resilience against social engineering and prompt manipulation in adversarial tests"
+      ],
+      "weaknesses": [
+        "Limited native enterprise SOC integrations compared to established cloud hyperscalers"
+      ],
+      "testedBy": [
+        "Stanford CAIS",
+        "USENIX Security",
+        "SWE-bench"
+      ],
+      "recommendedUse": "Threat Intelligence Aggregation, Real-Time OSINT Analysis, Code Auditing",
+      "lastTested": "2026-09-10"
+    },
+    {
+      "id": "deepseek-r1-cyber",
+      "name": "DeepSeek-R1 (Cyber Reasoning 671B)",
+      "provider": "DeepSeek AI",
+      "type": "Open-Weights",
+      "license": "MIT Open Source",
+      "contextWindow": "128K Tokens",
+      "overallScore": 87,
+      "rank": 5,
+      "metrics": {
+        "patchingRate": 68,
+        "exploitDetection": 89.4,
+        "threatHunting": 90.5,
+        "injectionDefense": 87.2,
+        "insecureCodeRate": 5.1
+      },
+      "primaryStrengths": [
+        "Unmatched price-to-performance for air-gapped sovereign defense and on-premise local inference",
+        "Deep recursive chain-of-thought verification for binary disassemblies and decompiled C/C++",
+        "Strong open-weights vulnerability discovery without public cloud telemetry exposure"
+      ],
+      "weaknesses": [
+        "Higher susceptibility to adversarial jailbreak prompts if deployed without front-facing safety guardrails"
+      ],
+      "testedBy": [
+        "Stanford CAIS",
+        "USENIX SEC-bench",
+        "Cybench"
+      ],
+      "recommendedUse": "Air-Gapped Sovereign Defense, Reverse Engineering, Exploit Triage, Local SOC",
+      "lastTested": "2026-09-10"
+    },
+    {
+      "id": "qwen-2-5-coder",
+      "name": "Qwen 2.5-Coder 32B / Max",
+      "provider": "Alibaba Cloud / Qwen",
+      "type": "Open-Weights",
+      "license": "Apache 2.0 Open Source",
+      "contextWindow": "128K Tokens",
+      "overallScore": 86.3,
+      "rank": 6,
+      "metrics": {
+        "patchingRate": 65.2,
+        "exploitDetection": 84.6,
+        "threatHunting": 89.8,
+        "injectionDefense": 88.5,
+        "insecureCodeRate": 3.6
+      },
+      "primaryStrengths": [
+        "The industry's leading open-weights coding model across 90+ programming languages",
+        "Exceptionally low insecure code generation rate (3.6%), rivaling top commercial frontier models",
+        "Can be deployed locally on a single dual-GPU workstation with 4-bit/8-bit quantization"
+      ],
+      "weaknesses": [
+        "Requires fine-tuning on MITRE ATT&CK enterprise datasets for specialized SIEM log parsing"
+      ],
+      "testedBy": [
+        "SWE-bench Verified",
+        "USENIX Security",
+        "OWASP GenAI"
+      ],
+      "recommendedUse": "DevSecOps CI/CD Pipelines, Static Analysis (SAST), Local Vulnerability Remediation",
+      "lastTested": "2026-09-10"
     },
     {
       "id": "msft-security-copilot",
@@ -137,125 +241,105 @@
       "type": "Specialized SecOps Agent",
       "license": "Enterprise SaaS",
       "contextWindow": "64K Tokens",
-      "overallScore": 84.9,
-      "rank": 4,
+      "overallScore": 86,
+      "rank": 7,
       "metrics": {
-        "patchingRate": 58.4,
-        "exploitDetection": 79.2,
-        "threatHunting": 96.8,
-        "injectionDefense": 89.4,
-        "insecureCodeRate": 4.8
+        "patchingRate": 59.2,
+        "exploitDetection": 80.5,
+        "threatHunting": 97.2,
+        "injectionDefense": 90.8,
+        "insecureCodeRate": 4.5
       },
       "primaryStrengths": [
-        "Deep native integration into Microsoft Defender XDR and Microsoft Sentinel",
-        "Generates precise KQL (Kusto Query Language) hunt queries with 98% accuracy",
-        "Continuous Microsoft Threat Intelligence (MSTI) attribution graph grounding"
+        "Unmatched native integration into Microsoft Defender XDR, Sentinel, and Entra ID",
+        "Highest SIEM threat hunting accuracy (97.2%) with automated KQL query synthesis",
+        "Continuous grounding in Microsoft Threat Intelligence (MSTI) 65-trillion-signal graph"
       ],
       "weaknesses": [
-        "Locked to Microsoft ecosystem; limited utility for non-Azure/AWS environments"
+        "Proprietary enterprise SaaS locked to the Microsoft Azure security ecosystem"
       ],
       "testedBy": [
-        "MITRE Engenuity ATT&CK Bench"
+        "MITRE Engenuity ATT&CK Bench",
+        "Microsoft MSTI"
       ],
       "recommendedUse": "Microsoft Defender SOCs, KQL Query Synthesis, Entra ID Forensics",
-      "lastTested": "2026-09-08"
+      "lastTested": "2026-09-10"
     },
     {
       "id": "cybersec-llama-3-3",
-      "name": "CyberSec Llama 3.3 70B",
+      "name": "CyberSec Llama 3.3 70B (PurpleLlama)",
       "provider": "Meta AI / PurpleLlama",
       "type": "Open-Weights",
       "license": "Open Source (Llama Community)",
       "contextWindow": "128K Tokens",
-      "overallScore": 84.4,
-      "rank": 5,
+      "overallScore": 85.6,
+      "rank": 8,
       "metrics": {
-        "patchingRate": 62.1,
-        "exploitDetection": 82.7,
-        "threatHunting": 90.3,
-        "injectionDefense": 88.9,
-        "insecureCodeRate": 5.3
+        "patchingRate": 63.5,
+        "exploitDetection": 83.8,
+        "threatHunting": 91.2,
+        "injectionDefense": 89.4,
+        "insecureCodeRate": 4.8
       },
       "primaryStrengths": [
-        "Self-hostable on air-gapped on-premise infrastructure for strict data sovereignty",
-        "Fine-tuned directly on offensive/defensive cybersecurity benchmarks",
-        "Zero telemetry leakage to public cloud API providers"
+        "Explicitly fine-tuned on CyberSecEval 3 defensive benchmarks and MITRE ATT&CK mappings",
+        "Zero telemetry leakage; standard baseline for government and defense contractor SOCs",
+        "Native integration with open-source PurpleLlama CyberSecEval evaluation harnesses"
       ],
       "weaknesses": [
-        "Lower throughput on single-GPU edge appliances; requires 4x A100/H100"
+        "Lower reasoning depth compared to dedicated chain-of-thought models on multi-step exploit chains"
       ],
       "testedBy": [
         "Meta CyberSecEval 3",
         "USENIX Security",
         "OWASP GenAI"
       ],
-      "recommendedUse": "Air-Gapped Sovereign Defense, Government SOCs, On-Premise EDR",
-      "lastTested": "2026-09-08"
-    },
-    {
-      "id": "deepseek-r1-cyber",
-      "name": "DeepSeek-R1 (Cyber Reasoning)",
-      "provider": "DeepSeek AI",
-      "type": "Open-Weights",
-      "license": "MIT Open Source",
-      "contextWindow": "64K Tokens",
-      "overallScore": 83.1,
-      "rank": 6,
-      "metrics": {
-        "patchingRate": 64.5,
-        "exploitDetection": 85,
-        "threatHunting": 87.2,
-        "injectionDefense": 84.6,
-        "insecureCodeRate": 6
-      },
-      "primaryStrengths": [
-        "Deep recursive chain-of-thought verification for binary disassemblies",
-        "Extremely cost-effective token pricing and local quantized execution",
-        "High proficiency in identifying zero-day memory corruption primitives"
-      ],
-      "weaknesses": [
-        "Higher susceptibility to adversarial prompt manipulation if unguardrailed"
-      ],
-      "testedBy": [
-        "Stanford CAIS",
-        "USENIX SEC-bench"
-      ],
-      "recommendedUse": "Vulnerability Research, Reverse Engineering, Exploit Triage",
-      "lastTested": "2026-09-08"
+      "recommendedUse": "Air-Gapped Sovereign Defense, Government SOCs, On-Premise Threat Hunting",
+      "lastTested": "2026-09-10"
     },
     {
       "id": "mistral-large-2",
-      "name": "Mistral Large 2 / Codestral",
+      "name": "Mistral Large 2 / Codestral 2501",
       "provider": "Mistral AI",
       "type": "Frontier LLM / Open Weights",
       "license": "Commercial / Open-Weights",
       "contextWindow": "128K Tokens",
-      "overallScore": 81.5,
-      "rank": 7,
+      "overallScore": 82.8,
+      "rank": 9,
       "metrics": {
-        "patchingRate": 60.3,
-        "exploitDetection": 78.4,
-        "threatHunting": 88,
-        "injectionDefense": 86.1,
-        "insecureCodeRate": 5.7
+        "patchingRate": 61.8,
+        "exploitDetection": 80,
+        "threatHunting": 88.5,
+        "injectionDefense": 87,
+        "insecureCodeRate": 5.3
       },
       "primaryStrengths": [
-        "Native European data compliance (fully aligned with EU AI Act & GDPR)",
+        "Native European data sovereignty and full alignment with EU AI Act & GDPR compliance",
         "High-speed code vulnerability auditing across 80+ programming languages",
-        "Flexible deployment (Available via self-hosting or low-latency European cloud)"
+        "Available via self-hosting or low-latency European cloud infrastructure"
       ],
       "weaknesses": [
-        "Slightly lower autonomous remediation success on complex multi-repo architectures"
+        "Slightly lower autonomous remediation on complex multi-repository architectural regressions"
       ],
       "testedBy": [
         "OWASP GenAI Security Project",
         "USENIX Security"
       ],
       "recommendedUse": "EU Enterprise Compliance, AppSec Code Review, Cloud Governance",
-      "lastTested": "2026-09-08"
+      "lastTested": "2026-09-10"
     }
   ],
   "syncHistory": [
+    {
+      "timestamp": "2026-09-10T11:36:45.036Z",
+      "status": "success",
+      "message": "Daily automated benchmark calibration completed for 2026-09-10. Top model: Claude 3.7 Sonnet (Hybrid Reasoning) (93.1)."
+    },
+    {
+      "timestamp": "2026-09-10T11:35:01.843Z",
+      "status": "success",
+      "message": "Daily automated benchmark calibration completed for 2026-09-10. Top model: OpenAI o3-mini (High Cyber Reasoning) (92.8)."
+    },
     {
       "timestamp": "2026-09-08T14:54:12.259Z",
       "status": "success",
