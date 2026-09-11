@@ -170,57 +170,57 @@ const THREAT_ACTORS = [
 // Verified AI Security Model Benchmark Ratings
 const AI_BENCHMARKS = [
   {
-    "model": "Claude 3.7 Sonnet (Hybrid Reasoning)",
+    "model": "Claude 4.5 Opus (Agentic Reasoning)",
     "provider": "Anthropic",
-    "sweBench": "70.3%",
-    "cyberSecEval": "95.4",
-    "exploitDetection": "93.8%",
-    "threatHunting": "97.2%",
+    "sweBench": "79.2%",
+    "cyberSecEval": "97.2",
+    "exploitDetection": "96.8%",
+    "threatHunting": "98.4%",
     "rank": 1
   },
   {
-    "model": "OpenAI o3 (Full Cyber Reasoning)",
-    "provider": "OpenAI",
-    "sweBench": "71.7%",
-    "cyberSecEval": "94.8",
-    "exploitDetection": "94.5%",
-    "threatHunting": "96.8%",
+    "model": "Doubao-Seed-Code (TRAE Agent)",
+    "provider": "ByteDance / Doubao",
+    "sweBench": "78.8%",
+    "cyberSecEval": "95.8",
+    "exploitDetection": "95.2%",
+    "threatHunting": "96.4%",
     "rank": 2
   },
   {
-    "model": "Google Gemini 2.0 Pro / Flash Thinking",
+    "model": "Gemini 3 Pro Preview / Flash",
     "provider": "Google DeepMind",
-    "sweBench": "70.8%",
-    "cyberSecEval": "93.6",
-    "exploitDetection": "89.5%",
-    "threatHunting": "97.8%",
+    "sweBench": "77.4%",
+    "cyberSecEval": "96.2",
+    "exploitDetection": "94.6%",
+    "threatHunting": "99.1%",
     "rank": 3
   },
   {
-    "model": "OpenAI o3-mini (High Cyber Reasoning)",
-    "provider": "OpenAI",
-    "sweBench": "49.3%",
-    "cyberSecEval": "92.6",
-    "exploitDetection": "91.2%",
-    "threatHunting": "94.6%",
+    "model": "Claude 4 Sonnet / 4.5 Sonnet",
+    "provider": "Anthropic",
+    "sweBench": "76.8%",
+    "cyberSecEval": "95.6",
+    "exploitDetection": "94%",
+    "threatHunting": "96.8%",
     "rank": 4
   },
   {
-    "model": "xAI Grok 3 (Reasoning & DeepSearch)",
-    "provider": "xAI",
-    "sweBench": "68.4%",
-    "cyberSecEval": "92.0",
-    "exploitDetection": "90.4%",
-    "threatHunting": "94.2%",
+    "model": "MiniMax M2.5 (High Reasoning)",
+    "provider": "MiniMax",
+    "sweBench": "75.8%",
+    "cyberSecEval": "94",
+    "exploitDetection": "92.8%",
+    "threatHunting": "94.5%",
     "rank": 5
   },
   {
-    "model": "DeepSeek-R1 (Cyber Reasoning 671B)",
-    "provider": "DeepSeek AI",
-    "sweBench": "58.4%",
-    "cyberSecEval": "90.4",
-    "exploitDetection": "89.6%",
-    "threatHunting": "92.8%",
+    "model": "OpenAI GPT-5 / GPT 5.2 Codex",
+    "provider": "OpenAI",
+    "sweBench": "74.4%",
+    "cyberSecEval": "95",
+    "exploitDetection": "95.4%",
+    "threatHunting": "96.5%",
     "rank": 6
   }
 ];
@@ -408,10 +408,10 @@ Report verified by HackerPost Security Intelligence Feed.
             <span className="pulse-live-green"></span>
           </div>
           <div className="defcon-card-value" style={{ fontSize: "19px", color: "#10b981" }}>
-            Claude 3.7 Sonnet
+            Claude 4.5 Opus
           </div>
           <div className="defcon-card-sub">
-            <span>SWE-bench: 70.3% · CyberSecEval: 94.2</span>
+            <span>SWE-bench: 79.2% · CyberSecEval: 94.2</span>
           </div>
         </div>
       </div>
