@@ -143,7 +143,7 @@ const NAV_DROPDOWNS = [
 ];
 
 export default function Header() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -155,7 +155,7 @@ export default function Header() {
   const router = useRouter();
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
+    const savedTheme = localStorage.getItem("theme") || "dark";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
   }, []);
@@ -217,56 +217,59 @@ export default function Header() {
   };
 
   const formattedDate = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
+    weekday: "short",
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric"
   });
 
   return (
     <div className="header-wrapper" ref={navRef}>
-      {/* Top Utility Masthead Bar */}
-      <div className="top-telemetry-bar">
-        <div className="container top-telemetry-content">
-          <div className="telemetry-item">
-            <span style={{ fontWeight: 600 }}>{formattedDate}</span>
-            <span className="telemetry-divider">|</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-              <span className="live-pulse-dot"></span>
-              <span>Enterprise Cybersecurity Wire · Real-Time Disclosures</span>
+      {/* Top Operations Command Bar (CrowdStrike / Mandiant SOC Standard) */}
+      <div className="ops-telemetry-bar">
+        <div className="container ops-telemetry-inner">
+          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+            <span className="ops-telemetry-pill">
+              <span className="pulse-live-red"></span>
+              <span style={{ color: "#ff3366", fontWeight: 800 }}>DEFCON 3: ELEVATED THREAT</span>
+            </span>
+            <span className="ops-telemetry-pill">
+              <span className="pulse-live"></span>
+              <span>KEV CATALOG: <b>1,288 ACTIVE</b></span>
+            </span>
+            <span className="ops-telemetry-pill" style={{ display: "none", sm: "inline-flex" }}>
+              <span>SENSORS: <b style={{ color: "#10b981" }}>14 FEEDS SYNCED</b></span>
             </span>
           </div>
 
-          <div className="telemetry-actions">
+          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+            <Link href="/benchmarks" className="top-bar-link" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+              <span style={{ color: "#00e5ff", fontWeight: 700 }}>AI SEC-BENCHMARKS</span>
+            </Link>
+            <span className="telemetry-divider">|</span>
             <Link href="/leaderboard" className="top-bar-link">
-              <span>CISO Vendor Index</span>
+              <span>CISO VENDOR INDEX</span>
             </Link>
             <span className="telemetry-divider">|</span>
-            <Link href="/advertise" className="top-bar-link">
-              <span>Media Kit &amp; PR Wire</span>
-            </Link>
-            <span className="telemetry-divider">|</span>
-            <Link href="/consult" className="top-bar-link">
-              <span>Hackproof CISO Advisory</span>
-            </Link>
-            <span className="telemetry-divider">|</span>
-            <Link href="/b2b" className="top-bar-link">
-              <span>API Feed</span>
-            </Link>
+            <span style={{ color: "hsl(var(--muted-foreground))", fontSize: "10px" }}>{formattedDate}</span>
           </div>
         </div>
       </div>
 
-      {/* Main Journal Masthead */}
+      {/* Main Command Masthead */}
       <header className="container header">
         {/* Brand Logo */}
-        <Link href="/" className="logo" aria-label="HackerPost.online Home">
-          <div className="logo-icon-box">
-            <ShieldCheck size={22} />
+        <Link href="/" className="logo" aria-label="HackerPost Intelligence Command">
+          <div className="logo-icon-box" style={{ background: "linear-gradient(135deg, rgba(0,229,255,0.2) 0%, rgba(15,23,42,0.9) 100%)", borderColor: "rgba(0,229,255,0.4)" }}>
+            <ShieldAlert size={22} color="#00e5ff" />
           </div>
           <div className="logo-text-group">
-            <span className="logo-main">HackerPost</span>
-            <span className="logo-domain">Enterprise Cybersecurity &amp; SecTech Journal</span>
+            <span className="logo-main" style={{ letterSpacing: "-0.03em" }}>
+              HACKERPOST <span style={{ color: "#00e5ff", fontSize: "13px", fontWeight: 900 }}>INTEL</span>
+            </span>
+            <span className="logo-domain" style={{ color: "#94a3b8", letterSpacing: "0.06em", fontSize: "10px", fontWeight: 600 }}>
+              GLOBAL CISO THREAT &amp; CYBER-DEFENSE TERMINAL
+            </span>
           </div>
         </Link>
 
@@ -277,7 +280,7 @@ export default function Header() {
             <Search size={14} className="header-search-icon" />
             <input
               type="text"
-              placeholder="Search CVE, vendor, deal..."
+              placeholder="Search CVE, APT, vendor, deal..."
               className="header-search-input"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}

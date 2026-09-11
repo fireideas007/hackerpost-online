@@ -45,8 +45,9 @@ export default function Ticker() {
 
   return (
     <div className="ticker-wrapper" aria-label="Breaking Threat Intel Marquee">
-      <div className="ticker-label">
-        BREAKING WIRE
+      <div className="ticker-label" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+        <span className="pulse-live-red" style={{ width: "6px", height: "6px" }}></span>
+        <span>LIVE THREAT TELEMETRY</span>
       </div>
       <div className="ticker-content">
         {tickerItems.map((item, idx) => (

@@ -26,7 +26,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <body style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         {/* Navigation Bar */}
         <Header />
