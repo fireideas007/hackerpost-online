@@ -1,9 +1,8 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getPublishedArticleById } from "@/lib/newsStore";
 import ArticleClient from "./ArticleClient";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 // Dynamic Metadata Generation for Search Engines (CISO SEO)
 export async function generateMetadata({ params }) {
@@ -22,10 +21,13 @@ export async function generateMetadata({ params }) {
     const cleanDescription = (article.content || "")
       .replace(/#[\s\S]*?\n/, "") // strip the main title
       .replace(/---[\s\S]*$/, "") // strip the attribution footnote
+      .replace(/[#*`_~>[\]]/g, "") // Clean markdown characters
       .substring(0, 160)
       .trim() + "...";
 
     const articleSlug = article.slug || id;
+    const canonicalUrl = `https://hackerpost.online/news/${articleSlug}`;
+    const imageUrl = article.imageUrl || "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&auto=format&fit=crop&q=80";
 
     return {
       title: `${article.title || "Threat Advisory"} | CISO Executive Brief | HackerPost.online`,
@@ -38,19 +40,33 @@ export async function generateMetadata({ params }) {
         "SEC Form 8-K Compliance",
         "Hackproof Technologies",
         "Vulnerability Mitigation Playbook"
-      ],
+      ].filter(Boolean),
       alternates: {
-        canonical: `/news/${articleSlug}`,
+        canonical: canonicalUrl,
       },
       openGraph: {
         title: `${article.title || "Threat Advisory"} | CISO Intelligence Wire`,
         description: cleanDescription,
-        url: `/news/${articleSlug}`,
+        url: canonicalUrl,
         type: "article",
         publishedTime: article.publishedAt,
         siteName: "HackerPost.online Threat Portal",
         authors: ["HackerPost Newsroom Coprocessor", "Hackproof Security Labs"],
+        images: [
+          {
+            url: imageUrl,
+            width: 1200,
+            height: 630,
+            alt: article.title || "HackerPost Threat Advisory"
+          }
+        ]
       },
+      twitter: {
+        card: "summary_large_image",
+        title: `${article.title || "Threat Advisory"} | HackerPost.online`,
+        description: cleanDescription,
+        images: [imageUrl]
+      }
     };
   } catch (_) {
     return {
@@ -69,11 +85,20 @@ export default async function ArticlePage({ params }) {
     notFound();
   }
 
+  // SEO-friendly URL Canonical Enforcement:
+  // If user requested via raw ID (e.g. pub-1 or pub-1789...) or unnormalized slug,
+  // 301 redirect to the clean, keyword-rich SEO canonical slug!
+  if (article.slug && id !== article.slug) {
+    redirect(`/news/${article.slug}`);
+  }
+
   const articleSlug = article.slug || article.id;
+  const canonicalUrl = `https://hackerpost.online/news/${articleSlug}`;
 
   const cleanDescription = (article.content || "")
     .replace(/#[\s\S]*?\n/, "")
     .replace(/---[\s\S]*$/, "")
+    .replace(/[#*`_~>[\]]/g, "")
     .substring(0, 160)
     .trim() + "...";
 
@@ -83,13 +108,14 @@ export default async function ArticlePage({ params }) {
     "@graph": [
       {
         "@type": "NewsArticle",
-        "@id": `https://hackerpost.online/news/${articleSlug}#article`,
+        "@id": `${canonicalUrl}#article`,
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": `https://hackerpost.online/news/${articleSlug}`
+          "@id": canonicalUrl
         },
         "headline": article.title || "Threat Advisory",
         "description": cleanDescription,
+        "image": article.imageUrl ? [article.imageUrl] : [],
         "datePublished": article.publishedAt || new Date().toISOString(),
         "dateModified": article.publishedAt || new Date().toISOString(),
         "author": {
@@ -102,7 +128,7 @@ export default async function ArticlePage({ params }) {
           "name": "HackerPost Threat Portal & Hackproof Technologies",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://hackerpost.online/logo.png"
+            "url": "https://hackerpost.online/favicon.ico"
           }
         },
         "about": {
@@ -112,7 +138,7 @@ export default async function ArticlePage({ params }) {
       },
       {
         "@type": "FAQPage",
-        "@id": `https://hackerpost.online/news/${articleSlug}#faq`,
+        "@id": `${canonicalUrl}#faq`,
         "mainEntity": [
           {
             "@type": "Question",

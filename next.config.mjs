@@ -9,6 +9,11 @@ const nextConfig = {
   turbopack: {
     root: __dirname,
   },
+  outputFileTracingIncludes: {
+    '/news/[id]': ['./data/**/*'],
+    '/api/**/*': ['./data/**/*'],
+    '/': ['./data/**/*'],
+  },
 };
 
 export default nextConfig;

@@ -23,25 +23,39 @@
   "cycleIntervalMinutes": 15,
   "dailyStats": {
     "date": "2026-09-14",
-    "publishedToday": 85,
+    "publishedToday": 96,
     "target": 10,
     "surgeActive": true,
     "threatVelocity": 100,
     "surgeTriggers": [
-      "Critical 0-Day / Vulnerability: Cybersecurity attention fades within months a...",
+      "Critical 0-Day / Vulnerability: Turn it off and on again, but for critical in...",
       "Active Ransomware Wave: Florida confirms DMV database breached via st...",
       "Active Ransomware Wave: Passkey-themed phishing attacks lead to Micro..."
     ]
   },
   "metrics": {
-    "totalCyclesRun": 47,
-    "totalScraped": 5395,
-    "totalAudited": 218,
-    "totalPublished": 129,
+    "totalCyclesRun": 49,
+    "totalScraped": 6011,
+    "totalAudited": 230,
+    "totalPublished": 140,
     "avgSimilarity": 0,
-    "lastRunTime": "2026-09-14T05:18:41.720Z"
+    "lastRunTime": "2026-09-14T06:08:12.778Z"
   },
   "logs": [
+    {
+      "id": "log-1789366092778-3xid",
+      "timestamp": "2026-09-14T06:08:12.778Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.7s. Published: 5 [Daily Total: 96/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789364318505-1k2y",
+      "timestamp": "2026-09-14T05:38:38.505Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 5.2s. Published: 6 [Daily Total: 91/10], Queued: 0.",
+      "details": null
+    },
     {
       "id": "log-1789363121720-ne6b",
       "timestamp": "2026-09-14T05:18:41.720Z",

@@ -83,6 +83,7 @@ export default function ArticleClient({ article = {} }) {
       const d = new Date(dateString);
       if (isNaN(d.getTime())) return "Recently Disclosed";
       return d.toLocaleDateString("en-US", {
+        timeZone: "UTC",
         weekday: "long",
         year: "numeric",
         month: "long",
