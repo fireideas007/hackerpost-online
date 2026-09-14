@@ -23,25 +23,67 @@
   "cycleIntervalMinutes": 15,
   "dailyStats": {
     "date": "2026-09-14",
-    "publishedToday": 100,
+    "publishedToday": 119,
     "target": 10,
     "surgeActive": true,
     "threatVelocity": 100,
     "surgeTriggers": [
-      "Active Ransomware Wave: Passkey-themed phishing attacks lead to Micro...",
+      "Active Ransomware Wave: Revolut discloses data breach exposing financ...",
       "Active Ransomware Wave: Scammers target hundreds of thousands of cryp...",
       "Active Ransomware Wave: Voice Callers Exploit BYOD to Reach Microsoft..."
     ]
   },
   "metrics": {
-    "totalCyclesRun": 52,
-    "totalScraped": 6935,
-    "totalAudited": 248,
-    "totalPublished": 143,
+    "totalCyclesRun": 58,
+    "totalScraped": 8783,
+    "totalAudited": 284,
+    "totalPublished": 162,
     "avgSimilarity": 0,
-    "lastRunTime": "2026-09-14T06:45:42.716Z"
+    "lastRunTime": "2026-09-14T08:56:28.106Z"
   },
   "logs": [
+    {
+      "id": "log-1789376188106-5r4v",
+      "timestamp": "2026-09-14T08:56:28.106Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 4.4s. Published: 3 [Daily Total: 119/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789372844856-yech",
+      "timestamp": "2026-09-14T08:00:44.856Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.3s. Published: 1 [Daily Total: 116/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789371942833-pij8",
+      "timestamp": "2026-09-14T07:45:42.833Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.2s. Published: 5 [Daily Total: 115/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789371043837-10kd",
+      "timestamp": "2026-09-14T07:30:43.837Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 3.2s. Published: 4 [Daily Total: 110/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789370143064-r98k",
+      "timestamp": "2026-09-14T07:15:43.064Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.5s. Published: 5 [Daily Total: 106/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789369302291-y0n0",
+      "timestamp": "2026-09-14T07:01:42.291Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 15.4s. Published: 1 [Daily Total: 101/10], Queued: 0.",
+      "details": null
+    },
     {
       "id": "log-1789368342716-198f",
       "timestamp": "2026-09-14T06:45:42.716Z",
