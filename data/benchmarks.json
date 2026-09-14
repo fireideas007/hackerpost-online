@@ -1,5 +1,5 @@
 {
-  "lastDailySync": "2026-09-11T04:41:38.393Z",
+  "lastDailySync": "2026-09-14T06:45:47.718Z",
   "syncFrequency": "daily",
   "entities": [
     {
@@ -47,7 +47,7 @@
       "type": "Frontier LLM",
       "license": "Proprietary API",
       "contextWindow": "200K Tokens",
-      "overallScore": 98.1,
+      "overallScore": 97.4,
       "rank": 1,
       "metrics": {
         "patchingRate": 79.2,
@@ -71,39 +71,7 @@
         "MITRE Engenuity"
       ],
       "recommendedUse": "Autonomous SecOps Agents, Critical Infrastructure Remediation, Zero-Day Triage, Tier-3 Incident Response",
-      "lastTested": "2026-09-11"
-    },
-    {
-      "id": "doubao-seed-code",
-      "name": "Doubao-Seed-Code (TRAE Agent)",
-      "provider": "ByteDance / Doubao",
-      "type": "Frontier LLM",
-      "license": "Proprietary API",
-      "contextWindow": "128K Tokens",
-      "overallScore": 97.4,
-      "rank": 2,
-      "metrics": {
-        "patchingRate": 78.8,
-        "exploitDetection": 95.2,
-        "threatHunting": 96.4,
-        "injectionDefense": 95.8,
-        "insecureCodeRate": 2
-      },
-      "primaryStrengths": [
-        "Ranks #2 on SWE-bench Verified with 78.8% resolution rate in real-world enterprise repositories",
-        "Specialized in full-stack architecture debugging, complex AST traversal, and static code security audits",
-        "Fast agentic iteration loop minimizing token overhead during large-scale code refactoring"
-      ],
-      "weaknesses": [
-        "Currently restricted regional availability for enterprise cloud API deployments"
-      ],
-      "testedBy": [
-        "SWE-bench Verified",
-        "USENIX SEC-bench",
-        "OWASP GenAI"
-      ],
-      "recommendedUse": "DevSecOps CI/CD Pipelines, High-Speed SAST Auditing, Automated Code Refactoring",
-      "lastTested": "2026-09-11"
+      "lastTested": "2026-09-14"
     },
     {
       "id": "gemini-3-pro",
@@ -112,8 +80,8 @@
       "type": "Frontier LLM",
       "license": "Proprietary API",
       "contextWindow": "2M Tokens",
-      "overallScore": 97,
-      "rank": 3,
+      "overallScore": 96.9,
+      "rank": 2,
       "metrics": {
         "patchingRate": 77.4,
         "exploitDetection": 94.6,
@@ -136,7 +104,39 @@
         "USENIX Security"
       ],
       "recommendedUse": "Enterprise SIEM & SOC Log Ingestion, Multi-Gigabyte PCAP Forensics, Cloud IAM Graph Audits",
-      "lastTested": "2026-09-11"
+      "lastTested": "2026-09-14"
+    },
+    {
+      "id": "doubao-seed-code",
+      "name": "Doubao-Seed-Code (TRAE Agent)",
+      "provider": "ByteDance / Doubao",
+      "type": "Frontier LLM",
+      "license": "Proprietary API",
+      "contextWindow": "128K Tokens",
+      "overallScore": 96.2,
+      "rank": 3,
+      "metrics": {
+        "patchingRate": 78.8,
+        "exploitDetection": 95.2,
+        "threatHunting": 96.4,
+        "injectionDefense": 95.8,
+        "insecureCodeRate": 2
+      },
+      "primaryStrengths": [
+        "Ranks #2 on SWE-bench Verified with 78.8% resolution rate in real-world enterprise repositories",
+        "Specialized in full-stack architecture debugging, complex AST traversal, and static code security audits",
+        "Fast agentic iteration loop minimizing token overhead during large-scale code refactoring"
+      ],
+      "weaknesses": [
+        "Currently restricted regional availability for enterprise cloud API deployments"
+      ],
+      "testedBy": [
+        "SWE-bench Verified",
+        "USENIX SEC-bench",
+        "OWASP GenAI"
+      ],
+      "recommendedUse": "DevSecOps CI/CD Pipelines, High-Speed SAST Auditing, Automated Code Refactoring",
+      "lastTested": "2026-09-14"
     },
     {
       "id": "claude-4-sonnet",
@@ -145,7 +145,7 @@
       "type": "Frontier LLM",
       "license": "Proprietary API",
       "contextWindow": "200K Tokens",
-      "overallScore": 96.5,
+      "overallScore": 95.9,
       "rank": 4,
       "metrics": {
         "patchingRate": 76.8,
@@ -168,38 +168,7 @@
         "Stanford CAIS"
       ],
       "recommendedUse": "Continuous Security Auditing, Automated Patch Verification, Cloud Infrastructure Security",
-      "lastTested": "2026-09-11"
-    },
-    {
-      "id": "minimax-m2-5",
-      "name": "MiniMax M2.5 (High Reasoning)",
-      "provider": "MiniMax",
-      "type": "Frontier LLM",
-      "license": "Proprietary API",
-      "contextWindow": "128K Tokens",
-      "overallScore": 95.2,
-      "rank": 5,
-      "metrics": {
-        "patchingRate": 75.8,
-        "exploitDetection": 92.8,
-        "threatHunting": 94.5,
-        "injectionDefense": 94,
-        "insecureCodeRate": 2.5
-      },
-      "primaryStrengths": [
-        "Top-5 ranking on SWE-bench Verified with 75.8% resolution rate on unassisted mini-SWE-agent harness",
-        "Fast test-time reasoning and self-repair for competitive programming and secure algorithms",
-        "Efficient token consumption reducing enterprise API costs by up to 60%"
-      ],
-      "weaknesses": [
-        "Fewer pre-built integrations for Western enterprise SOC and SIEM platforms"
-      ],
-      "testedBy": [
-        "SWE-bench Verified",
-        "Cybench"
-      ],
-      "recommendedUse": "Automated Code Review, Fast Vulnerability Remediation, Algorithmic Security Testing",
-      "lastTested": "2026-09-11"
+      "lastTested": "2026-09-14"
     },
     {
       "id": "gpt-5-codex",
@@ -208,8 +177,8 @@
       "type": "Frontier LLM",
       "license": "Proprietary API",
       "contextWindow": "256K Tokens",
-      "overallScore": 95,
-      "rank": 6,
+      "overallScore": 95.2,
+      "rank": 5,
       "metrics": {
         "patchingRate": 74.4,
         "exploitDetection": 95.4,
@@ -232,7 +201,38 @@
         "METR Safety"
       ],
       "recommendedUse": "Automated SOAR Orchestration, Red Teaming, CTF Challenge Automation, Binary Code Patching",
-      "lastTested": "2026-09-11"
+      "lastTested": "2026-09-14"
+    },
+    {
+      "id": "minimax-m2-5",
+      "name": "MiniMax M2.5 (High Reasoning)",
+      "provider": "MiniMax",
+      "type": "Frontier LLM",
+      "license": "Proprietary API",
+      "contextWindow": "128K Tokens",
+      "overallScore": 94.3,
+      "rank": 6,
+      "metrics": {
+        "patchingRate": 75.8,
+        "exploitDetection": 92.8,
+        "threatHunting": 94.5,
+        "injectionDefense": 94,
+        "insecureCodeRate": 2.5
+      },
+      "primaryStrengths": [
+        "Top-5 ranking on SWE-bench Verified with 75.8% resolution rate on unassisted mini-SWE-agent harness",
+        "Fast test-time reasoning and self-repair for competitive programming and secure algorithms",
+        "Efficient token consumption reducing enterprise API costs by up to 60%"
+      ],
+      "weaknesses": [
+        "Fewer pre-built integrations for Western enterprise SOC and SIEM platforms"
+      ],
+      "testedBy": [
+        "SWE-bench Verified",
+        "Cybench"
+      ],
+      "recommendedUse": "Automated Code Review, Fast Vulnerability Remediation, Algorithmic Security Testing",
+      "lastTested": "2026-09-14"
     },
     {
       "id": "glm-5",
@@ -241,7 +241,7 @@
       "type": "Frontier LLM",
       "license": "Proprietary API",
       "contextWindow": "128K Tokens",
-      "overallScore": 93.8,
+      "overallScore": 92.6,
       "rank": 7,
       "metrics": {
         "patchingRate": 72.8,
@@ -263,7 +263,7 @@
         "USENIX Security"
       ],
       "recommendedUse": "Legacy Code Migration, Vulnerability Remediation, Cross-Border Threat Intelligence",
-      "lastTested": "2026-09-11"
+      "lastTested": "2026-09-14"
     },
     {
       "id": "kimi-k2-5",
@@ -272,7 +272,7 @@
       "type": "Frontier LLM",
       "license": "Proprietary API",
       "contextWindow": "200K Tokens",
-      "overallScore": 93.2,
+      "overallScore": 91.7,
       "rank": 8,
       "metrics": {
         "patchingRate": 71.2,
@@ -294,7 +294,7 @@
         "OWASP GenAI"
       ],
       "recommendedUse": "Long-Context Dependency Audits, Race Condition Debugging, Automated Unit Test Synthesis",
-      "lastTested": "2026-09-11"
+      "lastTested": "2026-09-14"
     },
     {
       "id": "deepseek-v3-2",
@@ -303,7 +303,7 @@
       "type": "Open-Weights",
       "license": "MIT Open Source",
       "contextWindow": "128K Tokens",
-      "overallScore": 92.8,
+      "overallScore": 91.3,
       "rank": 9,
       "metrics": {
         "patchingRate": 70,
@@ -327,7 +327,7 @@
         "Cybench"
       ],
       "recommendedUse": "Air-Gapped Sovereign Defense, Reverse Engineering, Exploit Triage, On-Premise SOC",
-      "lastTested": "2026-09-11"
+      "lastTested": "2026-09-14"
     },
     {
       "id": "qwen3-coder",
@@ -336,7 +336,7 @@
       "type": "Open-Weights",
       "license": "Apache 2.0 Open Source",
       "contextWindow": "128K Tokens",
-      "overallScore": 92.4,
+      "overallScore": 90.7,
       "rank": 10,
       "metrics": {
         "patchingRate": 69.6,
@@ -359,10 +359,84 @@
         "OWASP GenAI"
       ],
       "recommendedUse": "Enterprise Sovereign Cloud, DevSecOps Automated Remediation, Polyglot Code Security",
-      "lastTested": "2026-09-11"
+      "lastTested": "2026-09-14"
+    },
+    {
+      "id": "llama-4-cybersec",
+      "name": "Meta Llama 4 CyberSec (70B / 405B)",
+      "provider": "Meta AI",
+      "type": "Open-Weights",
+      "license": "Meta Llama Community",
+      "contextWindow": "128K Tokens",
+      "overallScore": 90.6,
+      "rank": 11,
+      "metrics": {
+        "patchingRate": 68.8,
+        "exploitDetection": 91,
+        "threatHunting": 92.5,
+        "injectionDefense": 93,
+        "insecureCodeRate": 3.1
+      },
+      "primaryStrengths": [
+        "Trained specifically on verified US-CERT threat advisories and MITRE ATT&CK enterprise datasets",
+        "Native dual-use cyber safety filter blocking weaponized payload generation while permitting defensive analysis",
+        "Exceptional sovereign deployment utility for classified and private air-gapped security enclaves"
+      ],
+      "weaknesses": [
+        "Requires fine-tuned system prompting to disable over-refusals on benign penetration testing queries"
+      ],
+      "testedBy": [
+        "Meta CyberSecEval 3",
+        "SWE-bench Verified",
+        "Stanford CAIS"
+      ],
+      "recommendedUse": "Sovereign Air-Gapped SOC, Defensive Threat Analysis, Threat Intelligence Summarization",
+      "lastTested": "2026-09-14"
+    },
+    {
+      "id": "mistral-codestral-2",
+      "name": "Mistral Codestral 2 / Large 3",
+      "provider": "Mistral AI",
+      "type": "Open-Weights",
+      "license": "Mistral Non-Commercial / Commercial",
+      "contextWindow": "256K Tokens",
+      "overallScore": 89.2,
+      "rank": 12,
+      "metrics": {
+        "patchingRate": 67.8,
+        "exploitDetection": 89,
+        "threatHunting": 91.2,
+        "injectionDefense": 91.8,
+        "insecureCodeRate": 3.2
+      },
+      "primaryStrengths": [
+        "Industry-leading fill-in-the-middle (FIM) code completion and inline vulnerability mitigation",
+        "Massive 256K context window with exceptional low-latency inference speeds across European sovereign infrastructure",
+        "Multi-lingual threat intel parsing natively supporting French, German, Spanish, and English"
+      ],
+      "weaknesses": [
+        "Slightly lower complex zero-day exploit deobfuscation rates compared to top-3 frontier models"
+      ],
+      "testedBy": [
+        "SWE-bench Verified",
+        "OWASP GenAI",
+        "USENIX Security"
+      ],
+      "recommendedUse": "European Sovereign Enterprise Clouds, DevSecOps Inline IDE Patching, Fast Vulnerability Auditing",
+      "lastTested": "2026-09-14"
     }
   ],
   "syncHistory": [
+    {
+      "timestamp": "2026-09-14T06:45:47.718Z",
+      "status": "success",
+      "message": "Daily automated benchmark calibration completed for 2026-09-14. Top model: Claude 4.5 Opus (Agentic Reasoning) (97.4)."
+    },
+    {
+      "timestamp": "2026-09-14T06:45:06.284Z",
+      "status": "success",
+      "message": "Daily automated benchmark calibration completed for 2026-09-14. Top model: Claude 4.5 Opus (Agentic Reasoning) (97.4)."
+    },
     {
       "timestamp": "2026-09-11T04:41:38.393Z",
       "status": "success",

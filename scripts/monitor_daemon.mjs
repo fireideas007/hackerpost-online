@@ -14,6 +14,7 @@
  */
 
 import { runAgentCycle, getAgentState } from '../lib/agentEngine.js';
+import { updateDailyBenchmarks } from '../lib/benchmarkStore.js';
 
 const INTERVAL_MINUTES = parseInt(process.env.MONITOR_INTERVAL_MINUTES || '15', 10);
 const INTERVAL_MS = INTERVAL_MINUTES * 60 * 1000;
@@ -23,6 +24,7 @@ console.log('  HACKERPOST AUTONOMOUS CONTINUOUS MONITOR DAEMON ONLINE');
 console.log(`  Cycle Interval: Every ${INTERVAL_MINUTES} minutes`);
 console.log('  Feeds: CISA, THN, BleepingComputer, GitHub API, TechCrunch Startups,');
 console.log('         TechCrunch Funding, Dark Reading, Krebs, SANS, ZDI, Hacker News');
+console.log('  AI Security Benchmarks: Automated Daily Recalibration Active');
 console.log('='.repeat(70));
 
 let isRunning = false;
@@ -40,6 +42,19 @@ async function executeCycle() {
   console.log(`\n>>> [Cycle #${cycleCounter}] Starting monitoring sweep at ${new Date().toISOString()}...`);
 
   try {
+    // 1. Check and maintain daily AI Security Benchmark Leaderboard
+    try {
+      const benchResult = updateDailyBenchmarks(false);
+      if (benchResult.updated) {
+        console.log(`    [Benchmarks] Daily recalibration completed for ${benchResult.lastDailySync.split('T')[0]}. Top: ${benchResult.models[0]?.name} (${benchResult.models[0]?.overallScore})`);
+      } else {
+        console.log(`    [Benchmarks] Verified up-to-date for today (${benchResult.lastDailySync?.split('T')[0] || 'active'}).`);
+      }
+    } catch (benchErr) {
+      console.error(`    [Benchmarks Warning]:`, benchErr.message);
+    }
+
+    // 2. Run continuous threat telemetry & tech startup sweep
     const result = await runAgentCycle('autonomous-monitor-daemon');
     const duration = ((Date.now() - cycleStart) / 1000).toFixed(1);
 

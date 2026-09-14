@@ -1,5 +1,69 @@
 [
   {
+    "id": "x_post_1789368246554_8yjf",
+    "articleId": "pub-1789368246549",
+    "articleTitle": "ISC Stormcast For Monday, September 14th, 2026 https://isc.sans.edu/podcastdetail/10092, (Mon, Sep 14th)",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🛡️ CISO ADVISORY: ISC Stormcast For Monday, September 14th, 2026 https://isc.sans.edu/podcastdetail/10092, (Mon, Sep 14th)\n\n#CyberSecurity #InfoSec #HackerPost #CISO\n\n🔗 https://hackerpost.online/news/isc-stormcast-for-monday-september-14th-2026",
+    "charCount": 246,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CISO"
+    ],
+    "articleUrl": "https://hackerpost.online/news/isc-stormcast-for-monday-september-14th-2026",
+    "timestamp": "2026-09-14T06:44:06.554Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
+    "id": "x_post_1789367346628_sy5m",
+    "articleId": "pub-1789367346622",
+    "articleTitle": "Node.js Trust Falls: Dangerous Module Resolution on Windows",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🛡️ CISO ADVISORY: Node.js Trust Falls: Dangerous Module Resolution on Windows [CVE-2026-0776]\n\n#CyberSecurity #InfoSec #HackerPost #CVE20260776 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/nodejs-trust-falls-dangerous-module-resolution-on-windows",
+    "charCount": 258,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CVE20260776",
+      "#0day",
+      "#Vulnerability"
+    ],
+    "articleUrl": "https://hackerpost.online/news/nodejs-trust-falls-dangerous-module-resolution-on-windows",
+    "timestamp": "2026-09-14T06:29:06.628Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
+    "id": "x_post_1789367346606_ux5s",
+    "articleId": "pub-1789367346598",
+    "articleTitle": "The June 2026 Apple Security Update Review",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🛡️ CISO ADVISORY: The June 2026 Apple Security Update Review [CVE-2026-43724]\n\n#CyberSecurity #InfoSec #HackerPost #CVE202643724 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/the-june-2026-apple-security-update-review",
+    "charCount": 228,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CVE202643724",
+      "#0day",
+      "#Vulnerability"
+    ],
+    "articleUrl": "https://hackerpost.online/news/the-june-2026-apple-security-update-review",
+    "timestamp": "2026-09-14T06:29:06.606Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
     "id": "x_post_1789366092764_1g6m",
     "articleId": "pub-1789366092758",
     "articleTitle": "Traefik: Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling') and Incorrect Authorization",
@@ -2118,71 +2182,5 @@
     "status": "simulated",
     "message": "Simulated syndication to @HackerPostOnline. Connect Twitter API keys in Admin settings for live posting.",
     "tweetUrl": "https://x.com/HackerPostOnline"
-  },
-  {
-    "id": "x_post_1789041533971_26ek",
-    "articleId": "test-cve-1",
-    "articleTitle": "Critical Zero-Day Remote Code Execution Vulnerability in Enterprise Fortinet Firewalls (CVE-2026-4401)",
-    "handle": "@CyberDefenseWire",
-    "accountUrl": "https://x.com/CyberDefenseWire",
-    "tweetText": "🚨 CRITICAL 0-DAY ALERT: Critical Zero-Day Remote Code Execution Vulnerability in Enterprise Fortinet Firewalls (CVE-2026-4401) [CVE-2026-4401]\n\n#CyberSecurity #InfoSec #HackerPost #CVE20264401 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/fortinet-cve-2026-4401-rce",
-    "charCount": 276,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#CVE20264401",
-      "#0day",
-      "#Vulnerability"
-    ],
-    "articleUrl": "https://hackerpost.online/news/fortinet-cve-2026-4401-rce",
-    "timestamp": "2026-09-10T11:58:53.971Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @CyberDefenseWire. Connect Twitter API keys in Admin settings for live posting.",
-    "tweetUrl": "https://x.com/CyberDefenseWire"
-  },
-  {
-    "id": "x_post_1789041533965_w33x",
-    "articleId": "test-cve-1",
-    "articleTitle": "Critical Zero-Day Remote Code Execution Vulnerability in Enterprise Fortinet Firewalls (CVE-2026-4401)",
-    "handle": "@CyberDefenseWire",
-    "accountUrl": "https://x.com/CyberDefenseWire",
-    "tweetText": "🚨 CRITICAL 0-DAY ALERT: Critical Zero-Day Remote Code Execution Vulnerability in Enterprise Fortinet Firewalls (CVE-2026-4401) [CVE-2026-4401]\n\n#CyberSecurity #InfoSec #HackerPost #CVE20264401 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/fortinet-cve-2026-4401-rce",
-    "charCount": 276,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#CVE20264401",
-      "#0day",
-      "#Vulnerability"
-    ],
-    "articleUrl": "https://hackerpost.online/news/fortinet-cve-2026-4401-rce",
-    "timestamp": "2026-09-10T11:58:53.959Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @CyberDefenseWire. Connect Twitter API keys in Admin settings for live posting.",
-    "tweetUrl": "https://x.com/CyberDefenseWire"
-  },
-  {
-    "id": "x_post_1788879348202_yksp",
-    "articleId": "pub-startup-1",
-    "articleTitle": "SecTech Venture: Cyera Secures $300M Series D to Lead Enterprise AI Data Security Posture Management (DSPM)",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "🚀 SECTECH DEAL: Cyera Secures $300M Series D to Lead Enterprise AI Data Security Posture Management (DSPM) ($300M)\n\n#CyberSecurity #InfoSec #HackerPost #SecTech #Startups #VentureCapital\n\n🔗 https://hackerpost.online/news/cyera-secures-300m-series-d-enterprise-ai-dspm",
-    "charCount": 269,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#SecTech",
-      "#Startups",
-      "#VentureCapital"
-    ],
-    "articleUrl": "https://hackerpost.online/news/cyera-secures-300m-series-d-enterprise-ai-dspm",
-    "timestamp": "2026-09-08T14:55:48.184Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Provide X_API_KEY and X_ACCESS_TOKEN in .env for live automated posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
   }
 ]

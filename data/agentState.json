@@ -23,25 +23,46 @@
   "cycleIntervalMinutes": 15,
   "dailyStats": {
     "date": "2026-09-14",
-    "publishedToday": 96,
+    "publishedToday": 100,
     "target": 10,
     "surgeActive": true,
     "threatVelocity": 100,
     "surgeTriggers": [
-      "Critical 0-Day / Vulnerability: Turn it off and on again, but for critical in...",
-      "Active Ransomware Wave: Florida confirms DMV database breached via st...",
-      "Active Ransomware Wave: Passkey-themed phishing attacks lead to Micro..."
+      "Active Ransomware Wave: Passkey-themed phishing attacks lead to Micro...",
+      "Active Ransomware Wave: Scammers target hundreds of thousands of cryp...",
+      "Active Ransomware Wave: Voice Callers Exploit BYOD to Reach Microsoft..."
     ]
   },
   "metrics": {
-    "totalCyclesRun": 49,
-    "totalScraped": 6011,
-    "totalAudited": 230,
-    "totalPublished": 140,
+    "totalCyclesRun": 52,
+    "totalScraped": 6935,
+    "totalAudited": 248,
+    "totalPublished": 143,
     "avgSimilarity": 0,
-    "lastRunTime": "2026-09-14T06:08:12.778Z"
+    "lastRunTime": "2026-09-14T06:45:42.716Z"
   },
   "logs": [
+    {
+      "id": "log-1789368342716-198f",
+      "timestamp": "2026-09-14T06:45:42.716Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.4s. Published: 0 [Daily Total: 100/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789368246577-iwcy",
+      "timestamp": "2026-09-14T06:44:06.577Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.2s. Published: 1 [Daily Total: 99/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789367346655-tl2z",
+      "timestamp": "2026-09-14T06:29:06.655Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.3s. Published: 2 [Daily Total: 98/10], Queued: 0.",
+      "details": null
+    },
     {
       "id": "log-1789366092778-3xid",
       "timestamp": "2026-09-14T06:08:12.778Z",
