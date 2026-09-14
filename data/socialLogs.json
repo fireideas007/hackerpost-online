@@ -1,5 +1,67 @@
 [
   {
+    "id": "x_post_1789377086514_kryy",
+    "articleId": "pub-1789377086508-835",
+    "articleTitle": "How Threat Actors Are Turning Trusted AI Platforms Into an Attack Surface",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🛡️ CISO ADVISORY: How Threat Actors Are Turning Trusted AI Platforms Into an Attack Surface\n\n#CyberSecurity #InfoSec #HackerPost #CISO\n\n🔗 https://hackerpost.online/news/how-threat-actors-are-turning-trusted-ai-platforms-into-an-attack",
+    "charCount": 236,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CISO"
+    ],
+    "articleUrl": "https://hackerpost.online/news/how-threat-actors-are-turning-trusted-ai-platforms-into-an-attack",
+    "timestamp": "2026-09-14T09:11:26.514Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
+    "id": "x_post_1789377086492_8csd",
+    "articleId": "pub-1789377086485-848",
+    "articleTitle": "Claude Used to Automate Exploitation and Data Theft Across Multiple Victims",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🛡️ CISO ADVISORY: Claude Used to Automate Exploitation and Data Theft Across Multiple Victims\n\n#CyberSecurity #InfoSec #HackerPost #ZeroDay #Exploit #RCE\n\n🔗 https://hackerpost.online/news/claude-used-to-automate-exploitation-and-data-theft-across-multiple",
+    "charCount": 257,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#ZeroDay",
+      "#Exploit",
+      "#RCE"
+    ],
+    "articleUrl": "https://hackerpost.online/news/claude-used-to-automate-exploitation-and-data-theft-across-multiple",
+    "timestamp": "2026-09-14T09:11:26.492Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
+    "id": "x_post_1789377086455_lhoz",
+    "articleId": "pub-1789377086446-441",
+    "articleTitle": "Anthropic Says Seven China-Based AI Labs Ran Industrial-Scale Claude Distillation Attacks",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🛡️ CISO ADVISORY: Anthropic Says Seven China-Based AI Labs Ran Industrial-Scale Claude Distillation Attacks\n\n#CyberSecurity #InfoSec #HackerPost #CISO\n\n🔗 https://hackerpost.online/news/anthropic-says-seven-china-based-ai-labs-ran-industrial-scale-claude",
+    "charCount": 255,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CISO"
+    ],
+    "articleUrl": "https://hackerpost.online/news/anthropic-says-seven-china-based-ai-labs-ran-industrial-scale-claude",
+    "timestamp": "2026-09-14T09:11:26.455Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
     "id": "x_post_1789376188081_uvdl",
     "articleId": "pub-1789376188075-834",
     "articleTitle": "WhatsApp Restricted Chat locks a conversation to your primary phone",
@@ -2095,72 +2157,6 @@
     ],
     "articleUrl": "https://hackerpost.online/news/dutch-ncsc-critical-check-point-vpn-flaws-exploitation-is-imminent",
     "timestamp": "2026-09-14T01:51:11.299Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
-  },
-  {
-    "id": "x_post_1789350671281_4ryd",
-    "articleId": "pub-1789350671273",
-    "articleTitle": "CISA Adds 5 Actively Exploited Artifactory, ScreenConnect, and RouterOS Flaws to KEV",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "🚨 CRITICAL 0-DAY ALERT: CISA Adds 5 Actively Exploited Artifactory, ScreenConnect,... [CVE-2026-42016]\n\n#CyberSecurity #InfoSec #HackerPost #CVE202642016 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/cisa-adds-5-actively-exploited-artifactory-screenconnect-and-routeros",
-    "charCount": 280,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#CVE202642016",
-      "#0day",
-      "#Vulnerability"
-    ],
-    "articleUrl": "https://hackerpost.online/news/cisa-adds-5-actively-exploited-artifactory-screenconnect-and-routeros",
-    "timestamp": "2026-09-14T01:51:11.281Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
-  },
-  {
-    "id": "x_post_1789349770845_de4l",
-    "articleId": "pub-1789349770841",
-    "articleTitle": "Substack raises $100M from Chernin Group, Andreessen Horowitz, Skims CEO, and more",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "🚀 SECTECH DEAL: Substack raises $100M from Chernin Group, Andreessen Horowitz, Skims CEO... ($100M)\n\n#CyberSecurity #InfoSec #HackerPost #SecTech #Startups #VentureCapital\n\n🔗 https://hackerpost.online/news/substack-raises-100m-from-chernin-group-andreessen-horowitz-skims-ceo",
-    "charCount": 277,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#SecTech",
-      "#Startups",
-      "#VentureCapital"
-    ],
-    "articleUrl": "https://hackerpost.online/news/substack-raises-100m-from-chernin-group-andreessen-horowitz-skims-ceo",
-    "timestamp": "2026-09-14T01:36:10.845Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
-  },
-  {
-    "id": "x_post_1789349770830_m8mx",
-    "articleId": "pub-1789349770825",
-    "articleTitle": "Zipline charts drone delivery expansion with $600M in new funding",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "🚀 SECTECH DEAL: Zipline charts drone delivery expansion with $600M in new funding ($600M)\n\n#CyberSecurity #InfoSec #HackerPost #SecTech #Startups #VentureCapital\n\n🔗 https://hackerpost.online/news/zipline-charts-drone-delivery-expansion-with-600m-in-new-funding",
-    "charCount": 262,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#SecTech",
-      "#Startups",
-      "#VentureCapital"
-    ],
-    "articleUrl": "https://hackerpost.online/news/zipline-charts-drone-delivery-expansion-with-600m-in-new-funding",
-    "timestamp": "2026-09-14T01:36:10.830Z",
     "status": "simulated",
     "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
     "tweetUrl": "https://x.com/HackerPost2"

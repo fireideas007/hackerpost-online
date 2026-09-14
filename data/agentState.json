@@ -23,25 +23,32 @@
   "cycleIntervalMinutes": 15,
   "dailyStats": {
     "date": "2026-09-14",
-    "publishedToday": 119,
+    "publishedToday": 122,
     "target": 10,
     "surgeActive": true,
     "threatVelocity": 100,
     "surgeTriggers": [
-      "Active Ransomware Wave: Revolut discloses data breach exposing financ...",
       "Active Ransomware Wave: Scammers target hundreds of thousands of cryp...",
-      "Active Ransomware Wave: Voice Callers Exploit BYOD to Reach Microsoft..."
+      "Active Ransomware Wave: Voice Callers Exploit BYOD to Reach Microsoft...",
+      "Mega SecTech Deal: India’s Pocket FM doubles revenue run rate to..."
     ]
   },
   "metrics": {
-    "totalCyclesRun": 58,
-    "totalScraped": 8783,
-    "totalAudited": 284,
-    "totalPublished": 162,
+    "totalCyclesRun": 59,
+    "totalScraped": 9091,
+    "totalAudited": 290,
+    "totalPublished": 165,
     "avgSimilarity": 0,
-    "lastRunTime": "2026-09-14T08:56:28.106Z"
+    "lastRunTime": "2026-09-14T09:11:26.520Z"
   },
   "logs": [
+    {
+      "id": "log-1789377086520-ykds",
+      "timestamp": "2026-09-14T09:11:26.520Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.8s. Published: 3 [Daily Total: 122/10], Queued: 0.",
+      "details": null
+    },
     {
       "id": "log-1789376188106-5r4v",
       "timestamp": "2026-09-14T08:56:28.106Z",
