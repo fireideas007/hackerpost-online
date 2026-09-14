@@ -22,22 +22,131 @@
   "customDirective": "Guarantee minimum 10 verified articles per day. Dynamically scale intake during threat buzz surges (CVSS 9.0+, 0-days, major funding rounds). Ensure CISO-grade strategic takeaways with zero verbatim reproduction and auto-syndication to @HackerPost2.",
   "cycleIntervalMinutes": 15,
   "dailyStats": {
-    "date": "2026-09-08",
-    "publishedToday": 12,
+    "date": "2026-09-14",
+    "publishedToday": 77,
     "target": 10,
     "surgeActive": true,
-    "threatVelocity": 30,
-    "surgeTriggers": []
+    "threatVelocity": 100,
+    "surgeTriggers": [
+      "Mega SecTech Deal: Nike exits the S&P 100 after 18 years and a $...",
+      "Active Ransomware Wave: Florida confirms DMV database breached via st...",
+      "Active Ransomware Wave: Passkey-themed phishing attacks lead to Micro..."
+    ]
   },
   "metrics": {
-    "totalCyclesRun": 30,
-    "totalScraped": 252,
-    "totalAudited": 109,
-    "totalPublished": 44,
+    "totalCyclesRun": 45,
+    "totalScraped": 4779,
+    "totalAudited": 206,
+    "totalPublished": 121,
     "avgSimilarity": 0,
-    "lastRunTime": "2026-09-08T14:54:23.528Z"
+    "lastRunTime": "2026-09-14T04:21:11.574Z"
   },
   "logs": [
+    {
+      "id": "log-1789359671575-oure",
+      "timestamp": "2026-09-14T04:21:11.575Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.5s. Published: 4 [Daily Total: 77/10], Queued: 1.",
+      "details": null
+    },
+    {
+      "id": "log-1789358771144-sn45",
+      "timestamp": "2026-09-14T04:06:11.144Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.1s. Published: 4 [Daily Total: 73/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789357871536-gzto",
+      "timestamp": "2026-09-14T03:51:11.536Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.6s. Published: 5 [Daily Total: 69/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789356971042-b4ns",
+      "timestamp": "2026-09-14T03:36:11.042Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.1s. Published: 5 [Daily Total: 64/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789356071046-wgec",
+      "timestamp": "2026-09-14T03:21:11.046Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.1s. Published: 6 [Daily Total: 59/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789355171352-qf5a",
+      "timestamp": "2026-09-14T03:06:11.352Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.4s. Published: 6 [Daily Total: 53/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789354272707-ixa4",
+      "timestamp": "2026-09-14T02:51:12.707Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 3.7s. Published: 5 [Daily Total: 47/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789353371094-psbq",
+      "timestamp": "2026-09-14T02:36:11.094Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.0s. Published: 5 [Daily Total: 42/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789352470900-sd3v",
+      "timestamp": "2026-09-14T02:21:10.900Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.1s. Published: 5 [Daily Total: 37/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789351573081-bi9n",
+      "timestamp": "2026-09-14T02:06:13.081Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 4.3s. Published: 6 [Daily Total: 32/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789350671375-ze87",
+      "timestamp": "2026-09-14T01:51:11.375Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.6s. Published: 6 [Daily Total: 26/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789349770850-fadb",
+      "timestamp": "2026-09-14T01:36:10.850Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.2s. Published: 5 [Daily Total: 20/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789349749734-zgib",
+      "timestamp": "2026-09-14T01:35:49.734Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.1s. Published: 5 [Daily Total: 15/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789349725821-fwlf",
+      "timestamp": "2026-09-14T01:35:25.821Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 7.7s. Published: 10 [Daily Total: 10/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789349557662-rtg2",
+      "timestamp": "2026-09-14T01:32:37.662Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 4.9s. Published: 0 [Daily Total: 0/10], Queued: 7.",
+      "details": null
+    },
     {
       "id": "log-1788879263529-yygj",
       "timestamp": "2026-09-08T14:54:23.529Z",
