@@ -1,5 +1,69 @@
 [
   {
+    "id": "x_post_1789363121714_cy23",
+    "articleId": "pub-1789363121709",
+    "articleTitle": "The Apple macOS Security Update Review",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🚨 CRITICAL 0-DAY ALERT: The Apple macOS Security Update Review [CVE-2026-28819]\n\n#CyberSecurity #InfoSec #HackerPost #CVE202628819 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/the-apple-macos-security-update-review",
+    "charCount": 226,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CVE202628819",
+      "#0day",
+      "#Vulnerability"
+    ],
+    "articleUrl": "https://hackerpost.online/news/the-apple-macos-security-update-review",
+    "timestamp": "2026-09-14T05:18:41.714Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
+    "id": "x_post_1789363121677_sboy",
+    "articleId": "pub-1789363121672",
+    "articleTitle": "LG to Ban Residential Proxies from Smart TV Apps",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🚨 CRITICAL 0-DAY ALERT: LG to Ban Residential Proxies from Smart TV Apps\n\n#CyberSecurity #InfoSec #HackerPost #ZeroDay #Exploit #RCE\n\n🔗 https://hackerpost.online/news/lg-to-ban-residential-proxies-from-smart-tv-apps",
+    "charCount": 217,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#ZeroDay",
+      "#Exploit",
+      "#RCE"
+    ],
+    "articleUrl": "https://hackerpost.online/news/lg-to-ban-residential-proxies-from-smart-tv-apps",
+    "timestamp": "2026-09-14T05:18:41.677Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
+    "id": "x_post_1789363121655_rjyj",
+    "articleId": "pub-1789363121646",
+    "articleTitle": "Cybersecurity attention fades within months after a breach",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🚨 CRITICAL 0-DAY ALERT: Cybersecurity attention fades within months after a breach\n\n#CyberSecurity #InfoSec #HackerPost #CISO\n\n🔗 https://hackerpost.online/news/cybersecurity-attention-fades-within-months-after-a-breach",
+    "charCount": 220,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CISO"
+    ],
+    "articleUrl": "https://hackerpost.online/news/cybersecurity-attention-fades-within-months-after-a-breach",
+    "timestamp": "2026-09-14T05:18:41.655Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
     "id": "x_post_1789360571150_fx8h",
     "articleId": "pub-1789360571144",
     "articleTitle": "The July 2026 Apple Security Update Review",
@@ -2117,72 +2181,6 @@
     ],
     "articleUrl": "https://hackerpost.online/news/strategic-consolidation-crowdstrike-finalizes-strategic-acquisition",
     "timestamp": "2026-09-08T04:04:12.022Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Provide X_API_KEY and X_ACCESS_TOKEN in .env for live automated posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
-  },
-  {
-    "id": "x_post_1788840252018_z1hm",
-    "articleId": "pub-1788840252017",
-    "articleTitle": "Enterprise Ecosystems Defense Alert: Threat Analysis & Strategic Playbook for Malicious NPM Packages Hijack Developer AWS Credentials via Typosquatted Crypto Libraries (Daily Update 2026-09-08)",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "📊 AI SEC BENCHMARK: Threat Analysis & Strategic Playbook for Malicio... [GHSA-2026-npm-stolen-keys]\n\n#CyberSecurity #InfoSec #HackerPost #GHSA2026npmstolenkeys #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/enterprise-ecosystems-defense-alert-threat-analysis-strategic",
-    "charCount": 278,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#GHSA2026npmstolenkeys",
-      "#0day",
-      "#Vulnerability"
-    ],
-    "articleUrl": "https://hackerpost.online/news/enterprise-ecosystems-defense-alert-threat-analysis-strategic",
-    "timestamp": "2026-09-08T04:04:12.018Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Provide X_API_KEY and X_ACCESS_TOKEN in .env for live automated posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
-  },
-  {
-    "id": "x_post_1788840252016_z9xr",
-    "articleId": "pub-1788840252014",
-    "articleTitle": "CISO Brief: Kubernetes API Server Privilege Escalation Vulnerability Disclosed (CVE-2026-4432) (Daily Update 2026-09-08) Threat Vector (CVE-2026-4432)",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "🚨 CRITICAL 0-DAY ALERT: CISO Brief: Kubernetes API Server Privilege Escalation Vul... [CVE-2026-4432]\n\n#CyberSecurity #InfoSec #HackerPost #CVE20264432 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/ciso-brief-kubernetes-api-server-privilege-escalation-vulnerability",
-    "charCount": 276,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#CVE20264432",
-      "#0day",
-      "#Vulnerability"
-    ],
-    "articleUrl": "https://hackerpost.online/news/ciso-brief-kubernetes-api-server-privilege-escalation-vulnerability",
-    "timestamp": "2026-09-08T04:04:12.016Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Provide X_API_KEY and X_ACCESS_TOKEN in .env for live automated posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
-  },
-  {
-    "id": "x_post_1788840252012_9ani",
-    "articleId": "pub-1788840252011",
-    "articleTitle": "Zero-Day Threat Brief: CISA Adds Critical Ivanti Connect Secure Authentication Bypass to Known Exploited Vulnerabilities Catalog (CVE-2026-21887) (Daily Update 2026-09-08) Exposes Ivanti Infrastructure",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "🚨 CRITICAL 0-DAY ALERT: Zero-Day Threat Brief: CISA Adds Critical Ivanti Connect Secure... [CVE-2026-21887]\n\n#CyberSecurity #InfoSec #HackerPost #CVE202621887 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/zero-day-threat-brief-cisa-adds-critical-ivanti-connect-secure",
-    "charCount": 278,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#CVE202621887",
-      "#0day",
-      "#Vulnerability"
-    ],
-    "articleUrl": "https://hackerpost.online/news/zero-day-threat-brief-cisa-adds-critical-ivanti-connect-secure",
-    "timestamp": "2026-09-08T04:04:12.012Z",
     "status": "simulated",
     "message": "Simulated syndication to @HackerPost2. Provide X_API_KEY and X_ACCESS_TOKEN in .env for live automated posting.",
     "tweetUrl": "https://x.com/HackerPost2"

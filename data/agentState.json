@@ -23,25 +23,32 @@
   "cycleIntervalMinutes": 15,
   "dailyStats": {
     "date": "2026-09-14",
-    "publishedToday": 82,
+    "publishedToday": 85,
     "target": 10,
     "surgeActive": true,
     "threatVelocity": 100,
     "surgeTriggers": [
-      "Critical 0-Day / Vulnerability: Certificate failures can cost firms over $250...",
-      "Mega SecTech Deal: Certificate failures can cost firms over $250...",
-      "Mega SecTech Deal: Nike exits the S&P 100 after 18 years and a $..."
+      "Critical 0-Day / Vulnerability: Cybersecurity attention fades within months a...",
+      "Active Ransomware Wave: Florida confirms DMV database breached via st...",
+      "Active Ransomware Wave: Passkey-themed phishing attacks lead to Micro..."
     ]
   },
   "metrics": {
-    "totalCyclesRun": 46,
-    "totalScraped": 5087,
-    "totalAudited": 212,
-    "totalPublished": 126,
+    "totalCyclesRun": 47,
+    "totalScraped": 5395,
+    "totalAudited": 218,
+    "totalPublished": 129,
     "avgSimilarity": 0,
-    "lastRunTime": "2026-09-14T04:36:11.156Z"
+    "lastRunTime": "2026-09-14T05:18:41.720Z"
   },
   "logs": [
+    {
+      "id": "log-1789363121720-ne6b",
+      "timestamp": "2026-09-14T05:18:41.720Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.1s. Published: 3 [Daily Total: 85/10], Queued: 0.",
+      "details": null
+    },
     {
       "id": "log-1789360571156-murx",
       "timestamp": "2026-09-14T04:36:11.156Z",
