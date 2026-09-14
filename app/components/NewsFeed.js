@@ -744,7 +744,6 @@ Report verified by HackerPost Security Intelligence Feed.
           ========================================================================= */}
       {activeOpsTab === "cve" && (
         <div className="cve-inspector-panel">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px", marginBottom: "20px" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
                 <Bug size={18} color="#00e5ff" />

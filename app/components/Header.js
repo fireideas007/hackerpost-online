@@ -251,6 +251,10 @@ export default function Header() {
               <span>CISO VENDOR INDEX</span>
             </Link>
             <span className="telemetry-divider">|</span>
+            <Link href="/advertise" className="top-bar-link">
+              <span>Media Kit &amp; PR Wire</span>
+            </Link>
+            <span className="telemetry-divider">|</span>
             <span style={{ color: "hsl(var(--muted-foreground))", fontSize: "10px" }}>{formattedDate}</span>
           </div>
         </div>

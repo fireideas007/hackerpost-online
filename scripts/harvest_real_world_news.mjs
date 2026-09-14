@@ -116,9 +116,10 @@ async function main() {
     }
   });
 
-  // Store exclusively authentic real-world articles (zero dummy/synthetic articles)
-  processedArticles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  db.publishedArticles = processedArticles.slice(0, 60);
+  // Combine: New real-world articles first, followed by preserved existing articles
+  const allArticles = [...processedArticles, ...db.publishedArticles];
+  allArticles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  db.publishedArticles = allArticles.slice(0, 60);
 
   // Update rawArticles with remainder of real feeds
   db.rawArticles = rawItems.slice(60, 90).map((r, idx) => ({
