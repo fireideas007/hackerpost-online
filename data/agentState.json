@@ -22,349 +22,118 @@
   "customDirective": "Guarantee minimum 10 verified articles per day. Dynamically scale intake during threat buzz surges (CVSS 9.0+, 0-days, major funding rounds). Ensure CISO-grade strategic takeaways with zero verbatim reproduction and auto-syndication to @HackerPost2.",
   "cycleIntervalMinutes": 15,
   "dailyStats": {
-    "date": "2026-09-14",
-    "publishedToday": 122,
+    "date": "2026-09-15",
+    "publishedToday": 6,
     "target": 10,
     "surgeActive": true,
     "threatVelocity": 100,
     "surgeTriggers": [
-      "Active Ransomware Wave: Scammers target hundreds of thousands of cryp...",
-      "Active Ransomware Wave: Voice Callers Exploit BYOD to Reach Microsoft...",
-      "Mega SecTech Deal: India’s Pocket FM doubles revenue run rate to..."
+      "Active Ransomware Wave: Japan's Digital Agency says VPN flaw exposed ...",
+      "Critical 0-Day / Vulnerability: AI infrastructure company Cornelis raises $20...",
+      "Mega SecTech Deal: AI infrastructure company Cornelis raises $20..."
     ]
   },
   "metrics": {
-    "totalCyclesRun": 59,
-    "totalScraped": 9091,
-    "totalAudited": 290,
-    "totalPublished": 165,
+    "totalCyclesRun": 26,
+    "totalScraped": 3550,
+    "totalAudited": 141,
+    "totalPublished": 35,
     "avgSimilarity": 0,
-    "lastRunTime": "2026-09-14T09:11:26.520Z"
+    "lastRunTime": "2026-09-15T01:12:59.497Z"
   },
   "logs": [
     {
-      "id": "log-1789377086520-ykds",
-      "timestamp": "2026-09-14T09:11:26.520Z",
+      "id": "log-1789434779497-0578",
+      "timestamp": "2026-09-15T01:12:59.497Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.8s. Published: 3 [Daily Total: 122/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 11.7s. Published: 6 [Daily Total: 6/10], Queued: 0.",
       "details": null
     },
     {
-      "id": "log-1789376188106-5r4v",
-      "timestamp": "2026-09-14T08:56:28.106Z",
+      "id": "log-1789405119470-5yys",
+      "timestamp": "2026-09-14T16:58:39.470Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 4.4s. Published: 3 [Daily Total: 119/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 3.5s. Published: 2 [Daily Total: 170/10], Queued: 0.",
       "details": null
     },
     {
-      "id": "log-1789372844856-yech",
-      "timestamp": "2026-09-14T08:00:44.856Z",
+      "id": "log-1789404218409-ifw5",
+      "timestamp": "2026-09-14T16:43:38.409Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.3s. Published: 1 [Daily Total: 116/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 2.5s. Published: 0 [Daily Total: 168/10], Queued: 0.",
       "details": null
     },
     {
-      "id": "log-1789371942833-pij8",
-      "timestamp": "2026-09-14T07:45:42.833Z",
+      "id": "log-1789403319291-xooa",
+      "timestamp": "2026-09-14T16:28:39.291Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.2s. Published: 5 [Daily Total: 115/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 3.3s. Published: 1 [Daily Total: 168/10], Queued: 0.",
       "details": null
     },
     {
-      "id": "log-1789371043837-10kd",
-      "timestamp": "2026-09-14T07:30:43.837Z",
+      "id": "log-1789402420724-1rfl",
+      "timestamp": "2026-09-14T16:13:40.724Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 3.2s. Published: 4 [Daily Total: 110/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 4.8s. Published: 2 [Daily Total: 167/10], Queued: 0.",
       "details": null
     },
     {
-      "id": "log-1789370143064-r98k",
-      "timestamp": "2026-09-14T07:15:43.064Z",
+      "id": "log-1789401518228-bm8f",
+      "timestamp": "2026-09-14T15:58:38.228Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.5s. Published: 5 [Daily Total: 106/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 2.4s. Published: 2 [Daily Total: 165/10], Queued: 0.",
       "details": null
     },
     {
-      "id": "log-1789369302291-y0n0",
-      "timestamp": "2026-09-14T07:01:42.291Z",
+      "id": "log-1789400618134-2j50",
+      "timestamp": "2026-09-14T15:43:38.134Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 15.4s. Published: 1 [Daily Total: 101/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 2.3s. Published: 2 [Daily Total: 163/10], Queued: 0.",
       "details": null
     },
     {
-      "id": "log-1789368342716-198f",
-      "timestamp": "2026-09-14T06:45:42.716Z",
+      "id": "log-1789399718537-m8yp",
+      "timestamp": "2026-09-14T15:28:38.537Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.4s. Published: 0 [Daily Total: 100/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 2.8s. Published: 2 [Daily Total: 161/10], Queued: 0.",
       "details": null
     },
     {
-      "id": "log-1789368246577-iwcy",
-      "timestamp": "2026-09-14T06:44:06.577Z",
+      "id": "log-1789398820059-1rd0",
+      "timestamp": "2026-09-14T15:13:40.059Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.2s. Published: 1 [Daily Total: 99/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 4.5s. Published: 1 [Daily Total: 159/10], Queued: 0.",
       "details": null
     },
     {
-      "id": "log-1789367346655-tl2z",
-      "timestamp": "2026-09-14T06:29:06.655Z",
+      "id": "log-1789397918366-ra68",
+      "timestamp": "2026-09-14T14:58:38.366Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.3s. Published: 2 [Daily Total: 98/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 2.6s. Published: 2 [Daily Total: 158/10], Queued: 0.",
       "details": null
     },
     {
-      "id": "log-1789366092778-3xid",
-      "timestamp": "2026-09-14T06:08:12.778Z",
+      "id": "log-1789397110955-x7ii",
+      "timestamp": "2026-09-14T14:45:10.955Z",
       "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.7s. Published: 5 [Daily Total: 96/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789364318505-1k2y",
-      "timestamp": "2026-09-14T05:38:38.505Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 5.2s. Published: 6 [Daily Total: 91/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789363121720-ne6b",
-      "timestamp": "2026-09-14T05:18:41.720Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.1s. Published: 3 [Daily Total: 85/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789360571156-murx",
-      "timestamp": "2026-09-14T04:36:11.156Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.1s. Published: 5 [Daily Total: 82/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789359671575-oure",
-      "timestamp": "2026-09-14T04:21:11.575Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.5s. Published: 4 [Daily Total: 77/10], Queued: 1.",
-      "details": null
-    },
-    {
-      "id": "log-1789358771144-sn45",
-      "timestamp": "2026-09-14T04:06:11.144Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.1s. Published: 4 [Daily Total: 73/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789357871536-gzto",
-      "timestamp": "2026-09-14T03:51:11.536Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.6s. Published: 5 [Daily Total: 69/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789356971042-b4ns",
-      "timestamp": "2026-09-14T03:36:11.042Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.1s. Published: 5 [Daily Total: 64/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789356071046-wgec",
-      "timestamp": "2026-09-14T03:21:11.046Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.1s. Published: 6 [Daily Total: 59/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789355171352-qf5a",
-      "timestamp": "2026-09-14T03:06:11.352Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.4s. Published: 6 [Daily Total: 53/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789354272707-ixa4",
-      "timestamp": "2026-09-14T02:51:12.707Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 3.7s. Published: 5 [Daily Total: 47/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789353371094-psbq",
-      "timestamp": "2026-09-14T02:36:11.094Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.0s. Published: 5 [Daily Total: 42/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789352470900-sd3v",
-      "timestamp": "2026-09-14T02:21:10.900Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.1s. Published: 5 [Daily Total: 37/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789351573081-bi9n",
-      "timestamp": "2026-09-14T02:06:13.081Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 4.3s. Published: 6 [Daily Total: 32/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789350671375-ze87",
-      "timestamp": "2026-09-14T01:51:11.375Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.6s. Published: 6 [Daily Total: 26/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789349770850-fadb",
-      "timestamp": "2026-09-14T01:36:10.850Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.2s. Published: 5 [Daily Total: 20/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789349749734-zgib",
-      "timestamp": "2026-09-14T01:35:49.734Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 2.1s. Published: 5 [Daily Total: 15/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789349725821-fwlf",
-      "timestamp": "2026-09-14T01:35:25.821Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 7.7s. Published: 10 [Daily Total: 10/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1789349557662-rtg2",
-      "timestamp": "2026-09-14T01:32:37.662Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 4.9s. Published: 0 [Daily Total: 0/10], Queued: 7.",
-      "details": null
-    },
-    {
-      "id": "log-1788879263529-yygj",
-      "timestamp": "2026-09-08T14:54:23.529Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.1s. Published: 0 [Daily Total: 12/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1788878451067-km4f",
-      "timestamp": "2026-09-08T14:40:51.067Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.1s. Published: 0 [Daily Total: 12/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1788867930120-lkwm",
-      "timestamp": "2026-09-08T11:45:30.120Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.1s. Published: 0 [Daily Total: 12/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1788842824389-53jx",
-      "timestamp": "2026-09-08T04:47:04.389Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.0s. Published: 4 [Daily Total: 12/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1788840252045-ptvc",
-      "timestamp": "2026-09-08T04:04:12.045Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.1s. Published: 8 [Daily Total: 8/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1788705312940-y7mh",
-      "timestamp": "2026-09-06T14:35:12.940Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.1s. Published: 8 [Daily Total: 8/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1787635801796-k78n",
-      "timestamp": "2026-08-25T05:30:01.796Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.1s. Published: 8 [Daily Total: 8/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1787635787394-s3im",
-      "timestamp": "2026-08-25T05:29:47.394Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.0s. Published: 0 [Daily Total: 0/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1787517607947-4ask",
-      "timestamp": "2026-08-23T20:40:07.947Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.0s. Published: 0 [Daily Total: 6/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1787517512517-7h5c",
-      "timestamp": "2026-08-23T20:38:32.517Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.1s. Published: 0 [Daily Total: 6/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1787517240026-navd",
-      "timestamp": "2026-08-23T20:34:00.026Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.0s. Published: 0 [Daily Total: 6/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1787517147160-x9lg",
-      "timestamp": "2026-08-23T20:32:27.160Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.0s. Published: 0 [Daily Total: 6/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1787514798996-loi7",
-      "timestamp": "2026-08-23T19:53:18.996Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.0s. Published: 0 [Daily Total: 6/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1787514744614-83st",
-      "timestamp": "2026-08-23T19:52:24.614Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.1s. Published: 6 [Daily Total: 6/10], Queued: 0.",
-      "details": null
-    },
-    {
-      "id": "log-1787514692301-rs3k",
-      "timestamp": "2026-08-23T19:51:32.301Z",
-      "type": "info",
-      "message": "Multi-source editorial cycle completed in 0.0s. Published: 0 [Daily Total: 0/10], Queued: 0.",
+      "message": "Multi-source editorial cycle completed in 31.9s. Published: 5 [Daily Total: 156/10], Queued: 0.",
       "details": null
     },
     {
       "id": "log-1",
-      "timestamp": "2026-08-23T18:51:32.249Z",
+      "timestamp": "2026-09-14T05:45:40.280Z",
       "type": "info",
       "message": "Aegis autonomous editor initialized with multi-source harvester (CISA, THN, BleepingComputer, GitHub)."
     },
     {
       "id": "log-2",
-      "timestamp": "2026-08-23T19:21:32.249Z",
+      "timestamp": "2026-09-14T06:15:40.280Z",
       "type": "decision",
       "message": "Harvester evaluated multi-feed stream. Prioritized breaking zero-days and enterprise infrastructure advisories."
     },
     {
       "id": "log-3",
-      "timestamp": "2026-08-23T19:36:32.249Z",
+      "timestamp": "2026-09-14T06:30:40.280Z",
       "type": "publish",
       "message": "Synthesized CISO Executive Briefing for breaking advisory (Plagiarism: 0%)."
     }
@@ -374,7 +143,7 @@
       "id": "chat-init",
       "sender": "agent",
       "text": "Aegis AI Editor-in-Chief online. I am continuously monitoring global threat streams from CISA, The Hacker News, BleepingComputer, and GitHub, evaluating CVSS scores, synthesizing CISO executive briefings with 0% plagiarism, and auto-publishing breaking advisories. Issue directives to guide my newsroom coverage.",
-      "timestamp": "2026-08-23T18:51:32.249Z"
+      "timestamp": "2026-09-14T05:45:40.280Z"
     }
   ]
 }
