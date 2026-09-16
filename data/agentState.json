@@ -23,25 +23,88 @@
   "cycleIntervalMinutes": 15,
   "dailyStats": {
     "date": "2026-09-15",
-    "publishedToday": 6,
+    "publishedToday": 29,
     "target": 10,
     "surgeActive": true,
-    "threatVelocity": 100,
+    "threatVelocity": 85,
     "surgeTriggers": [
-      "Active Ransomware Wave: Japan's Digital Agency says VPN flaw exposed ...",
-      "Critical 0-Day / Vulnerability: AI infrastructure company Cornelis raises $20...",
-      "Mega SecTech Deal: AI infrastructure company Cornelis raises $20..."
+      "Critical 0-Day / Vulnerability: Microsoft Plugs Nearly 400 Security Holes...",
+      "Active Ransomware Wave: Canadian Man Pleads Guilty in Snowflake Extor...",
+      "Critical 0-Day / Vulnerability: Pwn2Own Berlin 2026: Day Three Results and Ma..."
     ]
   },
   "metrics": {
-    "totalCyclesRun": 26,
-    "totalScraped": 3550,
-    "totalAudited": 141,
-    "totalPublished": 35,
+    "totalCyclesRun": 35,
+    "totalScraped": 6340,
+    "totalAudited": 196,
+    "totalPublished": 58,
     "avgSimilarity": 0,
-    "lastRunTime": "2026-09-15T01:12:59.497Z"
+    "lastRunTime": "2026-09-15T03:27:54.140Z"
   },
   "logs": [
+    {
+      "id": "log-1789442874141-t3po",
+      "timestamp": "2026-09-15T03:27:54.141Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.4s. Published: 5 [Daily Total: 29/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789441969335-f7ic",
+      "timestamp": "2026-09-15T03:12:49.335Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.3s. Published: 1 [Daily Total: 24/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789441069290-icaz",
+      "timestamp": "2026-09-15T02:57:49.290Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.3s. Published: 2 [Daily Total: 23/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789440169171-q34c",
+      "timestamp": "2026-09-15T02:42:49.171Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.2s. Published: 0 [Daily Total: 21/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789439269191-vh46",
+      "timestamp": "2026-09-15T02:27:49.191Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.2s. Published: 1 [Daily Total: 21/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789438369905-ri1b",
+      "timestamp": "2026-09-15T02:12:49.905Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.9s. Published: 0 [Daily Total: 20/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789437469138-qgrz",
+      "timestamp": "2026-09-15T01:57:49.138Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 2.2s. Published: 5 [Daily Total: 20/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789436570113-f6ii",
+      "timestamp": "2026-09-15T01:42:50.113Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 3.2s. Published: 5 [Daily Total: 15/10], Queued: 0.",
+      "details": null
+    },
+    {
+      "id": "log-1789435691524-ktmr",
+      "timestamp": "2026-09-15T01:28:11.524Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 24.6s. Published: 4 [Daily Total: 10/10], Queued: 0.",
+      "details": null
+    },
     {
       "id": "log-1789434779497-0578",
       "timestamp": "2026-09-15T01:12:59.497Z",
