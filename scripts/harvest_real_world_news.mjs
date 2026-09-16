@@ -119,7 +119,7 @@ async function main() {
   // Combine: New real-world articles first, followed by preserved existing articles
   const allArticles = [...processedArticles, ...db.publishedArticles];
   allArticles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  db.publishedArticles = allArticles.slice(0, 60);
+  db.publishedArticles = allArticles.slice(0, 200);
 
   // Update rawArticles with remainder of real feeds
   db.rawArticles = rawItems.slice(60, 90).map((r, idx) => ({
