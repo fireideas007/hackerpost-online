@@ -506,14 +506,20 @@ Report verified by HackerPost Security Intelligence Feed.
               <div className="lead-story-card">
                 <div>
                   {/* Featured Lead Story Thumbnail Banner */}
-                  {leadStory.imageUrl && (
+                  {(leadStory.imageUrl || leadStory.slug || leadStory.id) && (
                     <Link href={`/news/${leadStory.slug || leadStory.id}`} className="lead-story-image-wrap" style={{ borderColor: "rgba(56, 189, 248, 0.2)" }}>
                       <img 
-                        src={leadStory.imageUrl} 
+                        src={leadStory.imageUrl || `/api/card/${leadStory.slug || leadStory.id}.svg`} 
                         alt={leadStory.title}
                         className="lead-story-img"
                         loading="eager"
                         decoding="async"
+                        onError={(e) => {
+                          const fallbackUrl = `/api/card/${leadStory.slug || leadStory.id}.svg`;
+                          if (e.currentTarget.src !== fallbackUrl && !e.currentTarget.src.endsWith(fallbackUrl)) {
+                            e.currentTarget.src = fallbackUrl;
+                          }
+                        }}
                       />
                     </Link>
                   )}
@@ -575,17 +581,21 @@ Report verified by HackerPost Security Intelligence Feed.
 
                 {secondaryStories.map((story) => (
                   <article key={story.id} className="sidebar-wire-item" style={{ borderColor: "rgba(56, 189, 248, 0.12)" }}>
-                    {story.imageUrl && (
-                      <Link href={`/news/${story.slug || story.id}`} className="sidebar-wire-thumb-wrap" style={{ borderColor: "rgba(56, 189, 248, 0.16)" }}>
-                        <img 
-                          src={story.imageUrl} 
-                          alt={story.title} 
-                          className="sidebar-wire-thumb"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </Link>
-                    )}
+                    <Link href={`/news/${story.slug || story.id}`} className="sidebar-wire-thumb-wrap" style={{ borderColor: "rgba(56, 189, 248, 0.16)" }}>
+                      <img 
+                        src={story.imageUrl || `/api/card/${story.slug || story.id}.svg`} 
+                        alt={story.title} 
+                        className="sidebar-wire-thumb"
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => {
+                          const fallbackUrl = `/api/card/${story.slug || story.id}.svg`;
+                          if (e.currentTarget.src !== fallbackUrl && !e.currentTarget.src.endsWith(fallbackUrl)) {
+                            e.currentTarget.src = fallbackUrl;
+                          }
+                        }}
+                      />
+                    </Link>
                     <div className="sidebar-wire-content">
                       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                         <span style={{ fontSize: "10px", fontWeight: 700, fontFamily: "var(--font-mono)", color: "#00e5ff" }}>
@@ -655,51 +665,36 @@ Report verified by HackerPost Security Intelligence Feed.
 
                 return (
                   <article key={article.id} className="news-card" style={{ borderColor: "rgba(56, 189, 248, 0.14)" }}>
-                    {article.imageUrl ? (
-                      <Link href={`/news/${article.slug || article.id}`} className="card-thumbnail-container" style={{ borderColor: "rgba(56, 189, 248, 0.16)" }}>
-                        <img 
-                          src={article.imageUrl} 
-                          alt={article.title}
-                          className="card-thumbnail-img"
-                          loading="lazy"
-                          decoding="async"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
-                        <div className="card-thumbnail-badges">
-                          <span className="card-category-badge" style={{ background: "rgba(11, 16, 29, 0.85)", borderColor: "rgba(0, 229, 255, 0.3)", color: "#00e5ff" }}>
-                            {article.category}
-                          </span>
-
-                          {isDeal && article.fundingAmount ? (
-                            <span className="card-thumbnail-tag deal" style={{ color: "#10b981", borderColor: "rgba(16, 185, 129, 0.3)" }}>
-                              {article.fundingAmount}
-                            </span>
-                          ) : article.cve ? (
-                            <span className="card-thumbnail-tag cve" style={{ color: "#f59e0b", borderColor: "rgba(245, 158, 11, 0.3)" }}>
-                              {article.cve}
-                            </span>
-                          ) : null}
-                        </div>
-                      </Link>
-                    ) : (
-                      <div className="card-image-stub" style={{ borderColor: "rgba(56, 189, 248, 0.12)" }}>
-                        <span className="card-category-badge">
+                    <Link href={`/news/${article.slug || article.id}`} className="card-thumbnail-container" style={{ borderColor: "rgba(56, 189, 248, 0.16)" }}>
+                      <img 
+                        src={article.imageUrl || `/api/card/${article.slug || article.id}.svg`} 
+                        alt={article.title}
+                        className="card-thumbnail-img"
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => {
+                          const fallbackUrl = `/api/card/${article.slug || article.id}.svg`;
+                          if (e.currentTarget.src !== fallbackUrl && !e.currentTarget.src.endsWith(fallbackUrl)) {
+                            e.currentTarget.src = fallbackUrl;
+                          }
+                        }}
+                      />
+                      <div className="card-thumbnail-badges">
+                        <span className="card-category-badge" style={{ background: "rgba(11, 16, 29, 0.85)", borderColor: "rgba(0, 229, 255, 0.3)", color: "#00e5ff" }}>
                           {article.category}
                         </span>
 
                         {isDeal && article.fundingAmount ? (
-                          <span style={{ fontSize: "11px", fontWeight: 700, color: "#10b981", fontFamily: "var(--font-mono)" }}>
+                          <span className="card-thumbnail-tag deal" style={{ color: "#10b981", borderColor: "rgba(16, 185, 129, 0.3)" }}>
                             {article.fundingAmount}
                           </span>
                         ) : article.cve ? (
-                          <span style={{ fontSize: "11px", fontWeight: 600, fontFamily: "var(--font-mono)", color: "#f59e0b" }}>
+                          <span className="card-thumbnail-tag cve" style={{ color: "#f59e0b", borderColor: "rgba(245, 158, 11, 0.3)" }}>
                             {article.cve}
                           </span>
                         ) : null}
                       </div>
-                    )}
+                    </Link>
 
                     <div className="card-body">
                       <div className="card-metadata">

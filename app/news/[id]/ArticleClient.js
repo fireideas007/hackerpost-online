@@ -371,14 +371,20 @@ Direct CISO Consultation Hotline: https://hackerpost.online/consult
               </div>
             </div>
 
-            {article.imageUrl && (
-              <div className="article-hero-banner" style={{ marginTop: "20px" }}>
+            {(article.imageUrl || article.slug || article.id) && (
+              <div className="article-hero-banner" style={{ marginTop: "20px", position: "relative", overflow: "hidden", borderRadius: "var(--radius-sm)", border: "1px solid rgba(56, 189, 248, 0.16)" }}>
                 <img
-                  src={article.imageUrl}
+                  src={article.imageUrl || `/api/card/${article.slug || article.id}.svg`}
                   alt={currentTitle}
                   className="article-hero-img"
                   loading="eager"
                   decoding="async"
+                  onError={(e) => {
+                    const fallbackUrl = `/api/card/${article.slug || article.id}.svg`;
+                    if (e.currentTarget.src !== fallbackUrl && !e.currentTarget.src.endsWith(fallbackUrl)) {
+                      e.currentTarget.src = fallbackUrl;
+                    }
+                  }}
                 />
               </div>
             )}
