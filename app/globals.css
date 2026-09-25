@@ -84,21 +84,21 @@
   --card: 0 0% 100%;
   --card-hover: 210 40% 98%;
   --card-foreground: 222 47% 11%;
-  --card-border: 214 32% 91%;
+  --card-border: 214 32% 88%;
   --muted: 210 40% 96%;
-  --muted-foreground: 215 16% 47%;
-  --border: 214 32% 91%;
-  --border-subtle: 220 14% 96%;
-  --primary: 217 91% 32%;
-  --primary-hover: 217 91% 24%;
-  --primary-bg: 217 91% 32% / 0.06;
-  --ring: 217 91% 32%;
-  --success: 142 76% 28%;
-  --success-bg: 142 76% 28% / 0.08;
-  --warning: 38 92% 40%;
-  --warning-bg: 38 92% 40% / 0.08;
-  --danger: 0 72% 40%;
-  --danger-bg: 0 72% 40% / 0.08;
+  --muted-foreground: 217 19% 36%;     /* High-contrast crisp charcoal slate #475569 */
+  --border: 214 32% 88%;
+  --border-subtle: 220 14% 94%;
+  --primary: 210 100% 40%;             /* High-contrast cyber blue #0284c7 */
+  --primary-hover: 210 100% 32%;
+  --primary-bg: 210 100% 40% / 0.08;
+  --ring: 210 100% 40%;
+  --success: 158 84% 32%;              /* Deep emerald #059669 */
+  --success-bg: 158 84% 32% / 0.08;
+  --warning: 38 92% 42%;               /* Deep amber #d97706 */
+  --warning-bg: 38 92% 42% / 0.08;
+  --danger: 0 78% 46%;                 /* Deep crimson #dc2626 */
+  --danger-bg: 0 78% 46% / 0.08;
   --shadow-glow-cyan: none;
 }
 
@@ -1805,6 +1805,45 @@ button, input, select, textarea {
   border: 1px solid rgba(16, 185, 129, 0.4);
 }
 
+/* Theme-Adaptive Threat & Metric Colors */
+.threat-val-red {
+  color: #ff3366;
+}
+[data-theme="light"] .threat-val-red {
+  color: #dc2626 !important;
+}
+
+.threat-val-cyan {
+  color: #00e5ff;
+}
+[data-theme="light"] .threat-val-cyan {
+  color: #0284c7 !important;
+}
+
+.threat-val-amber {
+  color: #f59e0b;
+}
+[data-theme="light"] .threat-val-amber {
+  color: #d97706 !important;
+}
+
+.threat-val-green {
+  color: #10b981;
+}
+[data-theme="light"] .threat-val-green {
+  color: #059669 !important;
+}
+
+.cve-mono-code {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 12px;
+  color: #00e5ff;
+}
+[data-theme="light"] .cve-mono-code {
+  color: #0284c7 !important;
+}
+
 /* CVE Inspector Module */
 .cve-inspector-panel {
   background: hsl(var(--card));
@@ -1813,6 +1852,12 @@ button, input, select, textarea {
   padding: 24px;
   margin-bottom: 32px;
   box-shadow: var(--shadow-lg);
+}
+
+[data-theme="light"] .cve-inspector-panel {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .cve-table {
@@ -1834,14 +1879,125 @@ button, input, select, textarea {
   background: rgba(15, 23, 42, 0.5);
 }
 
+[data-theme="light"] .cve-table th {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-bottom: 2px solid #cbd5e1 !important;
+}
+
 .cve-table td {
   padding: 14px;
   border-bottom: 1px solid hsl(var(--border-subtle));
   vertical-align: middle;
 }
 
+[data-theme="light"] .cve-table td {
+  color: #0f172a !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
 .cve-table tr:hover td {
   background: rgba(56, 189, 248, 0.03);
+}
+
+[data-theme="light"] .cve-table tr:hover td {
+  background: rgba(15, 23, 42, 0.02) !important;
+}
+
+/* Light Theme Overrides for Navigation, Tabs & Feed */
+[data-theme="light"] .ops-telemetry-bar {
+  background: #0f172a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+}
+
+[data-theme="light"] .ops-telemetry-pill {
+  color: #cbd5e1;
+}
+
+[data-theme="light"] .ops-telemetry-pill b {
+  color: #ffffff;
+}
+
+[data-theme="light"] .cyber-ops-tabs {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+}
+
+[data-theme="light"] .cyber-ops-tab {
+  color: #475569;
+}
+
+[data-theme="light"] .cyber-ops-tab:hover {
+  color: #0f172a;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .cyber-ops-tab.active {
+  color: #0284c7;
+  background: #ffffff;
+  border-color: #94a3b8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .adversary-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .adversary-tag {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+[data-theme="light"] .news-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .news-card:hover {
+  border-color: #94a3b8;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .card-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .card-title:hover {
+  color: #0284c7;
+}
+
+[data-theme="light"] .card-excerpt {
+  color: #334155;
+}
+
+[data-theme="light"] .card-metadata {
+  color: #64748b;
+}
+
+[data-theme="light"] .sidebar-wire-title {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .sidebar-wire-title:hover {
+  color: #0284c7 !important;
+}
+
+[data-theme="light"] .sidebar-wire-heading {
+  color: #0f172a !important;
+  border-bottom-color: #0284c7 !important;
+}
+
+[data-theme="light"] .lead-story-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .lead-story-excerpt {
+  color: #334155;
 }
 
 /* Threat Actor Matrix Cards */

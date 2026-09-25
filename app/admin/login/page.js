@@ -8,7 +8,7 @@ import { Lock, User, Key, ShieldAlert, CheckCircle2, ArrowRight, ShieldCheck, Bo
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectUrl = searchParams.get("redirect") || "/agent";
+  const redirectUrl = searchParams.get("redirect") || "/admin";
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -49,7 +49,7 @@ function LoginForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: username.trim() || "admin",
+          username: username.trim() || "Aditya",
           password: password.trim()
         })
       });
@@ -168,7 +168,7 @@ function LoginForm() {
             </label>
             <input
               type="text"
-              placeholder="admin"
+              placeholder="Aditya"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="sandbox-input"

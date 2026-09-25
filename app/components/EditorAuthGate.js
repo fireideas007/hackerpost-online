@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { Lock, CheckCircle2, Bot, Radio, Award, LogOut, ShieldAlert } from "lucide-react";
+import { Lock, CheckCircle2, Bot, Radio, Award, LogOut, ShieldAlert, ShieldCheck } from "lucide-react";
 
 export default function EditorAuthGate({ children, title = "Editor Access Gate" }) {
   const router = useRouter();
@@ -88,14 +88,14 @@ export default function EditorAuthGate({ children, title = "Editor Access Gate" 
               ADMIN CLEARANCE ACTIVE
             </span>
 
-            <nav style={{ display: "flex", gap: "8px" }}>
+            <nav style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
               <Link
-                href="/agent"
-                className={`btn ${pathname === "/agent" ? "btn-primary" : "btn-secondary"}`}
+                href="/admin/leads"
+                className={`btn ${pathname === "/admin/leads" ? "btn-primary" : "btn-secondary"}`}
                 style={{ fontSize: "11px", padding: "4px 12px", height: "28px", display: "inline-flex", alignItems: "center", gap: "6px" }}
               >
-                <Bot size={13} />
-                AI Agent Command Room
+                <ShieldCheck size={13} />
+                Consultation Leads
               </Link>
               <Link
                 href="/admin"
@@ -104,6 +104,14 @@ export default function EditorAuthGate({ children, title = "Editor Access Gate" 
               >
                 <Radio size={13} />
                 Threat Ingestion Hub
+              </Link>
+              <Link
+                href="/agent"
+                className={`btn ${pathname === "/agent" ? "btn-primary" : "btn-secondary"}`}
+                style={{ fontSize: "11px", padding: "4px 12px", height: "28px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+              >
+                <Bot size={13} />
+                AI Agent Command Room
               </Link>
             </nav>
           </div>

@@ -233,6 +233,8 @@ export default function NewsFeed({ initialArticles = [] }) {
   const [activeOpsTab, setActiveOpsTab] = useState("feed");
   const [cveSearch, setCveSearch] = useState("");
   const [cisoMemoCopied, setCisoMemoCopied] = useState(false);
+  const [expandedArticleId, setExpandedArticleId] = useState(null);
+  const [visibleArticleCount, setVisibleArticleCount] = useState(18);
 
   const categories = [
     { label: "All Dispatches", value: "All" },
@@ -317,8 +319,9 @@ export default function NewsFeed({ initialArticles = [] }) {
   });
 
   const leadStory = articles.length > 0 ? articles[0] : null;
-  const secondaryStories = articles.length > 1 ? articles.slice(1, 4) : [];
-  const standardFeed = articles.length > 4 ? articles.slice(4) : (articles.length <= 4 ? articles : []);
+  const secondaryStories = articles.length > 1 ? articles.slice(1, 7) : [];
+  const standardFeed = articles.length > 7 ? articles.slice(7) : (articles.length <= 7 ? articles : []);
+  const feedToDisplay = selectedCategory === "All" && !searchQuery ? standardFeed : articles;
 
   // Generate Boardroom CISO Threat Briefing Memo
   const copyCisoExecutiveMemo = () => {
@@ -368,7 +371,7 @@ Report verified by HackerPost Security Intelligence Feed.
             <span className="defcon-card-title">CISA Threat Advisory</span>
             <span className="pulse-live-red"></span>
           </div>
-          <div className="defcon-card-value" style={{ color: "#ff3366" }}>
+          <div className="defcon-card-value threat-val-red">
             DEFCON 3
           </div>
           <div className="defcon-card-sub">
@@ -381,7 +384,7 @@ Report verified by HackerPost Security Intelligence Feed.
             <span className="defcon-card-title">Active KEV Catalog</span>
             <span className="pulse-live"></span>
           </div>
-          <div className="defcon-card-value" style={{ color: "#00e5ff" }}>
+          <div className="defcon-card-value threat-val-cyan">
             1,288 CVEs
           </div>
           <div className="defcon-card-sub">
@@ -394,7 +397,7 @@ Report verified by HackerPost Security Intelligence Feed.
             <span className="defcon-card-title">Active Adversary Focus</span>
             <span className="pulse-live-red"></span>
           </div>
-          <div className="defcon-card-value" style={{ fontSize: "19px", color: "#f59e0b" }}>
+          <div className="defcon-card-value threat-val-amber" style={{ fontSize: "19px" }}>
             Volt Typhoon &amp; Akira
           </div>
           <div className="defcon-card-sub">
@@ -407,7 +410,7 @@ Report verified by HackerPost Security Intelligence Feed.
             <span className="defcon-card-title">Top AI SecLLM Leader</span>
             <span className="pulse-live-green"></span>
           </div>
-          <div className="defcon-card-value" style={{ fontSize: "19px", color: "#10b981" }}>
+          <div className="defcon-card-value threat-val-green" style={{ fontSize: "19px" }}>
             Claude 4.5 Opus
           </div>
           <div className="defcon-card-sub">
@@ -528,7 +531,7 @@ Report verified by HackerPost Security Intelligence Feed.
                     <span className={`cvss-badge ${getCvssClass(leadStory.severity || "Critical")}`}>
                       {leadStory.severity ? leadStory.severity.toUpperCase() : "CRITICAL"}
                     </span>
-                    <span style={{ fontSize: "11px", fontWeight: 800, color: "#00e5ff", fontFamily: "var(--font-mono)", letterSpacing: "0.06em" }}>
+                    <span className="threat-val-cyan" style={{ fontSize: "11px", fontWeight: 800, fontFamily: "var(--font-mono)", letterSpacing: "0.06em" }}>
                       VERIFIED DISPATCH
                     </span>
                   </div>
@@ -540,19 +543,19 @@ Report verified by HackerPost Security Intelligence Feed.
                   </Link>
 
                   <div className="lead-story-meta">
-                    <span style={{ color: "#00e5ff", fontWeight: 700 }}>{leadStory.providerName || "Verified Threat Wire"}</span>
+                    <span className="threat-val-cyan" style={{ fontWeight: 700 }}>{leadStory.providerName || "Verified Threat Wire"}</span>
                     <span>•</span>
                     <span>{formatDate(leadStory.publishedAt)}</span>
                     {leadStory.cve && (
                       <>
                         <span>•</span>
-                        <span style={{ color: "#f59e0b", fontFamily: "var(--font-mono)", fontWeight: 700 }}>{leadStory.cve}</span>
+                        <span className="threat-val-amber" style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>{leadStory.cve}</span>
                       </>
                     )}
                   </div>
 
-                  <p className="lead-story-excerpt" style={{ marginTop: "12px", color: "hsl(var(--muted-foreground))" }}>
-                    {leadStory.content ? leadStory.content.replace(/#[\s\S]*?\n/, "").substring(0, 220).trim() + "..." : "Security intelligence teams have cataloged high-severity advisory telemetry across production infrastructure."}
+                  <p className="lead-story-excerpt" style={{ marginTop: "12px", lineHeight: 1.65 }}>
+                    {leadStory.content ? leadStory.content.replace(/#+[\s\S]*?\n/g, "").replace(/\*\*|__/g, "").substring(0, 320).trim() + "..." : "Security intelligence teams have cataloged high-severity advisory telemetry across production infrastructure."}
                   </p>
                 </div>
 
@@ -566,7 +569,7 @@ Report verified by HackerPost Security Intelligence Feed.
                   </Link>
 
                   {leadStory.fundingAmount && (
-                    <span style={{ fontSize: "12px", fontWeight: 700, color: "#10b981", fontFamily: "var(--font-mono)" }}>
+                    <span className="threat-val-green" style={{ fontSize: "12px", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                       Deal Size: {leadStory.fundingAmount} ({leadStory.fundingRound || "Venture Round"})
                     </span>
                   )}
@@ -575,13 +578,13 @@ Report verified by HackerPost Security Intelligence Feed.
 
               {/* Latest Wire Column */}
               <div className="sidebar-wire-list">
-                <div className="sidebar-wire-heading" style={{ borderColor: "#00e5ff", color: "#f8fafc" }}>
+                <div className="sidebar-wire-heading">
                   Live Dispatches
                 </div>
 
                 {secondaryStories.map((story) => (
-                  <article key={story.id} className="sidebar-wire-item" style={{ borderColor: "rgba(56, 189, 248, 0.12)" }}>
-                    <Link href={`/news/${story.slug || story.id}`} className="sidebar-wire-thumb-wrap" style={{ borderColor: "rgba(56, 189, 248, 0.16)" }}>
+                  <article key={story.id} className="sidebar-wire-item">
+                    <Link href={`/news/${story.slug || story.id}`} className="sidebar-wire-thumb-wrap">
                       <img 
                         src={story.imageUrl || `/api/card/${story.slug || story.id}.svg`} 
                         alt={story.title} 
@@ -598,21 +601,21 @@ Report verified by HackerPost Security Intelligence Feed.
                     </Link>
                     <div className="sidebar-wire-content">
                       <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                        <span style={{ fontSize: "10px", fontWeight: 700, fontFamily: "var(--font-mono)", color: "#00e5ff" }}>
+                        <span className="threat-val-cyan" style={{ fontSize: "10px", fontWeight: 700, fontFamily: "var(--font-mono)" }}>
                           {story.category}
                         </span>
                         {story.cve && (
-                          <span style={{ fontSize: "10px", fontFamily: "var(--font-mono)", color: "#f59e0b" }}>
+                          <span className="threat-val-amber" style={{ fontSize: "10px", fontFamily: "var(--font-mono)" }}>
                             {story.cve}
                           </span>
                         )}
                       </div>
                       <Link href={`/news/${story.slug || story.id}`}>
-                        <h3 className="sidebar-wire-title" style={{ fontSize: "13px", lineHeight: "1.35", color: "#f8fafc" }}>
+                        <h3 className="sidebar-wire-title" style={{ fontSize: "13px", lineHeight: "1.35" }}>
                           {story.title}
                         </h3>
                       </Link>
-                      <div className="sidebar-wire-meta" style={{ color: "hsl(var(--muted-foreground))" }}>
+                      <div className="sidebar-wire-meta">
                         {formatDate(story.publishedAt)} · {story.providerName || "Threat Wire"}
                       </div>
                     </div>
@@ -623,16 +626,39 @@ Report verified by HackerPost Security Intelligence Feed.
           )}
 
           {/* Section Filter Navigation Tabs */}
-          <div className="news-sections-nav" style={{ borderColor: "rgba(56, 189, 248, 0.16)" }}>
-            {categories.map((cat) => (
-              <button
-                key={cat.value}
-                onClick={() => setCustomCategory(cat.value)}
-                className={`news-section-btn ${selectedCategory === cat.value ? "active" : ""}`}
-              >
-                {cat.label}
-              </button>
-            ))}
+          <div className="news-sections-nav">
+            {categories.map((cat) => {
+              const count = cat.value === "All" 
+                ? articles.length 
+                : articles.filter(a => cat.value === "Advisories" ? (a.category === "Advisories" || a.category === "Exploits") : a.category === cat.value).length;
+
+              return (
+                <button
+                  key={cat.value}
+                  onClick={() => {
+                    setCustomCategory(cat.value);
+                    setVisibleArticleCount(18);
+                  }}
+                  className={`news-section-btn ${selectedCategory === cat.value ? "active" : ""}`}
+                  style={{ display: "inline-flex", alignItems: "center" }}
+                >
+                  <span>{cat.label}</span>
+                  {count > 0 && (
+                    <span style={{
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      padding: "1px 6px",
+                      borderRadius: "10px",
+                      background: selectedCategory === cat.value ? "hsla(var(--primary), 0.2)" : "hsl(var(--muted))",
+                      color: selectedCategory === cat.value ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
+                      marginLeft: "6px"
+                    }}>
+                      {count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           {/* Main 3-Column News Article Grid */}
@@ -659,77 +685,135 @@ Report verified by HackerPost Security Intelligence Feed.
               </button>
             </div>
           ) : (
-            <div className="news-grid">
-              {(selectedCategory === "All" && !searchQuery ? standardFeed : articles).map((article) => {
-                const isDeal = article.category === "SecTech & Startups" || article.category === "M&A & Funding" || !!article.fundingAmount;
+            <>
+              <div className="news-grid">
+                {feedToDisplay.slice(0, visibleArticleCount).map((article) => {
+                  const isDeal = article.category === "SecTech & Startups" || article.category === "M&A & Funding" || !!article.fundingAmount;
+                  const isExpanded = expandedArticleId === article.id;
 
-                return (
-                  <article key={article.id} className="news-card" style={{ borderColor: "rgba(56, 189, 248, 0.14)" }}>
-                    <Link href={`/news/${article.slug || article.id}`} className="card-thumbnail-container" style={{ borderColor: "rgba(56, 189, 248, 0.16)" }}>
-                      <img 
-                        src={article.imageUrl || `/api/card/${article.slug || article.id}.svg`} 
-                        alt={article.title}
-                        className="card-thumbnail-img"
-                        loading="lazy"
-                        decoding="async"
-                        onError={(e) => {
-                          const fallbackUrl = `/api/card/${article.slug || article.id}.svg`;
-                          if (e.currentTarget.src !== fallbackUrl && !e.currentTarget.src.endsWith(fallbackUrl)) {
-                            e.currentTarget.src = fallbackUrl;
-                          }
-                        }}
-                      />
-                      <div className="card-thumbnail-badges">
-                        <span className="card-category-badge" style={{ background: "rgba(11, 16, 29, 0.85)", borderColor: "rgba(0, 229, 255, 0.3)", color: "#00e5ff" }}>
-                          {article.category}
-                        </span>
-
-                        {isDeal && article.fundingAmount ? (
-                          <span className="card-thumbnail-tag deal" style={{ color: "#10b981", borderColor: "rgba(16, 185, 129, 0.3)" }}>
-                            {article.fundingAmount}
+                  return (
+                    <article key={article.id} className="news-card">
+                      <Link href={`/news/${article.slug || article.id}`} className="card-thumbnail-container">
+                        <img 
+                          src={article.imageUrl || `/api/card/${article.slug || article.id}.svg`} 
+                          alt={article.title}
+                          className="card-thumbnail-img"
+                          loading="lazy"
+                          decoding="async"
+                          onError={(e) => {
+                            const fallbackUrl = `/api/card/${article.slug || article.id}.svg`;
+                            if (e.currentTarget.src !== fallbackUrl && !e.currentTarget.src.endsWith(fallbackUrl)) {
+                              e.currentTarget.src = fallbackUrl;
+                            }
+                          }}
+                        />
+                        <div className="card-thumbnail-badges">
+                          <span className="card-category-badge">
+                            {article.category}
                           </span>
-                        ) : article.cve ? (
-                          <span className="card-thumbnail-tag cve" style={{ color: "#f59e0b", borderColor: "rgba(245, 158, 11, 0.3)" }}>
-                            {article.cve}
-                          </span>
-                        ) : null}
-                      </div>
-                    </Link>
 
-                    <div className="card-body">
-                      <div className="card-metadata">
-                        <span style={{ color: "#94a3b8" }}>{formatDate(article.publishedAt)}</span>
-                        <span>•</span>
-                        <span style={{ color: "#00e5ff", fontWeight: 600 }}>{article.providerName || "Threat Wire"}</span>
-                      </div>
-
-                      <Link href={`/news/${article.slug || article.id}`}>
-                        <h2 className="card-title" style={{ fontSize: "15px", lineHeight: "1.4" }}>
-                          {article.title}
-                        </h2>
+                          {isDeal && article.fundingAmount ? (
+                            <span className="card-thumbnail-tag deal threat-val-green">
+                              {article.fundingAmount}
+                            </span>
+                          ) : article.cve ? (
+                            <span className="card-thumbnail-tag cve threat-val-amber">
+                              {article.cve}
+                            </span>
+                          ) : null}
+                        </div>
                       </Link>
 
-                      <p className="card-excerpt">
-                        {article.content 
-                          ? article.content.replace(/#[\s\S]*?\n/, "").substring(0, 150).trim() + "..." 
-                          : "Verified threat intelligence advisory for security engineering teams."}
-                      </p>
+                      <div className="card-body">
+                        <div className="card-metadata">
+                          <span>{formatDate(article.publishedAt)}</span>
+                          <span>•</span>
+                          <span className="threat-val-cyan" style={{ fontWeight: 600 }}>{article.providerName || "Threat Wire"}</span>
+                        </div>
 
-                      <div className="card-footer" style={{ borderColor: "rgba(56, 189, 248, 0.12)" }}>
-                        <span className={`cvss-badge ${getCvssClass(article.severity || "Medium")}`}>
-                          {isDeal ? "VENTURE DEAL" : (article.severity ? article.severity.toUpperCase() : "ADVISORY")}
-                        </span>
-
-                        <Link href={`/news/${article.slug || article.id}`} className="card-read-more" style={{ color: "#00e5ff" }}>
-                          <span>Inspect</span>
-                          <ArrowRight size={13} />
+                        <Link href={`/news/${article.slug || article.id}`}>
+                          <h2 className="card-title" style={{ fontSize: "16px", lineHeight: "1.35", fontWeight: 700 }}>
+                            {article.title}
+                          </h2>
                         </Link>
+
+                        <p className="card-excerpt" style={{ lineHeight: 1.6 }}>
+                          {article.content 
+                            ? article.content.replace(/#+[\s\S]*?\n/g, "").replace(/\*\*|__/g, "").substring(0, 220).trim() + "..." 
+                            : "Verified threat intelligence advisory for security engineering teams."}
+                        </p>
+
+                        {/* Inline Quick Read Expander */}
+                        {isExpanded && (
+                          <div style={{
+                            marginTop: "12px",
+                            padding: "14px",
+                            background: "hsl(var(--muted))",
+                            borderRadius: "var(--radius-xs)",
+                            border: "1px solid hsl(var(--border))",
+                            fontSize: "13px",
+                            lineHeight: "1.65",
+                            color: "hsl(var(--foreground))"
+                          }}>
+                            <div style={{ fontWeight: 800, fontSize: "11px", letterSpacing: "0.05em", textTransform: "uppercase", marginBottom: "8px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                              <span className="threat-val-cyan">Full Dispatch Intel:</span>
+                              <button
+                                onClick={() => setExpandedArticleId(null)}
+                                style={{ background: "none", border: "none", color: "hsl(var(--muted-foreground))", cursor: "pointer", fontSize: "12px", fontWeight: 700 }}
+                              >
+                                Close ✕
+                              </button>
+                            </div>
+                            <div style={{ whiteSpace: "pre-wrap" }}>
+                              {article.content.replace(/#+[\s\S]*?\n/g, "").replace(/\*\*|__/g, "").trim()}
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="card-footer">
+                          <span className={`cvss-badge ${getCvssClass(article.severity || "Medium")}`}>
+                            {isDeal ? "VENTURE DEAL" : (article.severity ? article.severity.toUpperCase() : "ADVISORY")}
+                          </span>
+
+                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                            <button
+                              onClick={() => setExpandedArticleId(isExpanded ? null : article.id)}
+                              className="btn btn-secondary"
+                              style={{ fontSize: "11px", padding: "4px 8px", height: "26px" }}
+                              title="Read complete dispatch without leaving page"
+                            >
+                              {isExpanded ? "Collapse" : "Quick Read"}
+                            </button>
+
+                            <Link href={`/news/${article.slug || article.id}`} className="card-read-more threat-val-cyan">
+                              <span>Inspect</span>
+                              <ArrowRight size={13} />
+                            </Link>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
+                    </article>
+                  );
+                })}
+              </div>
+
+              {/* Load More Pagination */}
+              {feedToDisplay.length > visibleArticleCount && (
+                <div style={{ textAlign: "center", marginTop: "36px", paddingBottom: "20px" }}>
+                  <p style={{ fontSize: "12px", color: "hsl(var(--muted-foreground))", marginBottom: "12px" }}>
+                    Showing {Math.min(visibleArticleCount, feedToDisplay.length)} of {feedToDisplay.length} verified dispatches
+                  </p>
+                  <button
+                    onClick={() => setVisibleArticleCount(prev => prev + 18)}
+                    className="btn btn-primary"
+                    style={{ padding: "10px 24px", fontSize: "13px", display: "inline-flex", alignItems: "center", gap: "8px" }}
+                  >
+                    <Layers size={15} />
+                    Load More Threat Dispatches ({feedToDisplay.length - visibleArticleCount} remaining)
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </>
       )}
@@ -742,12 +826,12 @@ Report verified by HackerPost Security Intelligence Feed.
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px", marginBottom: "20px" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                <Bug size={18} color="#00e5ff" />
-                <h2 style={{ fontSize: "18px", fontWeight: 800, color: "#f8fafc" }}>
+                <Bug size={18} className="threat-val-cyan" />
+                <h2 style={{ fontSize: "20px", fontWeight: 800, color: "hsl(var(--foreground))", margin: 0 }}>
                   Live Known Exploited Vulnerabilities (KEV) Inspector
                 </h2>
               </div>
-              <p style={{ fontSize: "12px", color: "#94a3b8" }}>
+              <p style={{ fontSize: "13px", color: "hsl(var(--muted-foreground))", margin: "4px 0 0 0" }}>
                 Interactive inspection terminal tracking CVSS scores, EPSS probabilities, and CISA federal directive compliance.
               </p>
             </div>
@@ -760,12 +844,13 @@ Report verified by HackerPost Security Intelligence Feed.
                 onChange={(e) => setCveSearch(e.target.value)}
                 style={{
                   width: "100%",
-                  padding: "8px 12px",
-                  background: "rgba(15, 23, 42, 0.6)",
-                  border: "1px solid rgba(56, 189, 248, 0.3)",
+                  padding: "9px 14px",
+                  background: "hsl(var(--muted))",
+                  border: "1px solid hsl(var(--border))",
                   borderRadius: "var(--radius-sm)",
-                  color: "#f8fafc",
-                  fontSize: "12px"
+                  color: "hsl(var(--foreground))",
+                  fontSize: "12px",
+                  outline: "none"
                 }}
               />
             </div>
@@ -788,14 +873,14 @@ Report verified by HackerPost Security Intelligence Feed.
                 {filteredCves.map((item) => (
                   <tr key={item.cve}>
                     <td>
-                      <span style={{ fontFamily: "var(--font-mono)", fontWeight: 800, color: "#00e5ff", fontSize: "12px" }}>
+                      <span className="cve-mono-code">
                         {item.cve}
                       </span>
-                      <div style={{ fontSize: "10px", color: "#94a3b8" }}>{item.addedDate}</div>
+                      <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))" }}>{item.addedDate}</div>
                     </td>
                     <td>
-                      <div style={{ fontWeight: 700, color: "#f8fafc" }}>{item.vendor}</div>
-                      <div style={{ fontSize: "11px", color: "#94a3b8" }}>{item.product}</div>
+                      <div style={{ fontWeight: 700, color: "hsl(var(--foreground))", fontSize: "13px" }}>{item.vendor}</div>
+                      <div style={{ fontSize: "12px", color: "hsl(var(--muted-foreground))" }}>{item.product}</div>
                     </td>
                     <td>
                       <span className={`cvss-badge ${getCvssClass(item.severity)}`}>
@@ -803,23 +888,23 @@ Report verified by HackerPost Security Intelligence Feed.
                       </span>
                     </td>
                     <td>
-                      <span style={{ fontFamily: "var(--font-mono)", fontWeight: 700, color: parseFloat(item.epss) > 90 ? "#ff3366" : "#f59e0b" }}>
+                      <span className={parseFloat(item.epss) > 90 ? "threat-val-red" : "threat-val-amber"} style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>
                         {item.epss}
                       </span>
                     </td>
-                    <td style={{ fontSize: "11px", color: "#94a3b8", maxWidth: "220px" }}>
+                    <td style={{ fontSize: "12px", color: "hsl(var(--foreground))", maxWidth: "240px" }}>
                       {item.vector}
                     </td>
                     <td>
                       {item.cisaKev ? (
-                        <span style={{ fontSize: "10px", fontWeight: 800, padding: "2px 6px", borderRadius: "3px", background: "rgba(255, 51, 102, 0.15)", color: "#ff3366", border: "1px solid rgba(255, 51, 102, 0.3)" }}>
+                        <span className="threat-val-red" style={{ fontSize: "10px", fontWeight: 800, padding: "2px 6px", borderRadius: "3px", background: "rgba(255, 51, 102, 0.12)", border: "1px solid rgba(255, 51, 102, 0.3)" }}>
                           LISTED KEV
                         </span>
                       ) : (
-                        <span style={{ fontSize: "10px", color: "#94a3b8" }}>N/A</span>
+                        <span style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))" }}>N/A</span>
                       )}
                     </td>
-                    <td style={{ fontSize: "11px", color: "#10b981", maxWidth: "260px" }}>
+                    <td className="threat-val-green" style={{ fontSize: "12px", fontWeight: 600, maxWidth: "260px" }}>
                       {item.mitigation}
                     </td>
                   </tr>
@@ -837,25 +922,25 @@ Report verified by HackerPost Security Intelligence Feed.
         <div>
           <div style={{ marginBottom: "20px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-              <ShieldAlert size={18} color="#ff3366" />
-              <h2 style={{ fontSize: "18px", fontWeight: 800, color: "#f8fafc" }}>
+              <ShieldAlert size={18} className="threat-val-red" />
+              <h2 style={{ fontSize: "20px", fontWeight: 800, color: "hsl(var(--foreground))", margin: 0 }}>
                 Active Threat Actor &amp; Ransomware Syndicate Matrix
               </h2>
             </div>
-            <p style={{ fontSize: "12px", color: "#94a3b8" }}>
+            <p style={{ fontSize: "13px", color: "hsl(var(--muted-foreground))", margin: "4px 0 0 0" }}>
               Real-time intelligence on advanced persistent threats (APTs) and ransomware cartels actively conducting campaigns.
             </p>
           </div>
 
           <div className="adversary-grid">
             {THREAT_ACTORS.map((actor) => (
-              <div key={actor.name} className="adversary-card" style={{ borderColor: "rgba(56, 189, 248, 0.18)" }}>
+              <div key={actor.name} className="adversary-card">
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}>
                   <div>
-                    <h3 style={{ fontSize: "16px", fontWeight: 800, color: "#f8fafc", marginBottom: "2px" }}>
+                    <h3 style={{ fontSize: "16px", fontWeight: 800, color: "hsl(var(--foreground))", marginBottom: "2px" }}>
                       {actor.name}
                     </h3>
-                    <div style={{ fontSize: "11px", color: "#94a3b8" }}>
+                    <div style={{ fontSize: "11px", color: "hsl(var(--muted-foreground))" }}>
                       AKA: {actor.aka}
                     </div>
                   </div>
@@ -864,28 +949,28 @@ Report verified by HackerPost Security Intelligence Feed.
                   </span>
                 </div>
 
-                <div style={{ fontSize: "11px", marginBottom: "10px", lineHeight: "1.5" }}>
-                  <div style={{ color: "#00e5ff", fontWeight: 700, marginBottom: "2px" }}>ORIGIN &amp; ATTRIBUTION:</div>
-                  <div style={{ color: "#cbd5e1" }}>{actor.origin}</div>
+                <div style={{ fontSize: "12px", marginBottom: "10px", lineHeight: "1.5" }}>
+                  <div className="threat-val-cyan" style={{ fontWeight: 700, marginBottom: "2px", fontSize: "11px" }}>ORIGIN &amp; ATTRIBUTION:</div>
+                  <div style={{ color: "hsl(var(--foreground))" }}>{actor.origin}</div>
                 </div>
 
-                <div style={{ fontSize: "11px", marginBottom: "10px", lineHeight: "1.5" }}>
-                  <div style={{ color: "#f59e0b", fontWeight: 700, marginBottom: "2px" }}>PRIMARY TARGET SECTORS:</div>
-                  <div style={{ color: "#cbd5e1" }}>{actor.primaryTargets}</div>
+                <div style={{ fontSize: "12px", marginBottom: "10px", lineHeight: "1.5" }}>
+                  <div className="threat-val-amber" style={{ fontWeight: 700, marginBottom: "2px", fontSize: "11px" }}>PRIMARY TARGET SECTORS:</div>
+                  <div style={{ color: "hsl(var(--foreground))" }}>{actor.primaryTargets}</div>
                 </div>
 
-                <div style={{ fontSize: "11px", marginBottom: "12px", lineHeight: "1.5" }}>
-                  <div style={{ color: "#ff3366", fontWeight: 700, marginBottom: "2px" }}>ACTIVE CAMPAIGN / TTP:</div>
-                  <div style={{ color: "#94a3b8" }}>{actor.modusOperandi}</div>
+                <div style={{ fontSize: "12px", marginBottom: "12px", lineHeight: "1.5" }}>
+                  <div className="threat-val-red" style={{ fontWeight: 700, marginBottom: "2px", fontSize: "11px" }}>ACTIVE CAMPAIGN / TTP:</div>
+                  <div style={{ color: "hsl(var(--muted-foreground))" }}>{actor.modusOperandi}</div>
                 </div>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", borderTop: "1px solid rgba(56, 189, 248, 0.12)", paddingTop: "12px" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", borderTop: "1px solid hsl(var(--border))", paddingTop: "12px" }}>
                   {actor.ttpCodes.map((ttp) => (
                     <span key={ttp} className="adversary-tag">
                       {ttp}
                     </span>
                   ))}
-                  <span className="adversary-tag" style={{ color: "#00e5ff", borderColor: "rgba(0, 229, 255, 0.3)" }}>
+                  <span className="adversary-tag threat-val-cyan">
                     CISA {actor.cisaAlert}
                   </span>
                 </div>
@@ -903,12 +988,12 @@ Report verified by HackerPost Security Intelligence Feed.
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px", marginBottom: "20px" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                <Cpu size={18} color="#10b981" />
-                <h2 style={{ fontSize: "18px", fontWeight: 800, color: "#f8fafc" }}>
+                <Cpu size={18} className="threat-val-green" />
+                <h2 style={{ fontSize: "20px", fontWeight: 800, color: "hsl(var(--foreground))", margin: 0 }}>
                   Empirical AI Security Model Leaderboard
                 </h2>
               </div>
-              <p style={{ fontSize: "12px", color: "#94a3b8" }}>
+              <p style={{ fontSize: "13px", color: "hsl(var(--muted-foreground))", margin: "4px 0 0 0" }}>
                 Verified capability scores from Meta CyberSecEval 3 and SWE-bench Verified for autonomous exploit defense and patch generation.
               </p>
             </div>
@@ -942,8 +1027,8 @@ Report verified by HackerPost Security Intelligence Feed.
                         width: "24px",
                         height: "24px",
                         borderRadius: "50%",
-                        background: model.rank === 1 ? "rgba(0, 229, 255, 0.2)" : "rgba(255, 255, 255, 0.05)",
-                        color: model.rank === 1 ? "#00e5ff" : "#94a3b8",
+                        background: model.rank === 1 ? "rgba(0, 229, 255, 0.2)" : "rgba(100, 116, 139, 0.12)",
+                        color: model.rank === 1 ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
                         fontWeight: 800,
                         fontSize: "11px",
                         fontFamily: "var(--font-mono)"
@@ -952,28 +1037,28 @@ Report verified by HackerPost Security Intelligence Feed.
                       </span>
                     </td>
                     <td>
-                      <span style={{ fontWeight: 700, color: "#f8fafc" }}>{model.model}</span>
+                      <span style={{ fontWeight: 700, color: "hsl(var(--foreground))" }}>{model.model}</span>
                     </td>
                     <td>
-                      <span style={{ fontSize: "12px", color: "#94a3b8" }}>{model.provider}</span>
+                      <span style={{ fontSize: "12px", color: "hsl(var(--muted-foreground))" }}>{model.provider}</span>
                     </td>
                     <td>
-                      <span style={{ fontFamily: "var(--font-mono)", fontWeight: 800, color: parseFloat(model.sweBench) > 60 ? "#10b981" : "#00e5ff" }}>
+                      <span className="threat-val-green" style={{ fontFamily: "var(--font-mono)", fontWeight: 800 }}>
                         {model.sweBench}
                       </span>
                     </td>
                     <td>
-                      <span style={{ fontFamily: "var(--font-mono)", fontWeight: 800, color: "#00e5ff" }}>
+                      <span className="threat-val-cyan" style={{ fontFamily: "var(--font-mono)", fontWeight: 800 }}>
                         {model.cyberSecEval} / 100
                       </span>
                     </td>
                     <td>
-                      <span style={{ fontFamily: "var(--font-mono)", color: "#cbd5e1" }}>
+                      <span style={{ fontFamily: "var(--font-mono)", color: "hsl(var(--foreground))" }}>
                         {model.exploitDetection}
                       </span>
                     </td>
                     <td>
-                      <span style={{ fontFamily: "var(--font-mono)", color: "#cbd5e1" }}>
+                      <span style={{ fontFamily: "var(--font-mono)", color: "hsl(var(--foreground))" }}>
                         {model.threatHunting}
                       </span>
                     </td>
@@ -993,12 +1078,12 @@ Report verified by HackerPost Security Intelligence Feed.
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px", marginBottom: "20px" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
-                <FileText size={18} color="#00e5ff" />
-                <h2 style={{ fontSize: "18px", fontWeight: 800, color: "#f8fafc" }}>
+                <FileText size={18} className="threat-val-cyan" />
+                <h2 style={{ fontSize: "20px", fontWeight: 800, color: "hsl(var(--foreground))", margin: 0 }}>
                   Autonomous CISO Executive Briefing Memorandum
                 </h2>
               </div>
-              <p style={{ fontSize: "12px", color: "#94a3b8" }}>
+              <p style={{ fontSize: "13px", color: "hsl(var(--muted-foreground))", margin: "4px 0 0 0" }}>
                 Instantly generates a board-ready executive security memorandum compiling active zero-day disclosures and mitigation playbooks.
               </p>
             </div>
@@ -1008,20 +1093,20 @@ Report verified by HackerPost Security Intelligence Feed.
               className="btn btn-primary"
               style={{ fontSize: "12px", gap: "6px" }}
             >
-              {cisoMemoCopied ? <Check size={14} color="#10b981" /> : <Copy size={14} />}
+              {cisoMemoCopied ? <Check size={14} className="threat-val-green" /> : <Copy size={14} />}
               <span>{cisoMemoCopied ? "Memorandum Copied!" : "Copy Executive Briefing"}</span>
             </button>
           </div>
 
           <div style={{
-            background: "#080c14",
-            border: "1px solid rgba(56, 189, 248, 0.2)",
+            background: "hsl(var(--muted))",
+            border: "1px solid hsl(var(--border))",
             borderRadius: "var(--radius-md)",
             padding: "20px",
             fontFamily: "var(--font-mono)",
             fontSize: "12px",
             lineHeight: "1.7",
-            color: "#cbd5e1",
+            color: "hsl(var(--foreground))",
             whiteSpace: "pre-wrap"
           }}>
 {`================================================================================
@@ -1052,6 +1137,134 @@ vulnerabilities with elevated exploitation velocity observed in the past 48 hour
 [ ] 4. Isolate administrative hypervisor management networks from general corporate traffic.
 
 Verified by HackerPost Security Intelligence Feed.`}
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================================
+          ACCOMPANYING READABLE NEWS DISPATCHES FOR ALL SPECIALIZED TABS
+          ========================================================================= */}
+      {activeOpsTab !== "feed" && (
+        <div style={{ marginTop: "44px", paddingTop: "28px", borderTop: "2px solid hsl(var(--border))" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "12px" }}>
+            <div>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "11px", fontWeight: 800, textTransform: "uppercase", color: "hsl(var(--primary))", marginBottom: "4px" }}>
+                <Radio size={13} className="pulse-live" />
+                Accompanying Intelligence Wire
+              </div>
+              <h3 style={{ fontSize: "20px", fontWeight: 800, margin: 0, color: "hsl(var(--foreground))" }}>
+                Breaking Threat Dispatches &amp; Security News
+              </h3>
+              <p style={{ fontSize: "13px", color: "hsl(var(--muted-foreground))", margin: "2px 0 0 0" }}>
+                Verified editorial dispatches contextualizing current CVEs, threat actors, and AI security benchmarks.
+              </p>
+            </div>
+
+            <button
+              onClick={() => setActiveOpsTab("feed")}
+              className="btn btn-primary"
+              style={{ fontSize: "12px", padding: "6px 14px", height: "32px", display: "inline-flex", alignItems: "center", gap: "6px" }}
+            >
+              View Full Wire Feed ({articles.length}) →
+            </button>
+          </div>
+
+          <div className="news-grid">
+            {articles.slice(0, 6).map((article) => {
+              const isDeal = article.category === "SecTech & Startups" || article.category === "M&A & Funding" || !!article.fundingAmount;
+              const isExpanded = expandedArticleId === `tab-${article.id}`;
+
+              return (
+                <article key={`tab-${article.id}`} className="news-card">
+                  <Link href={`/news/${article.slug || article.id}`} className="card-thumbnail-container">
+                    <img 
+                      src={article.imageUrl || `/api/card/${article.slug || article.id}.svg`} 
+                      alt={article.title}
+                      className="card-thumbnail-img"
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        const fallbackUrl = `/api/card/${article.slug || article.id}.svg`;
+                        if (e.currentTarget.src !== fallbackUrl && !e.currentTarget.src.endsWith(fallbackUrl)) {
+                          e.currentTarget.src = fallbackUrl;
+                        }
+                      }}
+                    />
+                    <div className="card-thumbnail-badges">
+                      <span className="card-category-badge">
+                        {article.category}
+                      </span>
+                      {article.cve && (
+                        <span className="card-thumbnail-tag cve threat-val-amber">
+                          {article.cve}
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+
+                  <div className="card-body">
+                    <div className="card-metadata">
+                      <span>{formatDate(article.publishedAt)}</span>
+                      <span>•</span>
+                      <span className="threat-val-cyan" style={{ fontWeight: 600 }}>{article.providerName || "Threat Wire"}</span>
+                    </div>
+
+                    <Link href={`/news/${article.slug || article.id}`}>
+                      <h2 className="card-title" style={{ fontSize: "15px", lineHeight: "1.35", fontWeight: 700 }}>
+                        {article.title}
+                      </h2>
+                    </Link>
+
+                    <p className="card-excerpt" style={{ lineHeight: 1.6 }}>
+                      {article.content 
+                        ? article.content.replace(/#+[\s\S]*?\n/g, "").replace(/\*\*|__/g, "").substring(0, 180).trim() + "..." 
+                        : "Verified threat intelligence advisory for security engineering teams."}
+                    </p>
+
+                    {isExpanded && (
+                      <div style={{
+                        marginTop: "10px",
+                        padding: "12px",
+                        background: "hsl(var(--muted))",
+                        borderRadius: "var(--radius-xs)",
+                        border: "1px solid hsl(var(--border))",
+                        fontSize: "12px",
+                        lineHeight: "1.6",
+                        color: "hsl(var(--foreground))"
+                      }}>
+                        <div style={{ fontWeight: 800, fontSize: "10px", textTransform: "uppercase", marginBottom: "6px", display: "flex", justifyContent: "space-between" }}>
+                          <span className="threat-val-cyan">Full Dispatch:</span>
+                          <button onClick={() => setExpandedArticleId(null)} style={{ background: "none", border: "none", color: "hsl(var(--muted-foreground))", cursor: "pointer", fontWeight: 700 }}>Close ✕</button>
+                        </div>
+                        <div style={{ whiteSpace: "pre-wrap" }}>
+                          {article.content.replace(/#+[\s\S]*?\n/g, "").replace(/\*\*|__/g, "").trim()}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="card-footer">
+                      <span className={`cvss-badge ${getCvssClass(article.severity || "Medium")}`}>
+                        {isDeal ? "VENTURE DEAL" : (article.severity ? article.severity.toUpperCase() : "ADVISORY")}
+                      </span>
+
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <button
+                          onClick={() => setExpandedArticleId(isExpanded ? null : `tab-${article.id}`)}
+                          className="btn btn-secondary"
+                          style={{ fontSize: "11px", padding: "4px 8px", height: "26px" }}
+                        >
+                          {isExpanded ? "Collapse" : "Quick Read"}
+                        </button>
+                        <Link href={`/news/${article.slug || article.id}`} className="card-read-more threat-val-cyan">
+                          <span>Inspect</span>
+                          <ArrowRight size={13} />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       )}

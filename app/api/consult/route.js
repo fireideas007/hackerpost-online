@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
-import { addConsultation, getConsultations } from '@/lib/consultationsStore';
+import { addConsultation, getConsultations, updateConsultationStatus, deleteConsultation } from '@/lib/consultationsStore';
 import { rateLimiter, sanitizeInput } from '@/lib/security';
+import { verifyEditorToken } from '@/lib/auth';
+
+export const dynamic = "force-dynamic";
 
 export async function POST(req) {
   try {
@@ -88,5 +91,65 @@ export async function GET() {
       success: false,
       error: "Failed to load consultations."
     }, { status: 500 });
+  }
+}
+
+export async function PATCH(req) {
+  try {
+    const authHeader = req.headers.get("authorization");
+    const token = authHeader?.replace("Bearer ", "");
+    if (!verifyEditorToken(token)) {
+      return NextResponse.json({ success: false, error: "Unauthorized. Administrator clearance required." }, { status: 401 });
+    }
+
+    const body = await req.json();
+    const { id, status, notes } = body;
+
+    if (!id) {
+      return NextResponse.json({ success: false, error: "Missing lead identifier." }, { status: 400 });
+    }
+
+    const updated = updateConsultationStatus(id, status, notes);
+    if (!updated) {
+      return NextResponse.json({ success: false, error: "Lead not found." }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Lead status updated successfully.",
+      record: updated
+    });
+  } catch (err) {
+    return NextResponse.json({ success: false, error: "Failed to update lead." }, { status: 500 });
+  }
+}
+
+export async function DELETE(req) {
+  try {
+    const authHeader = req.headers.get("authorization");
+    const token = authHeader?.replace("Bearer ", "");
+    if (!verifyEditorToken(token)) {
+      return NextResponse.json({ success: false, error: "Unauthorized. Administrator clearance required." }, { status: 401 });
+    }
+
+    const body = await req.json();
+    const { id } = body;
+
+    if (!id) {
+      return NextResponse.json({ success: false, error: "Missing lead identifier." }, { status: 400 });
+    }
+
+    const deleted = deleteConsultation(id);
+    if (!deleted) {
+      return NextResponse.json({ success: false, error: "Lead not found." }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Lead deleted successfully.",
+      deletedId: id
+    });
+  } catch (err) {
+    return NextResponse.json({ success: false, error: "Failed to delete lead." }, { status: 500 });
   }
 }
