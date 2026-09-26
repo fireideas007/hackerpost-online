@@ -22,26 +22,33 @@
   "customDirective": "Guarantee minimum 10 verified articles per day. Dynamically scale intake during threat buzz surges (CVSS 9.0+, 0-days, major funding rounds). Ensure CISO-grade strategic takeaways with zero verbatim reproduction and auto-syndication to @HackerPost2.",
   "cycleIntervalMinutes": 15,
   "dailyStats": {
-    "date": "2026-09-15",
-    "publishedToday": 29,
+    "date": "2026-09-26",
+    "publishedToday": 11,
     "target": 10,
     "surgeActive": true,
-    "threatVelocity": 85,
+    "threatVelocity": 100,
     "surgeTriggers": [
-      "Critical 0-Day / Vulnerability: Microsoft Plugs Nearly 400 Security Holes...",
-      "Active Ransomware Wave: Canadian Man Pleads Guilty in Snowflake Extor...",
-      "Critical 0-Day / Vulnerability: Pwn2Own Berlin 2026: Day Three Results and Ma..."
+      "Mega SecTech Deal: Stocktwits AI Roundup: Meta's Muse Lifts Chip...",
+      "Mega SecTech Deal: CrowdStrike(CRWD.US) Officer Sells US$125.49 ...",
+      "Mega SecTech Deal: Crowdstrike CFO Burt Podbere sells $125.5m in..."
     ]
   },
   "metrics": {
-    "totalCyclesRun": 35,
-    "totalScraped": 6340,
-    "totalAudited": 196,
-    "totalPublished": 58,
+    "totalCyclesRun": 36,
+    "totalScraped": 6809,
+    "totalAudited": 206,
+    "totalPublished": 68,
     "avgSimilarity": 0,
-    "lastRunTime": "2026-09-15T03:27:54.140Z"
+    "lastRunTime": "2026-09-26T08:52:48.933Z"
   },
   "logs": [
+    {
+      "id": "log-1790412768933-h20a",
+      "timestamp": "2026-09-26T08:52:48.933Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 5.8s. Published: 10 [Daily Total: 11/10], Queued: 0.",
+      "details": null
+    },
     {
       "id": "log-1789442874141-t3po",
       "timestamp": "2026-09-15T03:27:54.141Z",
