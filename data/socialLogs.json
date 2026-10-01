@@ -1,5 +1,93 @@
 [
   {
+    "id": "x_post_1790413533105_0hw0",
+    "articleId": "pub-1790413533096-634",
+    "articleTitle": "Airbnb-backed WeRoad raises $58M to take its group travel platform to the US",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🚀 SECTECH DEAL: Airbnb-backed WeRoad raises $58M to take its group travel platform to the US ($58M)\n\n#CyberSecurity #InfoSec #HackerPost #SecTech #Startups #VentureCapital\n\n🔗 https://hackerpost.online/news/airbnb-backed-weroad-raises-58m-to-take-its-group-travel-platform-to",
+    "charCount": 276,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#SecTech",
+      "#Startups",
+      "#VentureCapital"
+    ],
+    "articleUrl": "https://hackerpost.online/news/airbnb-backed-weroad-raises-58m-to-take-its-group-travel-platform-to",
+    "timestamp": "2026-09-26T09:05:33.105Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
+    "id": "x_post_1790413533084_0lhx",
+    "articleId": "pub-1790413533075-908",
+    "articleTitle": "Wispr raises $280M at $2B valuation as it looks beyond dictation",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🚀 SECTECH DEAL: Wispr raises $280M at $2B valuation as it looks beyond dictation ($280M)\n\n#CyberSecurity #InfoSec #HackerPost #SecTech #Startups #VentureCapital\n\n🔗 https://hackerpost.online/news/wispr-raises-280m-at-2b-valuation-as-it-looks-beyond-dictation",
+    "charCount": 259,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#SecTech",
+      "#Startups",
+      "#VentureCapital"
+    ],
+    "articleUrl": "https://hackerpost.online/news/wispr-raises-280m-at-2b-valuation-as-it-looks-beyond-dictation",
+    "timestamp": "2026-09-26T09:05:33.084Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
+    "id": "x_post_1790413533065_kukw",
+    "articleId": "pub-1790413533056-521",
+    "articleTitle": "The August 2026 Security Update Review",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🚨 CRITICAL 0-DAY ALERT: The August 2026 Security Update Review [CVE-2026-68820]\n\n#CyberSecurity #InfoSec #HackerPost #CVE202668820 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/the-august-2026-security-update-review",
+    "charCount": 226,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#CVE202668820",
+      "#0day",
+      "#Vulnerability"
+    ],
+    "articleUrl": "https://hackerpost.online/news/the-august-2026-security-update-review",
+    "timestamp": "2026-09-26T09:05:33.065Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
+    "id": "x_post_1790413533038_bez2",
+    "articleId": "pub-1790413533027-979",
+    "articleTitle": "Two Alleged ‘TeamPCP’ Hackers Arrested in Australia",
+    "handle": "@HackerPost2",
+    "accountUrl": "https://x.com/HackerPost2",
+    "tweetText": "🚨 CRITICAL 0-DAY ALERT: Two Alleged ‘TeamPCP’ Hackers Arrested in Australia\n\n#CyberSecurity #InfoSec #HackerPost #Ransomware #Malware #ThreatIntel\n\n🔗 https://hackerpost.online/news/two-alleged-teampcp-hackers-arrested-in-australia",
+    "charCount": 232,
+    "hashtags": [
+      "#CyberSecurity",
+      "#InfoSec",
+      "#HackerPost",
+      "#Ransomware",
+      "#Malware",
+      "#ThreatIntel"
+    ],
+    "articleUrl": "https://hackerpost.online/news/two-alleged-teampcp-hackers-arrested-in-australia",
+    "timestamp": "2026-09-26T09:05:33.038Z",
+    "status": "simulated",
+    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
+    "tweetUrl": "https://x.com/HackerPost2"
+  },
+  {
     "id": "x_post_1790412768928_p14e",
     "articleId": "pub-1790412768924-11",
     "articleTitle": "Viral AI startup Instinct has raised $350M at a $2.5B valuation",
@@ -1997,94 +2085,6 @@
     ],
     "articleUrl": "https://hackerpost.online/news/central-dogma-ldap-injection-in-searchfirstactivedirectoryrealm",
     "timestamp": "2026-09-14T07:45:42.798Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
-  },
-  {
-    "id": "x_post_1789371942779_uqub",
-    "articleId": "pub-1789371942772-726",
-    "articleTitle": "Shopper: Negative discount values accepted and propagated through order calculation pipeline",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "📊 AI SEC BENCHMARK: Shopper: Negative discount values accepted and propagated th... [CVE-2026-56831]\n\n#CyberSecurity #InfoSec #HackerPost #CVE202656831 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/shopper-negative-discount-values-accepted-and-propagated-through-order",
-    "charCount": 279,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#CVE202656831",
-      "#0day",
-      "#Vulnerability"
-    ],
-    "articleUrl": "https://hackerpost.online/news/shopper-negative-discount-values-accepted-and-propagated-through-order",
-    "timestamp": "2026-09-14T07:45:42.779Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
-  },
-  {
-    "id": "x_post_1789371942758_4drl",
-    "articleId": "pub-1789371942753-259",
-    "articleTitle": "Shopping privilege escalation through missing authorization in Settings components",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "📊 AI SEC BENCHMARK: Shopping privilege escalation through missing authorization in Set... [CVE-2026-56826]\n\n#CyberSecurity #InfoSec #HackerPost #CVE202656826 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/shopping-privilege-escalation-through-missing-authorization-in",
-    "charCount": 277,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#CVE202656826",
-      "#0day",
-      "#Vulnerability"
-    ],
-    "articleUrl": "https://hackerpost.online/news/shopping-privilege-escalation-through-missing-authorization-in",
-    "timestamp": "2026-09-14T07:45:42.758Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
-  },
-  {
-    "id": "x_post_1789371942739_w3xt",
-    "articleId": "pub-1789371942730-470",
-    "articleTitle": "Debian 13.7 ships the fixes behind 92 security advisories, updates 106 packages",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "📊 AI SEC BENCHMARK: Debian 13.7 ships the fixes behind 92 security advisories, updates 106 packages\n\n#CyberSecurity #InfoSec #HackerPost #AISecurity #LLM #GenAI\n\n🔗 https://hackerpost.online/news/debian-137-ships-the-fixes-behind-92-security-advisories-updates-106",
-    "charCount": 265,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#AISecurity",
-      "#LLM",
-      "#GenAI"
-    ],
-    "articleUrl": "https://hackerpost.online/news/debian-137-ships-the-fixes-behind-92-security-advisories-updates-106",
-    "timestamp": "2026-09-14T07:45:42.739Z",
-    "status": "simulated",
-    "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
-    "tweetUrl": "https://x.com/HackerPost2"
-  },
-  {
-    "id": "x_post_1789371043830_h89v",
-    "articleId": "pub-1789371043808-423",
-    "articleTitle": "Shopper: Media sub-form store() still lacks authorization (Incomplete fix for GHSA-h4mp-g9c6-xwph)",
-    "handle": "@HackerPost2",
-    "accountUrl": "https://x.com/HackerPost2",
-    "tweetText": "📊 AI SEC BENCHMARK: Shopper: Media sub-form store() still lacks authorization (Inc... [CVE-2026-56830]\n\n#CyberSecurity #InfoSec #HackerPost #CVE202656830 #0day #Vulnerability\n\n🔗 https://hackerpost.online/news/shopper-media-sub-form-store-still-lacks-authorization-incomplete-fix",
-    "charCount": 280,
-    "hashtags": [
-      "#CyberSecurity",
-      "#InfoSec",
-      "#HackerPost",
-      "#CVE202656830",
-      "#0day",
-      "#Vulnerability"
-    ],
-    "articleUrl": "https://hackerpost.online/news/shopper-media-sub-form-store-still-lacks-authorization-incomplete-fix",
-    "timestamp": "2026-09-14T07:30:43.830Z",
     "status": "simulated",
     "message": "Simulated syndication to @HackerPost2. Connect Twitter API keys in Admin settings for live posting.",
     "tweetUrl": "https://x.com/HackerPost2"

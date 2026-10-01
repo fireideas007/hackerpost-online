@@ -23,25 +23,32 @@
   "cycleIntervalMinutes": 15,
   "dailyStats": {
     "date": "2026-09-26",
-    "publishedToday": 11,
+    "publishedToday": 15,
     "target": 10,
     "surgeActive": true,
     "threatVelocity": 100,
     "surgeTriggers": [
-      "Mega SecTech Deal: Stocktwits AI Roundup: Meta's Muse Lifts Chip...",
+      "Critical 0-Day / Vulnerability: CareCam CM2507...",
       "Mega SecTech Deal: CrowdStrike(CRWD.US) Officer Sells US$125.49 ...",
       "Mega SecTech Deal: Crowdstrike CFO Burt Podbere sells $125.5m in..."
     ]
   },
   "metrics": {
-    "totalCyclesRun": 36,
-    "totalScraped": 6809,
-    "totalAudited": 206,
-    "totalPublished": 68,
+    "totalCyclesRun": 37,
+    "totalScraped": 7278,
+    "totalAudited": 210,
+    "totalPublished": 72,
     "avgSimilarity": 0,
-    "lastRunTime": "2026-09-26T08:52:48.933Z"
+    "lastRunTime": "2026-09-26T09:05:33.114Z"
   },
   "logs": [
+    {
+      "id": "log-1790413533114-gkgs",
+      "timestamp": "2026-09-26T09:05:33.114Z",
+      "type": "info",
+      "message": "Multi-source editorial cycle completed in 4.9s. Published: 4 [Daily Total: 15/10], Queued: 0.",
+      "details": null
+    },
     {
       "id": "log-1790412768933-h20a",
       "timestamp": "2026-09-26T08:52:48.933Z",
