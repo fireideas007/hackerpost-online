@@ -1,25 +1,33 @@
 services:
-  hackerpost:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: hackerpost_app
+    container_name: hackerpost
     restart: always
-    ports:
-      - "3000:3000"
     environment:
       - NODE_ENV=production
       - PORT=3000
       - HOSTNAME=0.0.0.0
-    user: "0:0"
-    env_file:
-      - .env
+      - VIRTUAL_HOST=hackerpost.online
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=hackerpost.online
+      - LETSENCRYPT_EMAIL=64010844+fireideas007@users.noreply.github.com
     volumes:
       # Persist the database, user keys, and social logs across updates
       - ./data:/app/data
+    networks:
+      - default
+      - app_webnet
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/news"]
       interval: 30s
       timeout: 5s
       retries: 3
       start_period: 15s
+
+networks:
+  default:
+  app_webnet:
+    external: true
+    name: app_webnet
