@@ -41,6 +41,41 @@
   ],
   "models": [
     {
+      "id": "gemini-4-argon",
+      "name": "Gemini 4 Argon (1M Continuous Output)",
+      "provider": "Google DeepMind",
+      "type": "Frontier Autonomous LLM",
+      "license": "Proprietary API",
+      "contextWindow": "2M Input / 1M Output Tokens",
+      "overallScore": 99.2,
+      "rank": 1,
+      "metrics": {
+        "patchingRate": 82.5,
+        "exploitDetection": 98.4,
+        "threatHunting": 99.5,
+        "injectionDefense": 98.9,
+        "insecureCodeRate": 1.2
+      },
+      "primaryStrengths": [
+        "Unprecedented 1 Million continuous output token horizon enabling end-to-end autonomous C/C++ to memory-safe Rust codebase refactoring",
+        "Official Google Fairwind Program access empowering certified defenders with zero-guardrail threat triage and patch verification",
+        "SOTA 77.9% on DeepSWE v1.1 and tied #1 on CWE-bench v1 (68% remediation rate across 20 programming languages)",
+        "Rank #1 on Gray Swan Indirect Prompt Injection Benchmark and proven real-world zero-day discovery with Wiz (Scan for Good)"
+      ],
+      "weaknesses": [
+        "Access to unconstrained defensive weights requires vetting under Google's Frontier Safety Framework"
+      ],
+      "testedBy": [
+        "SWE-bench / DeepSWE v1.1",
+        "CWE-bench v1",
+        "Gray Swan IPI Benchmark",
+        "Wiz Threat Labs",
+        "MITRE Engenuity"
+      ],
+      "recommendedUse": "Autonomous Red/Blue Cyber Defense, Industrial Memory Safety Modernization, Zero-Day Discovery & Patch Synthesis",
+      "lastTested": "2026-10-01"
+    },
+    {
       "id": "claude-4-5-opus",
       "name": "Claude 4.5 Opus (Agentic Reasoning)",
       "provider": "Anthropic",
@@ -48,7 +83,7 @@
       "license": "Proprietary API",
       "contextWindow": "200K Tokens",
       "overallScore": 97.4,
-      "rank": 1,
+      "rank": 2,
       "metrics": {
         "patchingRate": 79.2,
         "exploitDetection": 96.8,
@@ -81,7 +116,7 @@
       "license": "Proprietary API",
       "contextWindow": "2M Tokens",
       "overallScore": 96.9,
-      "rank": 2,
+      "rank": 3,
       "metrics": {
         "patchingRate": 77.4,
         "exploitDetection": 94.6,
@@ -114,7 +149,7 @@
       "license": "Proprietary API",
       "contextWindow": "128K Tokens",
       "overallScore": 96.2,
-      "rank": 3,
+      "rank": 4,
       "metrics": {
         "patchingRate": 78.8,
         "exploitDetection": 95.2,
@@ -146,7 +181,7 @@
       "license": "Proprietary API",
       "contextWindow": "200K Tokens",
       "overallScore": 95.9,
-      "rank": 4,
+      "rank": 5,
       "metrics": {
         "patchingRate": 76.8,
         "exploitDetection": 94,
@@ -178,7 +213,7 @@
       "license": "Proprietary API",
       "contextWindow": "256K Tokens",
       "overallScore": 95.2,
-      "rank": 5,
+      "rank": 6,
       "metrics": {
         "patchingRate": 74.4,
         "exploitDetection": 95.4,
@@ -211,7 +246,7 @@
       "license": "Proprietary API",
       "contextWindow": "128K Tokens",
       "overallScore": 94.3,
-      "rank": 6,
+      "rank": 7,
       "metrics": {
         "patchingRate": 75.8,
         "exploitDetection": 92.8,
@@ -242,7 +277,7 @@
       "license": "Proprietary API",
       "contextWindow": "128K Tokens",
       "overallScore": 92.6,
-      "rank": 7,
+      "rank": 8,
       "metrics": {
         "patchingRate": 72.8,
         "exploitDetection": 91.5,
@@ -273,7 +308,7 @@
       "license": "Proprietary API",
       "contextWindow": "200K Tokens",
       "overallScore": 91.7,
-      "rank": 8,
+      "rank": 9,
       "metrics": {
         "patchingRate": 71.2,
         "exploitDetection": 90.8,
@@ -304,7 +339,7 @@
       "license": "MIT Open Source",
       "contextWindow": "128K Tokens",
       "overallScore": 91.3,
-      "rank": 9,
+      "rank": 10,
       "metrics": {
         "patchingRate": 70,
         "exploitDetection": 92.4,
@@ -337,7 +372,7 @@
       "license": "Apache 2.0 Open Source",
       "contextWindow": "128K Tokens",
       "overallScore": 90.7,
-      "rank": 10,
+      "rank": 11,
       "metrics": {
         "patchingRate": 69.6,
         "exploitDetection": 89.5,
@@ -369,7 +404,7 @@
       "license": "Meta Llama Community",
       "contextWindow": "128K Tokens",
       "overallScore": 90.6,
-      "rank": 11,
+      "rank": 12,
       "metrics": {
         "patchingRate": 68.8,
         "exploitDetection": 91,
@@ -401,7 +436,7 @@
       "license": "Mistral Non-Commercial / Commercial",
       "contextWindow": "256K Tokens",
       "overallScore": 89.2,
-      "rank": 12,
+      "rank": 13,
       "metrics": {
         "patchingRate": 67.8,
         "exploitDetection": 89,
