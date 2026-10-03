@@ -174,6 +174,30 @@ Direct CISO Consultation Hotline: https://hackerpost.online/consult
     let codeBlockContent = [];
     const renderedElements = [];
 
+    const renderFormattedText = (text) => {
+      if (!text) return null;
+      const parts = [];
+      const regex = /(\*\*.*?\*\*|`.*?`)/g;
+      let lastIndex = 0;
+      let match;
+      while ((match = regex.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+          parts.push(text.substring(lastIndex, match.index));
+        }
+        const token = match[0];
+        if (token.startsWith("**") && token.endsWith("**")) {
+          parts.push(<strong key={match.index}>{token.slice(2, -2)}</strong>);
+        } else if (token.startsWith("`") && token.endsWith("`")) {
+          parts.push(<code key={match.index} style={{ background: "hsl(var(--muted))", padding: "2px 5px", borderRadius: "3px", fontSize: "0.9em" }}>{token.slice(1, -1)}</code>);
+        }
+        lastIndex = regex.lastIndex;
+      }
+      if (lastIndex < text.length) {
+        parts.push(text.substring(lastIndex));
+      }
+      return parts.length > 0 ? parts : text;
+    };
+
     lines.forEach((line, idx) => {
       if (line.trim().startsWith("```")) {
         if (inCodeBlock) {
@@ -195,26 +219,16 @@ Direct CISO Consultation Hotline: https://hackerpost.online/consult
         codeBlockContent.push(line);
       } else {
         const trimmed = line.trim();
+        // Ignore any leftover callout markers
+        if (/^>\s*\[!(IMPORTANT|TIP|NOTE|CAUTION|WARNING)\]/i.test(trimmed)) {
+          return;
+        }
         if (trimmed.startsWith("# ")) {
-          renderedElements.push(<h1 key={idx} style={{ fontSize: "24px", fontWeight: 800, margin: "24px 0 14px 0", borderBottom: "1px solid hsl(var(--border))", paddingBottom: "6px" }}>{trimmed.slice(2)}</h1>);
+          renderedElements.push(<h1 key={idx} style={{ fontSize: "24px", fontWeight: 800, margin: "24px 0 14px 0", borderBottom: "1px solid hsl(var(--border))", paddingBottom: "6px" }}>{renderFormattedText(trimmed.slice(2))}</h1>);
         } else if (trimmed.startsWith("## ")) {
-          renderedElements.push(<h2 key={idx} style={{ fontSize: "19px", fontWeight: 700, margin: "22px 0 10px 0" }}>{trimmed.slice(3)}</h2>);
+          renderedElements.push(<h2 key={idx} style={{ fontSize: "19px", fontWeight: 700, margin: "22px 0 10px 0" }}>{renderFormattedText(trimmed.slice(3))}</h2>);
         } else if (trimmed.startsWith("### ")) {
-          renderedElements.push(<h3 key={idx} style={{ fontSize: "16px", fontWeight: 700, margin: "18px 0 8px 0", color: "hsl(var(--primary))" }}>{trimmed.slice(4)}</h3>);
-        } else if (trimmed.startsWith("> [!IMPORTANT]") || trimmed.startsWith("> [!TIP]") || trimmed.startsWith("> [!NOTE]")) {
-          renderedElements.push(
-            <div key={idx} style={{
-              background: "hsl(var(--muted))",
-              borderLeft: "3px solid hsl(var(--primary))",
-              padding: "14px 16px",
-              borderRadius: "var(--radius-xs)",
-              margin: "18px 0",
-              fontSize: "13px",
-              lineHeight: 1.6
-            }}>
-              {trimmed.replace(/^>\s*\[!(IMPORTANT|TIP|NOTE)\]/, "").trim()}
-            </div>
-          );
+          renderedElements.push(<h3 key={idx} style={{ fontSize: "16px", fontWeight: 700, margin: "18px 0 8px 0", color: "hsl(var(--primary))" }}>{renderFormattedText(trimmed.slice(4))}</h3>);
         } else if (trimmed.startsWith("> ")) {
           renderedElements.push(
             <blockquote key={idx} style={{
@@ -224,23 +238,23 @@ Direct CISO Consultation Hotline: https://hackerpost.online/consult
               color: "hsl(var(--muted-foreground))",
               fontStyle: "italic"
             }}>
-              {trimmed.slice(2)}
+              {renderFormattedText(trimmed.slice(2))}
             </blockquote>
           );
         } else if (trimmed.startsWith("* ") || trimmed.startsWith("- ")) {
           renderedElements.push(
             <li key={idx} style={{ marginLeft: "18px", marginBottom: "6px", lineHeight: 1.6 }}>
-              {trimmed.slice(2)}
+              {renderFormattedText(trimmed.slice(2))}
             </li>
           );
         } else if (/^\d+\.\s/.test(trimmed)) {
           renderedElements.push(
             <div key={idx} style={{ marginLeft: "10px", marginBottom: "8px", lineHeight: 1.6 }}>
-              <b>{trimmed.match(/^\d+\./)[0]}</b> {trimmed.replace(/^\d+\.\s*/, "")}
+              <b>{trimmed.match(/^\d+\./)[0]}</b> {renderFormattedText(trimmed.replace(/^\d+\.\s*/, ""))}
             </div>
           );
         } else if (trimmed) {
-          renderedElements.push(<p key={idx} style={{ marginBottom: "16px", lineHeight: 1.7, fontSize: "15px" }}>{trimmed}</p>);
+          renderedElements.push(<p key={idx} style={{ marginBottom: "16px", lineHeight: 1.7, fontSize: "15px" }}>{renderFormattedText(trimmed)}</p>);
         }
       }
     });

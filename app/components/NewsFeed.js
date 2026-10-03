@@ -225,6 +225,34 @@ const AI_BENCHMARKS = [
   }
 ];
 
+function cleanExcerpt(content, maxLength = 220) {
+  if (!content) return "Verified threat intelligence advisory for security engineering teams.";
+  let clean = content
+    .replace(/^>\s*\[![\s\S]*?\n\n/g, "")
+    .replace(/^>\s*/gm, "")
+    .replace(/#+[\s\S]*?\n/g, " ")
+    .replace(/(\*\*|__|\*|_|`)/g, "")
+    .replace(/---+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (clean.length > maxLength) {
+    const truncated = clean.substring(0, maxLength);
+    const lastSpace = truncated.lastIndexOf(" ");
+    return (lastSpace > 40 ? truncated.substring(0, lastSpace) : truncated) + "...";
+  }
+  return clean;
+}
+
+function cleanFullDispatch(content) {
+  if (!content) return "";
+  return content
+    .replace(/^>\s*\[![\s\S]*?\n\n/g, "")
+    .replace(/^>\s*/gm, "")
+    .replace(/\*\*|__/g, "")
+    .trim();
+}
+
 export default function NewsFeed({ initialArticles = [] }) {
   const searchParams = useSearchParams();
   const [articles, setArticles] = useState(initialArticles);
@@ -555,7 +583,7 @@ Report verified by HackerPost Security Intelligence Feed.
                   </div>
 
                   <p className="lead-story-excerpt" style={{ marginTop: "12px", lineHeight: 1.65 }}>
-                    {leadStory.content ? leadStory.content.replace(/#+[\s\S]*?\n/g, "").replace(/\*\*|__/g, "").substring(0, 320).trim() + "..." : "Security intelligence teams have cataloged high-severity advisory telemetry across production infrastructure."}
+                    {cleanExcerpt(leadStory.content, 320)}
                   </p>
                 </div>
 
@@ -738,9 +766,7 @@ Report verified by HackerPost Security Intelligence Feed.
                         </Link>
 
                         <p className="card-excerpt" style={{ lineHeight: 1.6 }}>
-                          {article.content 
-                            ? article.content.replace(/#+[\s\S]*?\n/g, "").replace(/\*\*|__/g, "").substring(0, 220).trim() + "..." 
-                            : "Verified threat intelligence advisory for security engineering teams."}
+                          {cleanExcerpt(article.content, 220)}
                         </p>
 
                         {/* Inline Quick Read Expander */}
@@ -765,7 +791,7 @@ Report verified by HackerPost Security Intelligence Feed.
                               </button>
                             </div>
                             <div style={{ whiteSpace: "pre-wrap" }}>
-                              {article.content.replace(/#+[\s\S]*?\n/g, "").replace(/\*\*|__/g, "").trim()}
+                              {cleanFullDispatch(article.content)}
                             </div>
                           </div>
                         )}
@@ -1216,9 +1242,7 @@ Verified by HackerPost Security Intelligence Feed.`}
                     </Link>
 
                     <p className="card-excerpt" style={{ lineHeight: 1.6 }}>
-                      {article.content 
-                        ? article.content.replace(/#+[\s\S]*?\n/g, "").replace(/\*\*|__/g, "").substring(0, 180).trim() + "..." 
-                        : "Verified threat intelligence advisory for security engineering teams."}
+                      {cleanExcerpt(article.content, 180)}
                     </p>
 
                     {isExpanded && (
@@ -1237,7 +1261,7 @@ Verified by HackerPost Security Intelligence Feed.`}
                           <button onClick={() => setExpandedArticleId(null)} style={{ background: "none", border: "none", color: "hsl(var(--muted-foreground))", cursor: "pointer", fontWeight: 700 }}>Close ✕</button>
                         </div>
                         <div style={{ whiteSpace: "pre-wrap" }}>
-                          {article.content.replace(/#+[\s\S]*?\n/g, "").replace(/\*\*|__/g, "").trim()}
+                          {cleanFullDispatch(article.content)}
                         </div>
                       </div>
                     )}

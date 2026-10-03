@@ -96,9 +96,12 @@ export default async function ArticlePage({ params }) {
   const canonicalUrl = `https://hackerpost.online/news/${articleSlug}`;
 
   const cleanDescription = (article.content || "")
-    .replace(/#[\s\S]*?\n/, "")
+    .replace(/^>\s*\[![\s\S]*?\n\n/g, "")
+    .replace(/^>\s*/gm, "")
+    .replace(/#+[\s\S]*?\n/g, " ")
     .replace(/---[\s\S]*$/, "")
     .replace(/[#*`_~>[\]]/g, "")
+    .replace(/\s+/g, " ")
     .substring(0, 160)
     .trim() + "...";
 
